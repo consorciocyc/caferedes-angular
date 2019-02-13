@@ -1,10 +1,10 @@
 export class constantes {
-  public routeGlobal = "/sip/public/api/"; ///sip/public/api/
-  public route = "/sip/public/api/";
-  public routeimage = "/sip/public/public/images/"; // ruta para las imagesnes dentro de la carpeta images
-  public url_complete = "/sip/public/"; // ruta para abrir los pdf de los medidores
-  public url_api = "/sip/public/api/"; // ruta api
-  public url_image_internas = "/sip/public/public"; // ruta api
+  public routeGlobal = "/api/"; ///caferedes/public/api/
+  public route = "/api/";
+  public routeimage = "/caferedes/public/public/images/"; // ruta para las imagesnes dentro de la carpeta images
+  public url_complete = "/caferedes/public/"; // ruta para abrir los pdf de los medidores
+  public url_api = "/caferedes/public/api/"; // ruta api
+  public url_image_internas = "/caferedes/public/public"; // ruta api
   public SUBMENUS = {
     Materiales: 1,
     Compras: 2,

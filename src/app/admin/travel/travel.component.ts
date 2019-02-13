@@ -1,19 +1,38 @@
-import { Component, OnInit, HostListener } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  HostListener,
+  ChangeDetectorRef,
+  ElementRef,
+  ViewChild
+} from "@angular/core";
 import { ListService } from "../../services/list/list.service";
 import { PermitsService } from "../../services/permisos/permits.service";
 import { datatables } from "../../utilitis/datatables";
 import { constantes } from "../../utilitis/constantes";
 import { TravelService } from "../../services/travel/travel.service";
 import swal from "sweetalert2";
-declare const google: any;
+import { Location } from "../../models/location-model";
+import { GeocodeService } from "../../services/senhtml/geocode.service";
 import proj4 from "proj4";
-declare var ol: any;
+import { GoogleMapsAPIWrapper } from "@agm/core/services";
+import { MouseEvent } from "@agm/core";
+import { MapsAPILoader, AgmMap } from "@agm/core";
+declare const google: any;
+
 
 @Component({
   selector: "app-travel",
   templateUrl: "./travel.component.html",
   styleUrls: ["./travel.component.scss"],
-  providers: [TravelService, ListService, PermitsService, datatables]
+  providers: [
+    TravelService,
+    ListService,
+    PermitsService,
+    datatables,
+    GeocodeService,
+    AgmMap
+  ]
 })
 export class TravelComponent implements OnInit {
   public constantes: constantes;
@@ -32,18 +51,33 @@ export class TravelComponent implements OnInit {
   public date_porp;
   public porprogramar;
   public idporprogramar;
+  public progratotal_hidden;
 
-  public map;
+  //public map;
   public marker;
   public center;
   public firstProjection;
   public cordenadas;
   public cor = null;
-
+  // google maps zoom level
+  zoom: number = 6;
+  geocoder: any;
+  // initial center position for the map
+  lat: number = 4.570868;
+  lng: number = -74.2973328;
+  address = "London";
+  location: Location;
+  loading: boolean;
+  @ViewChild(AgmMap) map: AgmMap;
+  public markers: marker[] = [];
   constructor(
     private ListService: ListService,
     private _PermitsService: PermitsService,
-    private travelService: TravelService
+    private travelService: TravelService,
+    private ref: ChangeDetectorRef,
+    private geocodeService: GeocodeService,
+    public mapsApiLoader: MapsAPILoader,
+    public wrapper: GoogleMapsAPIWrapper
   ) {
     this.constantes = new constantes();
     this.datatables = new datatables();
@@ -57,7 +91,7 @@ export class TravelComponent implements OnInit {
     this.Searchemployee = this.url + "employee/searc_employee?term=:keyword";
     this.sub_state();
 
-    this.center = { lat: 6.2922634763, lng: -75.543858111800006 };
+    this.center = { lat: 4.570868, lng: -74.2973328 };
   }
 
   sub_state() {
@@ -89,15 +123,13 @@ export class TravelComponent implements OnInit {
   }
 
   search() {
-    if (this.tipe == 1) {
+    this.markers = [];
+    if (this.tipe == 1 || 2) {
       let params = {
         date_re: this.date_rec,
         idemployee: this.idrecorredor
       };
-      this.map = new google.maps.Map(document.getElementById("map"), {
-        center: this.center,
-        zoom: 11
-      });
+
       this.travelService.searchrecorredor(params).subscribe(
         result => {
           this.list_table = result.response;
@@ -107,22 +139,30 @@ export class TravelComponent implements OnInit {
               Number(this.list_table[e].x),
               Number(this.list_table[e].y)
             ]);
-
-            this.cor = {
-              lat: this.cordenadas[1],
-              lng: this.cordenadas[0]
-            };
-
-            this.marker = new google.maps.Marker({
-              position: this.cor,
-              map: this.map,
-              title:
-                this.list_table[e].Direccion +
-                " " +
-                this.list_table[e].consecutive
-            });
+            if (this.list_table[e].worki_type_obr != 1) {
+              if (this.list_table[e].x == null) {
+                this.markers.push({
+                  lat: this.list_table[e].lat,
+                  lng: this.list_table[e].lng,
+                  draggable: false,
+                  label: this.list_table[e].Direccion,
+                  consecutive: this.list_table[e].idworkI,
+                  estado: "",
+                  row: this.list_table[e]
+                });
+              } else {
+                this.markers.push({
+                  lat: this.cordenadas[1],
+                  lng: this.cordenadas[0],
+                  draggable: false,
+                  label: this.list_table[e].Direccion,
+                  consecutive: this.list_table[e].idworkI,
+                  estado: "",
+                  row: this.list_table[e]
+                });
+              }
+            }
           }
-
           this.datatables.reInitDatatable1("#table_p");
         },
         error => {}
@@ -130,10 +170,6 @@ export class TravelComponent implements OnInit {
     }
 
     if (this.tipe == 2) {
-      this.map = new google.maps.Map(document.getElementById("map"), {
-        center: this.center,
-        zoom: 11
-      });
       let params = { company: this.company };
 
       this.travelService.searchporpragramar(params).subscribe(
@@ -145,20 +181,29 @@ export class TravelComponent implements OnInit {
               Number(this.list_table[e].x),
               Number(this.list_table[e].y)
             ]);
-
-            this.cor = {
-              lat: this.cordenadas[1],
-              lng: this.cordenadas[0]
-            };
-
-            this.marker = new google.maps.Marker({
-              position: this.cor,
-              map: this.map,
-              title:
-                this.list_table[e].Direccion +
-                " " +
-                this.list_table[e].consecutive
-            });
+            if (this.list_table[e].worki_type_obr != 1) {
+              if (this.list_table[e].x == null) {
+                this.markers.push({
+                  lat: this.list_table[e].lat,
+                  lng: this.list_table[e].lng,
+                  draggable: false,
+                  label: this.list_table[e].Direccion,
+                  consecutive: this.list_table[e].idworkI,
+                  estado: "",
+                  row: this.list_table[e]
+                });
+              } else {
+                this.markers.push({
+                  lat: this.cordenadas[1],
+                  lng: this.cordenadas[0],
+                  draggable: false,
+                  label: this.list_table[e].Direccion,
+                  consecutive: this.list_table[e].idworkI,
+                  estado: "",
+                  row: this.list_table[e]
+                });
+              }
+            }
           }
           this.datatables.reInitDatatable1("#table_p");
         },
@@ -219,14 +264,40 @@ export class TravelComponent implements OnInit {
         error => {}
       );
     }
+
+    if (this.tipe == 3) {
+      let params = {
+        date_porp: this.date_porp,
+        idemployee: this.idporprogramar,
+        data: this.list_table,
+        hoy: this.dia()
+      };
+
+      this.travelService.saveporprogramar_total(params).subscribe(
+        result => {
+          if (result.response == true) {
+            swal("", "Se Programado ", "success");
+          }
+        },
+        error => {}
+      );
+    }
   }
 
   chnage() {
     if (this.tipe == 1) {
-      this.progra_hidden = true;
       this.recorre_hidden = false;
+      this.progratotal_hidden = true;
+      this.progra_hidden = true;
     }
     if (this.tipe == 2) {
+      this.progra_hidden = false;
+      this.recorre_hidden = true;
+      this.progratotal_hidden = true;
+    }
+
+    if (this.tipe == 3) {
+      this.progratotal_hidden = false;
       this.recorre_hidden = true;
       this.progra_hidden = false;
     }
@@ -235,4 +306,37 @@ export class TravelComponent implements OnInit {
   porprogramarchange() {
     this.idporprogramar = this.porprogramar.idemployees;
   }
+
+  clickedMarker(label: string, index: number) {
+    this.markers[index].icon = "../../../assets/images/marcador.png";
+
+    console.log(`clicked the marker: ${label || index}`);
+    this.prueba(index, this.markers[index].row);
+  }
+
+  clickedMarke1(label: string, index: number) {
+    this.markers[index].icon = "../../../assets/images/marcador.png";
+
+    console.log(`clicked the marker: ${label || index}`);
+  }
+
+  prueba(i: number, row: any) {
+    this.clickedMarke1(row, i);
+    console.log(row);
+    row.checkbox = true;
+  }
+  markerDragEnd(m: marker, $event: MouseEvent) {
+    console.log("dragEnd", m, $event);
+  }
+
+}
+interface marker {
+  lat: number;
+  lng: number;
+  label?: string;
+  consecutive: any;
+  icon?: string;
+  draggable: boolean;
+  estado: any;
+  row: any;
 }

@@ -66,9 +66,6 @@
           Administración
         </a>
         <div class="dropdown-menu" aria-labelledby="administration">
-          <a class="dropdown-item" [routerLink]="['/admin/administrator']"
-            >Administración</a
-          >
           <a class="dropdown-item" [routerLink]="['/admin/empleados']"
             >Empleados</a
           >
@@ -113,9 +110,6 @@
           <a class="dropdown-item" [routerLink]="['/admin/municipaality']"
             >Listas Municipios</a
           >
-          <a class="dropdown-item" [routerLink]="['/admin/type-of-work']"
-            >Tipos de obra</a
-          >
         </div>
       </li>
       <li class="nav-item dropdown px-2">
@@ -129,40 +123,20 @@
           Obras
         </a>
         <div class="dropdown-menu" aria-labelledby="works">
-          <a class="dropdown-item" [routerLink]="['/admin/documentos_epm']"
-            >Documentos Epm</a
-          >
           <a class="dropdown-item" [routerLink]="['/admin/internas']"
             >Obras Internas</a
           >
-          <a class="dropdown-item" [routerLink]="['/admin/obra_externa']"
-            >Obras Externas</a
-          >
-          <a class="dropdown-item" [routerLink]="['/admin/operaciones']"
-            >Operaciones</a
-          >
-          <a class="dropdown-item" [routerLink]="['/admin/permisosobr']"
-            >Permisos Obra</a
-          >
-          <a class="dropdown-item" [routerLink]="['/admin/asignacion']"
-            >Asignación de Encargados</a
-          >
+
           <a class="dropdown-item" [routerLink]="['/admin/recorrido']"
-            >Programación Masiva</a
+            >Programación</a
           >
-          <a class="dropdown-item" [routerLink]="['/admin/subir_obra']"
-            >Importar Obra</a
-          >
-          <a class="dropdown-item" [routerLink]="['/admin/importaroym']"
-            >Importar Oym</a
+
+          <a class="dropdown-item" [routerLink]="['/admin/subir_html']"
+            >Subir Obra</a
           >
           <a class="dropdown-item" [routerLink]="['/admin/subir_html']"
-            >Importar Html</a
-          >
-          <a class="dropdown-item" [routerLink]="['/admin/actas_vecindad']"
-            >Domiciliarias</a
-          >
-          <a class="dropdown-item" [routerLink]="['/admin/ow']">OW</a>
+          >Atualizar Obra</a
+        >
           <a class="dropdown-item" [routerLink]="['/admin/pago_actividades']"
             >Pago Actividades</a
           >
@@ -171,9 +145,6 @@
           >
           <a class="dropdown-item" [routerLink]="['/admin/acta_materiales']"
             >Extraer Datos</a
-          >
-          <a class="dropdown-item" [routerLink]="['/admin/programacion']"
-            >Programación</a
           >
         </div>
       </li>
@@ -240,6 +211,8 @@
     <div class="form-group">
       <label>cambiar empresa</label>
       <select
+        name=""
+        id=""
         #id_company="ngModel"
         class="form-control input-modified"
         (change)="get_contracts(id_company.value)"
@@ -257,6 +230,8 @@
     <div class="form-group">
       <label>cambiar contrato</label>
       <select
+        name=""
+        id=""
         class="form-control input-modified"
         #id_contract="ngModel"
         name="id_contract"

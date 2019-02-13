@@ -11,7 +11,6 @@ declare let plupload: any;
 import { OperacionService } from "../../../services/operacion/operacion.service";
 import { constantes } from "../../../utilitis/constantes";
 import { OperactionModel } from "../../../models/operation.model";
-import { OymDac } from "../../../models/operation.model";
 import { Router, ActivatedRoute } from "@angular/router";
 import swal from "sweetalert2";
 import "rxjs/add/operator/filter";
@@ -24,7 +23,6 @@ import {
   NgxGalleryImage,
   NgxGalleryAnimation
 } from "ngx-gallery";
-import { delay } from "rxjs/operator/delay";
 
 @Component({
   selector: "app-details-operations",
@@ -42,7 +40,6 @@ import { delay } from "rxjs/operator/delay";
 export class DetailsOperationsComponent implements OnInit {
   public constantes: constantes;
   public operationmodel: OperactionModel;
-  public oymDac: OymDac;
   public list_type = [];
   public type;
   public descrition;
@@ -66,16 +63,6 @@ export class DetailsOperationsComponent implements OnInit {
   public btnupload;
   public ANS;
   public list_type_activity;
-  public company;
-  public contract;
-
-  public clasificacion;
-  public motv;
-
-  public btninsert;
-  public btnupdate;
-  public rowdac;
-  public close_ans;
   @ViewChild("myButton")
   myButton: ElementRef;
 
@@ -106,10 +93,6 @@ export class DetailsOperationsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.company = localStorage.getItem("company");
-
-    this.contract = localStorage.getItem("contract");
-
     this.galleryOptions = [
       {
         width: "600px",
@@ -136,7 +119,6 @@ export class DetailsOperationsComponent implements OnInit {
 
     this.galleryImages = [];
     this.operationmodel = new OperactionModel();
-    this.oymDac = new OymDac();
     this.constantes = new constantes();
     this.url = this.constantes.getRouter();
     this.url_image = this.constantes.getimage();
@@ -276,17 +258,16 @@ export class DetailsOperationsComponent implements OnInit {
     this.OperacionService.searchoym(params).subscribe(
       result => {
         this.operationmodel = result.search;
-        this.ANS = result.dias;
-        // this.operationmodel.day_vencidos = result.close;
-        if (this.operationmodel.day_vencidos == null) {
-          this.operationmodel.day_vencidos = 0;
-        }
 
-        if (
-          this.operationmodel.day_vencidos <= 0 &&
-          this.operationmodel.state != 4
-        ) {
-          console.log(this.operationmodel.day_vencidos);
+        let fechaInicio = new Date(
+          this.operationmodel.date_assignment
+        ).getTime();
+        let fechaFin = new Date(this.date()).getTime();
+
+        var diff = fechaFin - fechaInicio;
+        let direfencia = diff / (1000 * 60 * 60 * 24);
+        this.ANS = direfencia;
+        if (this.operationmodel.ans >= direfencia) {
           this.renderer.addClass(this.myButton.nativeElement, "parpadea");
           this.renderer.addClass(this.myButton.nativeElement, "btn-sm");
           this.renderer.addClass(this.myButton.nativeElement, "mr-3");
@@ -294,53 +275,12 @@ export class DetailsOperationsComponent implements OnInit {
           let text = this.renderer.createText("Activa");
           this.renderer.appendChild(this.myButton.nativeElement, text);
         }
-
-        //estado devuelta
-        if (
-          this.operationmodel.day_vencidos >= 0 &&
-          this.operationmodel.state == 5
-        ) {
-          console.log(this.operationmodel.day_vencidos);
-          this.renderer.addClass(this.myButton.nativeElement, "parpadea");
-          this.renderer.addClass(this.myButton.nativeElement, "btn-sm");
-          this.renderer.addClass(this.myButton.nativeElement, "mr-3");
-          this.renderer.addClass(this.myButton.nativeElement, "btn-success");
-          let text = this.renderer.createText("Atendida");
-          this.renderer.appendChild(this.myButton.nativeElement, text);
-        }
-        //estado pendiente
-        if (
-          this.operationmodel.day_vencidos >= 0 &&
-          this.operationmodel.state == 6
-        ) {
-          console.log(this.operationmodel.day_vencidos);
-          this.renderer.addClass(this.myButton.nativeElement, "parpadea");
-          this.renderer.addClass(this.myButton.nativeElement, "btn-sm");
-          this.renderer.addClass(this.myButton.nativeElement, "mr-3");
-          this.renderer.addClass(this.myButton.nativeElement, "btn-success");
-          let text = this.renderer.createText("Atendida");
-          this.renderer.appendChild(this.myButton.nativeElement, text);
-        }
-
-        if (
-          this.operationmodel.day_vencidos > 0 &&
-          this.operationmodel.state == 3
-        ) {
-          console.log(this.operationmodel.day_vencidos);
+        if (this.operationmodel.ans < direfencia) {
           this.renderer.addClass(this.myButton.nativeElement, "parpadea");
           this.renderer.addClass(this.myButton.nativeElement, "btn-sm");
           this.renderer.addClass(this.myButton.nativeElement, "mr-3");
           this.renderer.addClass(this.myButton.nativeElement, "btn-danger");
           let text = this.renderer.createText("Vencida");
-          this.renderer.appendChild(this.myButton.nativeElement, text);
-        }
-
-        if (this.operationmodel.state == 4) {
-          this.renderer.addClass(this.myButton.nativeElement, "parpadea");
-          this.renderer.addClass(this.myButton.nativeElement, "btn-sm");
-          this.renderer.addClass(this.myButton.nativeElement, "mr-3");
-          this.renderer.addClass(this.myButton.nativeElement, "btn-success");
-          let text = this.renderer.createText("Atendida");
           this.renderer.appendChild(this.myButton.nativeElement, text);
         }
 
@@ -457,84 +397,6 @@ export class DetailsOperationsComponent implements OnInit {
     this.OperacionService.list_type_activity().subscribe(
       result => {
         this.list_type_activity = result.response;
-      },
-      error => {}
-    );
-  }
-
-  motivos() {
-    this.oymDac.id_mot = "";
-    let params = { clasificacion: this.oymDac.id_clasif };
-    this.OperacionService.motivos_dac(params).subscribe(
-      result => {
-        this.motv = result.motivos_dac;
-      },
-      error => {}
-    );
-  }
-
-  event_dac() {
-    let params = {
-      company: this.company,
-      contrac: this.contract,
-      id_oym: this.operationmodel.id_oym
-    };
-
-    this.OperacionService.search_dac(params).subscribe(
-      result => {
-        this.rowdac = result.response;
-      },
-      error => {}
-    );
-
-    this.OperacionService.clasificacion().subscribe(
-      result => {
-        this.clasificacion = result.clasificacion_dac;
-      },
-      error => {}
-    );
-  }
-
-  save_dac() {
-    let params = {
-      id_oym: this.operationmodel.id_oym,
-      idcontrato: this.contract,
-      company: this.company,
-      dac: this.oymDac
-    };
-
-    this.OperacionService.save_dac(params).subscribe(
-      result => {
-        if (result.response == true) {
-          swal("", "evento Guardado", "success");
-        }
-      },
-      error => {}
-    );
-  }
-
-  update_dac() {
-    let params = { dac: this.oymDac };
-
-    this.OperacionService.update_dac(params).subscribe(
-      result => {
-        if (result.response == true) {
-          swal("", "Se Ha Atualizado", "success");
-        }
-      },
-      error => {}
-    );
-  }
-
-  search_dac(event) {
-    let params = { iddac_worki: event.target.value };
-    this.OperacionService.search_dacuno(params).subscribe(
-      result => {
-        this.oymDac.id_clasif = result.response.id_clasif;
-        this.motivos();
-        this.oymDac = result.response;
-        this.btninsert = true;
-        this.btnupdate = false;
       },
       error => {}
     );

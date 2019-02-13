@@ -12,9 +12,8 @@ import { SupportComponent } from "./support/support.component";
 import { OwComponent } from "./ow/ow.component";
 import { CotizacionComponent } from "./cotizacion/cotizacion.component";
 import { ImporthtmlComponent } from "./importhtml/importhtml.component";
+import { TravelComponent } from "./travel/travel.component";
 import { MunicipalityComponent } from "./municipality/municipality.component";
-import { TypeOfWorkComponent} from "./type-of-work/type-of-work.component";
-import { AdministratorComponent } from './administrator/administrator.component';
 const routes: Routes = [
   {
     path: "",
@@ -101,10 +100,6 @@ const routes: Routes = [
         component: MunicipalityComponent
       },
       {
-        path: "type-of-work",
-        component: TypeOfWorkComponent
-      },
-      {
         path: "internas",
         loadChildren: "./internal/internal.module#InternalModule"
       },
@@ -154,7 +149,7 @@ const routes: Routes = [
       },
       {
         path: "recorrido",
-        loadChildren: "./travel/travel.module#TravelModule"
+        component: TravelComponent
       },
       {
         path: "documentos_epm",
@@ -172,12 +167,7 @@ const routes: Routes = [
       {
         path: "support",
         component: SupportComponent
-      },
-      {
-        path: "administrator",
-         loadChildren: "./administrator/administrator.module#AdministratorModule"
-      },
-
+      }
     ]
   }
 ];

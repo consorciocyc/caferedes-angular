@@ -21,7 +21,7 @@
 
                 <label class="col-1 col-form-label"># Compra
 
-                    <button class="btn_success fas fa-search" [disabled]="butoonsearch" data-toggle="modal"
+                    <button class="fa fa-search btn btn-sm btn_success" [disabled]="butoonsearch" data-toggle="modal"
                         data-target="#buscar_purchases" type="button" style="padding: 2px">
                     </button>
                 </label>
@@ -156,7 +156,6 @@
                             <th class="width-table-01">Un</th>
                             <th class="width-table-02">Can/Solicitada</th>
                             <th class="width-table-02">Can/Recibida</th>
-                            <th class="width-table-02">Can/P</th>
                             <th class="width-table-02">Valor/Uni</th>
                             <th class="width-table-02">Desc</th>
                             <th class="width-table-02">Iva</th>
@@ -212,10 +211,6 @@
                             <td>
                                 <input class="amount_receipt form-control purchase input-modified" type="text" name="ceceived_amount"
                                     (keyup)="operaciones(i, newrow)" [(ngModel)]="newrow.ceceived_amount">
-                            </td>
-                            <td>
-                                <input class="amount_receipt form-control purchase input-modified" type="text" name="cp"
-                                    [(ngModel)]="newrow.cp" readonly>
                             </td>
                             <td>
                                 <input class="unit_value form-control purchase input-modified" type="text" name="unit_value"

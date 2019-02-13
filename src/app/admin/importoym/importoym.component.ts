@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-
+import { Constants } from "../control-series/control-series.constants";
 import { datatables } from "../../utilitis/datatables";
 import { constantes } from "../../utilitis/constantes";
 import { ImportService } from "../../services/import/import.service";

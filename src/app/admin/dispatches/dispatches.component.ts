@@ -136,7 +136,7 @@ export class DispatchesComponent implements OnInit {
 
     this.SearchConsecutive =
       this.url +
-      "operaction/search_consec_dispachet?term=:keyword&company=" +
+      "operaction/search_consec?term=:keyword&company=" +
       this.company;
   }
 
@@ -218,7 +218,6 @@ export class DispatchesComponent implements OnInit {
     newrow.name_Unity = newrow.cod_mater.name_Unity;
     newrow.missing = newrow.cod_mater.inventary_quantity;
     newrow.serie = newrow.cod_mater.serie;
-    newrow.idmateriales = newrow.cod_mater.idmateriales;
   }
 
   valuechagematedes(index: number, newrow: any) {
@@ -248,28 +247,6 @@ export class DispatchesComponent implements OnInit {
     this.spermits();
     if (this.Pinsert == 0) {
       swal("", "No Cuenta con Permiso", "error");
-      return;
-    }
-
-    if (this.dispatches_head.idincharge == null) {
-      swal("", "No Selecciono EL Encargado", "error");
-      return;
-    }
-
-    for (var e in this.rowDatatable) {
-      if (this.rowDatatable[e].code == null) {
-        swal("", "Hay Un Material Mal Digitado", "error");
-
-        return;
-      }
-    }
-
-    if (
-      this.dispatches_head.dispatches_destino == 3 &&
-      this.dispatches_head.id_oym == null
-    ) {
-      swal("", "No ha Digitado EL Consecutivo", "error");
-
       return;
     }
     this.loader = false;
@@ -595,6 +572,5 @@ export class DispatchesComponent implements OnInit {
 
   oym_chage(event) {
     this.dispatches_head.id_oym = this.dispatches_head.oym.id_oym;
-    this.dispatches_head.address = this.dispatches_head.oym.address;
   }
 }

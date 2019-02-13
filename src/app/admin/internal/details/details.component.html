@@ -36,9 +36,9 @@
                         </tr>
                         <tr>
 
-                            <td>Telefono Contacto</td>
+                            <td>Suscriptor</td>
                             <td>
-                                <input type="text" class="form-control input-modified" #Tel_Contacto="ngModel" name="Tel_Contacto" [(ngModel)]="internalmodel.Tel_Contacto"
+                                <input type="text" class="form-control input-modified" #Instalacion="ngModel" name="Instalacion" [(ngModel)]="internalmodel.Instalacion"
                                     readonly>
                             </td>
 
@@ -52,18 +52,17 @@
                         </tr>
                         <tr>
                             <td>Municipio</td>
+                        
+                                <td>
+                                    <input type="text" class="form-control input-modified" #nmunicipio="ngModel" name="Instalacion" [(ngModel)]="internalmodel.nmunicipio"
+                                        readonly>
+                                </td>
+                                
+
+                      
+                            <td>Producto</td>
                             <td>
-
-                                <select class="form-control input-modified" name="Municipio" #Municipio="ngModel" [(ngModel)]="internalmodel.Municipio" readonly>
-                                    <option *ngFor="let municipaly of municipaly" value="{{municipaly.id_dane}}">
-
-                                        {{municipaly.name_municipality}}</option>
-                                </select>
-
-                            </td>
-                            <td>Instalación</td>
-                            <td>
-                                <input type="text" class="form-control input-modified" #Instalacion="ngModel" name="Instalacion" [(ngModel)]="internalmodel.Instalacion"
+                                <input type="text" class="form-control input-modified" #producto="ngModel" name="producto" [(ngModel)]="internalmodel.producto"
                                     readonly>
                             </td>
                         </tr>
@@ -105,7 +104,8 @@
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>Pedido</th>
+                            <th>Solicitud</th>
+                            <th>Orden</th>
                             <th>Tipo</th>
                             <th>Estado</th>
                             <th>Fecha/Estado
@@ -119,11 +119,11 @@
                                     readonly>
                             </td>
                             <td>
-                                <select class="form-control input-modified" #worki_type_obr="ngModel" name="worki_type_obr" [(ngModel)]="internalmodel.worki_type_obr">
-                                    <option *ngFor="let type_obr of type_obr; let i=index" value="{{type_obr.idtipos_obr_internas}}">
-
-                                        {{type_obr.tipos_obr_internas_name}}</option>
-                                </select>
+                                <input type="text" class="form-control input-modified" #Pedido="ngModel" name="orden" [(ngModel)]="internalmodel.orden"
+                                    readonly>
+                            </td>
+                            <td>
+                                <input class="form-control input-modified" type="text" #worki_state="ngModel" name="worki_state" [(ngModel)]="internalmodel.idtipoobr+ ' - '+  internalmodel.tipos_obr_internas_name ">
                             </td>
                             <td>
                                 <select class="form-control input-modified" #worki_state="ngModel" name="worki_state" [(ngModel)]="internalmodel.worki_state"
@@ -133,6 +133,8 @@
 
                                         {{estado.state_obr_name}}</option>
                                 </select>
+
+                                
                             </td>
 
                             <td>
@@ -146,43 +148,35 @@
                 <table class="table table-striped table-bordered table-hover " style="font-size: 13px;">
                     <thead>
                         <tr>
-                            <th width="25%">OT</th>
-                            <th width="30%">Subtipo</th>
-                            <th width="40%">Subestado</th>
-                            <th width="7%">F/Estado</th>
-                            <th width="7%">F/Progra</th>
-                            <th width="10%">Items/A</th>
+                            <th width="10%">Orden</th>
+                            <th width="30%">Tipo</th>
+
+                            <th width="7%">Asig/Interve</th>
+                            <th width="7%">Legalizada</th>
+                            <th width="7%">Seleccionar</th>
+                          
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="item_actividad eliminar_tr" *ngFor="let newrow of rowot; let i=index">
                             <td style="font-size: 12px;">
-                                {{newrow.OT}}
+                                {{newrow.orden}}
                             </td>
 
                             <td>
-                                <select class="form-control input-modified" name="sub_tipo" #sub_tipo="ngModel" [(ngModel)]="newrow.sub_tipo">
-                                    <option *ngFor="let subtipo of subtipo; let i=index" value="{{subtipo.idsubtipo_obr_internas}}" [disabled]="subtipo.id_tipo==newrow.id_tipo  ? disabled : true">
 
-                                        {{subtipo.subtipo_obr_internas_name}}</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control input-modified" name="sub_estado" #sub_estado="ngModel" [(ngModel)]="newrow.sub_estado" (change)="fsubstate(i, newrow )">
-                                    <option *ngFor="let substate of substate; let i=index" value="{{substate.idsub_state}}">
+{{newrow.idtipoobr+'-'+ newrow.tipos_obr_internas_name}}
 
-                                        {{substate.sub_state_name}}</option>
-                                </select>
                             </td>
+
                             <td>
-                                <input class="form-control input-modified" type="date" #fstate="ngModel" name="fstate" [(ngModel)]="newrow.fstate" readonly>
+                                <input class="form-control input-modified" type="date" #fstate="ngModel" name="fstate" [(ngModel)]="newrow.fstate">
                             </td>
                             <td>
                                 <input class="form-control input-modified" type="date" #fprogra="ngModel" name="fprogra" [(ngModel)]="newrow.fprogra">
                             </td>
                             <td>
-                                <button type="button" class="btn btn-sm btn_primary fa fa-pencil-square-o" style="border-radius:50%;" data-toggle="modal"
-                                    value="{{newrow.idOT}}" data-target="#items_aplica" (click)="itemsaplic(i,newrow)"></button>
+                                <button  (click)="searchobri(i,newrow)"> seleccionar</button>
                             </td>
                         </tr>
                     </tbody>
@@ -267,7 +261,15 @@
             <div class="form-group row">
                 <label for="" class="col-1 col-form-label">Observaciones Pedido</label>
                 <div class="col-11">
-                    <textarea class="form-control input-modified textarea-modified" #Obs_Pedido="ngModel" name="Obs_Pedido" [(ngModel)]="internalmodel.Obs_Pedido"></textarea>
+                    <textarea class="form-control input-modified textarea-modified" #Obs_Pedido="ngModel" name="Obs_Pedido" [(ngModel)]="internalmodel.Obs_Pedido" readonly></textarea>
+                </div>
+            </div>
+
+            
+            <div class="form-group row">
+                <label for="" class="col-1 col-form-label">Puntos</label>
+                <div class="col-7">
+                    <textarea class="form-control input-modified textarea-modified" #puntos="ngModel" name="puntos" [(ngModel)]="internalmodel.puntos" readonly></textarea>
                 </div>
             </div>
         </div>
@@ -303,14 +305,24 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="" class="col-4 col-form-label">Fecha/ Programado a</label>
+                <label class="col-4 col-form-label">Fecha/ Programado a</label>
                 <div class="col-8">
                     <input class="form-control input-modified" type="date" #Fecha_Recorrido="ngModel" name="Fecha_Prog" [(ngModel)]="internalmodel.Fecha_Prog">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="" class="col-1 col-form-label">Planea</label>
-                <div class="col-6">
+                <label for="" class="col-3 col-form-label">Recorredor</label>
+                <div class="col-9">
+
+                    <input class="form-control input-modified " ngui-auto-complete (change)="Hace2Changed()" [(ngModel)]="internalmodel.nameHace_2"
+                        [source]="Searchemployee" list-formatter="full_name" path-to-data="employee" value-property-name="idemployees"
+                        display-property-name="full_name" min-chars="1" name="nameHace_2" #nameHace_2="ngModel" />
+                </div>
+            
+            </div>
+            <div class="form-group row">
+                <label class="col-3 col-form-label">Instalador</label>
+                <div class="col-9">
 
                     <input class="form-control input-modified " ngui-auto-complete (change)="PlaneaChanged()" [(ngModel)]="internalmodel.namePlanea"
                         [source]="Searchemployee" list-formatter="full_name" path-to-data="employee" value-property-name="idemployees"
@@ -318,13 +330,11 @@
                 </div>
 
 
-                <div class="col-5">
-                    <input class="form-control input-modified" type="date" #f_Planea="ngModel" name="f_Planea" [(ngModel)]="internalmodel.f_Planea">
-                </div>
+            
             </div>
             <div class="form-group row">
-                <label for="" class="col-1 col-form-label">Hace/1</label>
-                <div class="col-6">
+                <label class="col-3 col-form-label">Auxiliar</label>
+                <div class="col-9">
 
                     <input class="form-control input-modified " ngui-auto-complete (change)="Hace1Changed()" [(ngModel)]="internalmodel.nameHace_1"
                         [source]="Searchemployee" list-formatter="full_name" path-to-data="employee" value-property-name="idemployees"
@@ -332,58 +342,45 @@
 
 
                 </div>
-                <div class="col-5">
-                    <input class="form-control input-modified" type="date" #f_Hace_1="ngModel" name="f_Hace_1" [(ngModel)]="internalmodel.f_Hace_1">
-                </div>
+               
             </div>
             <div class="form-group row">
-                <label for="" class="col-1 col-form-label">Hace/2</label>
-                <div class="col-6">
+                <label class="col-3 col-form-label">Vendedor</label>
+                <div class="col-9">
 
-                    <input class="form-control input-modified " ngui-auto-complete (change)="Hace2Changed()" [(ngModel)]="internalmodel.nameHace_2"
-                        [source]="Searchemployee" list-formatter="full_name" path-to-data="employee" value-property-name="idemployees"
-                        display-property-name="full_name" min-chars="1" name="nameHace_2" #nameHace_2="ngModel" />
+                    <input class="form-control input-modified "  [(ngModel)]="internalmodel.vendedor"
+                        readonly/>
                 </div>
-                <div class="col-5">
-                    <input class="form-control input-modified" type="date" #f_Hace_2="ngModel" name="f_Hace_2" [(ngModel)]="internalmodel.f_Hace_2">
-                </div>
+               
             </div>
             <div class="form-group row">
-                <label for="" class="col-1 col-form-label">Hace/3</label>
-                <div class="col-6">
+                <label  class="col-3 col-form-label">Inmueble</label>
+                <div class="col-9">
 
-                    <input class="form-control input-modified " ngui-auto-complete (change)="Hace3Changed()" [(ngModel)]="internalmodel.nameHace_3"
-                        [source]="Searchemployee" list-formatter="full_name" path-to-data="employee" value-property-name="idemployees"
-                        display-property-name="full_name" min-chars="1" name="nameHace_3" #nameHace_3="ngModel" />
+                    <input class="form-control input-modified "  [(ngModel)]="internalmodel.inmueble"
+                       readonly />
                 </div>
-                <div class="col-5">
-                    <input class="form-control input-modified" type="date" #f_Hace_3="ngModel" name="f_Hace_3" [(ngModel)]="internalmodel.f_Hace_3">
-                </div>
+               
             </div>
             <div class="form-group row">
-                <label for="" class="col-1 col-form-label">Verifica</label>
-                <div class="col-6">
+                <label class="col-3 col-form-label">Promociones</label>
+                <div class="col-9">
 
-                    <input class="form-control input-modified " ngui-auto-complete (change)="VerificaChanged()" [(ngModel)]="internalmodel.nameVerifica"
-                        [source]="Searchemployee" list-formatter="full_name" path-to-data="employee" value-property-name="idemployees"
-                        display-property-name="full_name" min-chars="1" name="nameVerifica" #nameVerifica="ngModel" />
+                    <input class="form-control input-modified "  [(ngModel)]="internalmodel.promo"
+                         readonly/>
                 </div>
-                <div class="col-5">
-                    <input class="form-control input-modified" type="date" #f_Verifica="ngModel" name="f_Verifica" [(ngModel)]="internalmodel.f_Verifica">
-                </div>
+             
             </div>
             <div class="form-group row">
-                <label for="" class="col-1 col-form-label">Aprueba</label>
-                <div class="col-6">
+                <label class="col-3 col-form-label">Tipo De Instalación</label>
+                <div class="col-9">
 
-                    <input class="form-control input-modified " ngui-auto-complete (change)="ApruebaChanged()" [(ngModel)]="internalmodel.nameAprueba"
-                        [source]="Searchemployee" list-formatter="full_name" path-to-data="employee" value-property-name="idemployees"
-                        display-property-name="full_name" min-chars="1" name="nameAprueba" #nameAprueba="ngModel" />
+                    <input class="form-control input-modified "  [(ngModel)]="internalmodel.tipo_instal"
+                         readonly/>
                 </div>
-                <div class="col-5">
-                    <input class="form-control input-modified" type="date" #f_Aprueba="ngModel" name="f_Aprueba" [(ngModel)]="internalmodel.f_Aprueba">
-                </div>
+             
             </div>
+       
 
         </div>
         <button class="btn btn-sm btn-block btn_primary mb-3" data-toggle="modal" data-target="#eventos_dac" (click)="event()">Eventos y Dac</button>
@@ -570,15 +567,13 @@
                 <div class="row data-tables">
                     <div class="col-sm-12">
                         <div class="form-group row">
-                            <div class="col-sm-1">
-                            </div>
-                            <div class="col-sm-10">
-                                <div id="map" class="google-map" style="position: fixed;overflow: hidden;height:  600px;width:900px;margin-top: 10px;"></div>
+                           
+                            <div class="col-sm-12">
+                                <div id="map" class="google-map" style="position: fixed;overflow: hidden;height:  600px;width:100%;margin-top: 10px;"></div>
 
                             </div>
 
-                            <div class="col-sm-1">
-                            </div>
+    
                         </div>
 
 
@@ -721,11 +716,9 @@
                             <tr>
                                 <th class="width-table-1">Item</th>
                                 <th class="width-table-2">Consecutivo</th>
-                                <th class="width-table-2">Ot</th>
-                                <th class="width-table-2">Sub Tipo</th>
-                                <th class="width-table-2">Sub Estado</th>
                                 <th class="width-table-6">Obs</th>
                                 <th class="width-table-2">Tipo</th>
+                                <th class="width-table-2">Estado</th>
                                 <th class="width-table-3">Fecha</th>
                                 <th class="width-table-2">Usuario</th>
 
@@ -740,20 +733,15 @@
                                 <td>
                                     {{newrow.histo_obr_consec}}
                                 </td>
-                                <td>
-                                    {{newrow.histo_obr_ot}}
-                                </td>
-                                <td>
-                                    {{newrow.subtipo_obr_internas_name}}
-                                </td>
-                                <td>
-                                    {{newrow.sub_state_name}}
-                                </td>
+
                                 <td>
                                     {{newrow.histo_obr_obs}}
                                 </td>
                                 <td>
-                                    {{newrow.tipos_obr_internas_name}}
+                                    {{newrow.nombretipo}}
+                                </td>
+                                <td>
+                                    {{newrow.state_obr_name}}
                                 </td>
                                 <td>
                                     {{newrow.usuario_name}}
@@ -819,3 +807,7 @@
         </div>
     </div>
 </div>
+
+<div class="loader" *ngIf="loader==false">
+    <img src="../../assets/images/preload.svg" alt="">
+  </div>

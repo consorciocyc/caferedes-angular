@@ -295,14 +295,14 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-3 col-form-label">Proveedor Arenilla</label>
+                            <label class="col-3 col-form-label">Arenilla</label>
                             <div class="col-9">
 
                                 <input type="text" class="  form-control input-modified " name="quejas" [(ngModel)]="dobra.quejas" />
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-3 col-form-label">Proveedor Base</label>
+                            <label class="col-3 col-form-label">Base</label>
                             <div class="col-9">
                                 <input type="text" class=" form-control input-modified " name="problemss"
                                     [(ngModel)]="dobra.problemss" />
@@ -335,7 +335,7 @@
                     <button type="button" class="btn btn_success btn-sm" (click)="update_dobra()" data-dismiss="modal"
                         [disabled]="btn_dupdate">Actualizar</button>
                         <button class="btn btn-sm btn-primary"data-toggle="modal" data-target="#cmaterial"><i class="fa fa-folder"></i>
-                            Referenciación y ensayos </button>
+                             Clasificación material </button>
                 </div>
             </div>
         </div>
@@ -997,7 +997,7 @@
                                                     <th width="2%">OTI</th>
                                                     <th width="2%">Gerencial</th>
                                                     <th width="2%">Editar</th>
-                                                    <th width="1%">Eliminar</th>
+                                                    <th width="2%">Eliminar</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1055,10 +1055,7 @@
                                     </div>
                                     </div>
 
-                                    <button class="btn_add fa fa-folder" data-toggle="modal" data-target="#pru123"
-                                    (click)="btn_insert_d()">
 
-                                </button>
                                     
                                 </div>
 
@@ -1269,7 +1266,7 @@
                                                                 </label>
                                                                 <div class="col-7 float-right">
                                                                     <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                                        type="text" name="ininode" [(ngModel)]="topografiamodel.ininode">
+                                                                        type="number" name="ininode" [(ngModel)]="topografiamodel.ininode">
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 mb-1 mt-1 uno">
@@ -1397,7 +1394,7 @@
                                                                 </label>
                                                                 <div class="col-7 float-right">
                                                                     <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                                        type="text" name="finnode" [(ngModel)]="topografiamodel.finnode">
+                                                                        type="number" name="finnode" [(ngModel)]="topografiamodel.finnode">
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 mb-1 mt-1 uno">
@@ -1740,18 +1737,13 @@
                                                     <thead>
                                                         <tr>
                                                             <th class="width-table-01">#</th>
-                                                            <th class="width-table-01">Eliminar</th>
-                                                            <th class="width-table-1">Cod material</th> 
-                                                            <th class="width-table-5">Desc material</th>
+                                                            <th class="width-table-01">El</th>
+                                                            <th class="width-table-1">Codigo</th>
                                                             <th class="width-table-1">Item</th>
                                                             <th class="width-table-5">Descripción </th>
-                                                            <th class="width-table-1">Estado </th>
-                                                            <th class="width-table-1">Codigo</th>
-                                                            
-                                                           
                                                             <th class="width-table-01">Unidad</th>
-                                                            
-                                                            
+                                                            <th class="width-table-1">Cod material</th>
+                                                            <th class="width-table-5">Desc material</th>
                                                             <th class="width-table-01">Cantidad</th>
                                  
                                                             <th class="width-table-1">Ipid</th>
@@ -1762,43 +1754,7 @@
                                                             <td>{{i+1}}</td>
                                                             <td><button class="fas fa-trash-alt btn btn-danger btn-sm"
                                                                     value="{{row.iditem_ow}}" (click)='delete($event)'></button></td>
-                                                         
-                                                                    <td>
-
-                                                                            <input class="form-control input-modified mx-2"
-                                                                            (change)="valueChangedcodemate(i, row)" ngui-auto-complete
-                                                                            [(ngModel)]="row.codemate" placeholder="Material"
-                                                                            [source]="search_codigo" list-formatter="code"
-                                                                            path-to-data="materiales" value-property-name="code"
-                                                                            display-property-name="code" min-chars="1"
-                                                                            name="code" #code="ngModel" />
-                                                                    </td>
-                                                           
-                                                                    <td> <input class="form-control input-modified mx-2"
-                                                                        (change)="valueChanged_namemate(i, row)"
-                                                                        ngui-auto-complete [(ngModel)]="row.desmate"
-                                                                        placeholder="Descripción Material" [source]="search_desc"
-                                                                        list-formatter="code description "
-                                                                        no-match-found-text="no se encontro ningun resultado"
-                                                                        path-to-data="results" value-property-name="description"
-                                                                        display-property-name="description" min-chars="1"
-                                                                        name="item_cobro_name" #name="ngModel" /></td>
-
-                                                                    <td>
-                                                                            <input class="form-control input-modified mx-2"
-                                                                                (change)="valueChanged_name(i, row)"
-                                                                                ngui-auto-complete [(ngModel)]="row.item_cobro_name"
-                                                                                placeholder="Descripción" [source]="search_oti_name"
-                                                                                list-formatter="item_cobro_name"
-                                                                                no-match-found-text="no se encontro ningun resultado"
-                                                                                path-to-data="search" value-property-name="item_cobro_name"
-                                                                                display-property-name="item_cobro_name" min-chars="1"
-                                                                                name="item_cobro_name" #name="ngModel" />
-                                                                        </td>
-
-                                                                       
-
-                                                                    <td>
+                                                            <td>
                                                                 <input class="form-control input-modified mx-2"
                                                                     (change)="valueChanged(i, row)" ngui-auto-complete
                                                                     [(ngModel)]="row.item_cobro_code" placeholder="Item"
@@ -1808,19 +1764,43 @@
                                                                     name="item_cobro_code" #code="ngModel" />
 
                                                             </td>
-
-                                                            <td><select name="statusdes" id="" ></select></td>
-
-                                                             <td>
-                                                             <input type="text" class="form-control-sm col-12 input-modified"
-                                                                 name="item" [(ngModel)]="row.item" readonly>
-                                                         </td>
-
+                                                            <td>
+                                                                <input type="text" class="form-control-sm col-12 input-modified"
+                                                                    name="item" [(ngModel)]="row.item" readonly>
+                                                            </td>
+                                                            <td>
+                                                                <input class="form-control input-modified mx-2"
+                                                                    (change)="valueChanged_name(i, row)"
+                                                                    ngui-auto-complete [(ngModel)]="row.item_cobro_name"
+                                                                    placeholder="Descripción" [source]="search_oti_name"
+                                                                    list-formatter="item_cobro_name"
+                                                                    no-match-found-text="no se encontro ningun resultado"
+                                                                    path-to-data="search" value-property-name="item_cobro_name"
+                                                                    display-property-name="item_cobro_name" min-chars="1"
+                                                                    name="item_cobro_name" #name="ngModel" />
+                                                            </td>
                                                             <td>
                                                                     {{row.item_cobro_unidad}}
                                                             </td>
+                                                            <td>
 
-
+                                                                    <input class="form-control input-modified mx-2"
+                                                                    (change)="valueChangedcodemate(i, row)" ngui-auto-complete
+                                                                    [(ngModel)]="row.codemate" placeholder="Material"
+                                                                    [source]="search_codigo" list-formatter="code"
+                                                                    path-to-data="materiales" value-property-name="code"
+                                                                    display-property-name="code" min-chars="1"
+                                                                    name="code" #code="ngModel" />
+                                                            </td>
+                                                            <td> <input class="form-control input-modified mx-2"
+                                                                (change)="valueChanged_namemate(i, row)"
+                                                                ngui-auto-complete [(ngModel)]="row.desmate"
+                                                                placeholder="Descripción Material" [source]="search_desc"
+                                                                list-formatter="code description "
+                                                                no-match-found-text="no se encontro ningun resultado"
+                                                                path-to-data="results" value-property-name="description"
+                                                                display-property-name="description" min-chars="1"
+                                                                name="item_cobro_name" #name="ngModel" /></td>
                                                        
                                                                     <td>
                                                                             <input class="form-control input-modified" type="number"
@@ -2257,363 +2237,6 @@
                     </button>
                   </div>
                 </div>
-              </div>
-            </div>
-        </div>
-
-
-
-        <div class="modal fade ss3" id="pru123" tabindex="-1"role="dialog" aria-labelledby="modalBuscar" aria-hidden="true">
-            <div class="modal-dialog  modal-lg " role="document">
-              <div class="modal-content ">
-                <div class="modal-header bg-#000 ">
-                  <div class="row">
-                    <div class="col-12">
-                      <h2 class="modal-title mtitle ">Clasificación material</h2>
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-body">
-
-                    <div class="col-sm-12  float-left d-inline-block dos">
-                        <div class="form-group row">
-
-                            <div class="col-sm-12 col-md-7 float-left d-inline-block dos">
-                                <div class="form-group row">
-
-                                    <div class="col-12">
-                                        <h2 class="modal-title mtitle " style="color:black">Personal</h2>
-                                      </div>
-
-                            <div class="col-sm-12 col-md-4 float-left d-inline-block dos">
-                                <div class="form-group row">
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Ing residente: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="ingResident" [(ngModel)]="ingresidente">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Gest ambiental: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="gestAmbiental" [(ngModel)]="gestambiental">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Gest social: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="gestSocial" [(ngModel)]="gestsocial">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Gest sst: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="gestSST" [(ngModel)]="gestsst">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al"> Gest calidad: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="gestCalidad" [(ngModel)]="gestcalidad">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Gest Comercial: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="gestComercial" [(ngModel)]="gestcomercial">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Supervisor: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="supervisor" [(ngModel)]="supervisor">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al"> Tec aux HSEQ-SST: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="tecauxhseqsst" [(ngModel)]="tecauxhseqsst">
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-                            <div class="col-sm-12 col-md-4 float-left d-inline-block dos">
-                                <div class="form-group row">
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Encargado: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="encargado" [(ngModel)]="eencargado">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Oficiales: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="oficiales" [(ngModel)]="oficiales">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Operadores: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="operadores" [(ngModel)]="operadores">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Topografo: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="topografo" [(ngModel)]="topografo">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Soldador: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="soldador" [(ngModel)]="soldador">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Silleteros: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="silleteros" [(ngModel)]="silleteros">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Ayudantes obra: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="ayudantesobra" [(ngModel)]="ayudantesobra">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Ayudante impacto: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="ayudanteimpacto" [(ngModel)]="ayudanteimpacto">
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-                            <div class="col-sm-12 col-md-4 float-left d-inline-block dos">
-                                <div class="form-group row">
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Conductor: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="conductor" [(ngModel)]="conductor">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Cadenero: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="cadenero" [(ngModel)]="cadenero">
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-
-                            </div>
-                        </div>
-
-                        <div class="col-sm-12 col-md-5 float-left d-inline-block dos">
-                            <div class="form-group row">
-
-                                    <div class="col-12">
-                                            <h2 class="modal-title mtitle " style="color:black">Equipos & Vehiculos</h2>
-                                          </div>
-
-                            <div class="col-sm-12 col-md-6 float-left d-inline-block dos">
-                                <div class="form-group row">
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Concretadora: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="concretadora" [(ngModel)]="concretadora">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Canguros: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="canguros" [(ngModel)]="canguros">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Cortadora: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="cortadora" [(ngModel)]="cortadora">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Equipo soldadura: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="equipoSoldadura" [(ngModel)]="equiposoldadura">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Planta: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="planta" [(ngModel)]="pplanta">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Pulidora: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="pulidora" [(ngModel)]="pulidora">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Martillo Elec: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="martilloelec" [(ngModel)]="martiloelec">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Alimentador H20: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="alimentadorh20" [(ngModel)]="alimentadorh20">
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-
-                            <div class="col-sm-12 col-md-6 float-left d-inline-block dos">
-                                <div class="form-group row">
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Camion: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="camion" [(ngModel)]="camion">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Retro-excavadora: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="retroexcavadora" [(ngModel)]="retroexcavadora">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Mini-cargador: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="minicargador" [(ngModel)]="minicargador">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Compresor: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="compresor" [(ngModel)]="compresor">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Volqueta: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="volqueta" [(ngModel)]="volqueta">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Eq. term o elect, fusión: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="eqteroelecfusion" [(ngModel)]="eqteroelecfusion">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Planta: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="planta" [(ngModel)]="planta">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-1 mt-1 uno">
-                                        <label class="col-6 col-form-label pl-2 al">Soldadura: </label>
-                                        <div class="col-6 float-right">
-                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
-                                                type="number" name="soldadura" [(ngModel)]="soldadura">
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-
-
-
-                                </div>
-                            </div>
-
-
-                            </div>
-                        </div>
-
-                </div>
-        
-
               </div>
             </div>
         </div>

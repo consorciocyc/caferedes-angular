@@ -6,6 +6,7 @@ import { NguiAutoCompleteModule } from "@ngui/auto-complete";
 import { FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { CustomFormsModule } from "ng2-validation";
+import { InternalRoutingModule } from "../internal-routing.module";
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { CustomFormsModule } from "ng2-validation";
     FormsModule,
     HttpModule,
     CustomFormsModule,
-
-  ],
+    InternalRoutingModule
+  ]
 })
 export class DetailsModule {}

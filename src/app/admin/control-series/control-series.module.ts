@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { ControlSeriesRoutingModule } from "./control-series-routing.module";
 import { ControlSeriesComponent } from "./control-series.component";
 import { FileUtil } from "./file.util";
+import { Constants } from "./control-series.constants";
 import { HttpModule } from "@angular/http";
 import { Http } from "@angular/http/src/http";
 import { FormsModule } from "@angular/forms";
@@ -21,6 +22,6 @@ import { CustomFormsModule } from "ng2-validation";
 
   declarations: [ControlSeriesComponent],
 
-  providers: [FileUtil]
+  providers: [FileUtil, Constants]
 })
 export class ControlSeriesModule {}

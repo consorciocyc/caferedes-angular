@@ -1,113 +1,214 @@
 <div class="container-fluid container-modified">
-    <div class="col-12">
-        <h3 class="mb-3 title">Programación</h3>
+  <div class="col-12">
+    <h3 class="mb-3 title">Programación</h3>
+  </div>
+
+  <div class="col-12">
+    <div class="form-group row">
+      <label for=" " class="col-1 col-form-label label-required"
+        >Programar ?</label
+      >
+      <div class="col-2">
+        <select
+          class="form-control input-modified"
+          name="tipe"
+          (change)="chnage()"
+          [(ngModel)]="tipe"
+        >
+          <option value="1">RECORRIDO</option>
+          <option value="2">OBRA POR PROGRAMADAR</option>
+          <option value="3">OBRA PROGRAMADA</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row" [hidden]="recorre_hidden">
+      <label
+        for=" "
+        class="col-1 col-form-label label-required"
+        [hidden]="recorre_hidden"
+        >Fecha Re</label
+      >
+      <div class="col-2">
+        <input
+          class="form-control input-modified"
+          type="date"
+          [hidden]="recorre_hidden"
+          name="date_rec"
+          [(ngModel)]="date_rec"
+        />
+      </div>
+      <label
+        for=" "
+        class="col-1 col-form-label label-required"
+        [hidden]="recorre_hidden"
+        >Recorredor</label
+      >
+      <div class="col-2">
+        <input
+          class="form-control input-modified "
+          ngui-auto-complete
+          (change)="recorredorchange()"
+          [(ngModel)]="recorredor"
+          [hidden]="recorre_hidden"
+          [source]="Searchemployee"
+          list-formatter="full_name"
+          path-to-data="employee"
+          value-property-name="idemployees"
+          display-property-name="full_name"
+          min-chars="1"
+          name="recorredor"
+          #nameHace_1="ngModel"
+        />
+      </div>
     </div>
 
-    <div class="col-12">
+    <div class="form-group row" [hidden]="progra_hidden">
+      <label for=" " class="col-1 col-form-label label-required"
+        >Programar a</label
+      >
+      <div class="col-2">
+        <input
+          class="form-control input-modified "
+          ngui-auto-complete
+          (change)="porprogramarchange()"
+          [(ngModel)]="porprogramar"
+          [hidden]="progra_hidden"
+          [source]="Searchemployee"
+          list-formatter="full_name"
+          path-to-data="employee"
+          value-property-name="idemployees"
+          display-property-name="full_name"
+          min-chars="1"
+          name="recorredor"
+          #nameHace_1="ngModel"
+        />
+      </div>
 
-        <div class="form-group row">
-            <label for=" " class="col-1 col-form-label label-required">Programar ?</label>
-            <div class="col-2">
-                <select class="form-control input-modified" name="tipe" (change)="chnage()" [(ngModel)]="tipe">
-                    <option value="1">RECORRIDO</option>
-                    <option value="2">OBRA POR PROGRAMADA</option>
-                    <option value="3">OBRA PROGRAMADA</option>
-                </select>
-            </div>
-
-
-        </div>
-        <div class="form-group row" [hidden]="recorre_hidden">
-
-            <label for=" " class="col-1 col-form-label label-required" [hidden]="recorre_hidden">Fecha Re</label>
-            <div class="col-2">
-                <input class="form-control input-modified" type="date" [hidden]="recorre_hidden" name="date_rec" [(ngModel)]="date_rec" />
-            </div>
-            <label for=" " class="col-1 col-form-label label-required" [hidden]="recorre_hidden">Recorredor</label>
-            <div class="col-2">
-
-                <input class="form-control input-modified " ngui-auto-complete (change)="recorredorchange()" [(ngModel)]="recorredor" [hidden]="recorre_hidden"
-                    [source]="Searchemployee" list-formatter="full_name" path-to-data="employee" value-property-name="idemployees"
-                    display-property-name="full_name" min-chars="1" name="recorredor" #nameHace_1="ngModel" />
-            </div>
-
-
-        </div>
-
-        <div class="form-group row" [hidden]="progra_hidden">
-            <label for=" " class="col-1 col-form-label label-required">Programar a</label>
-            <div class="col-2">
-                <input class="form-control input-modified " ngui-auto-complete (change)="porprogramarchange()" [(ngModel)]="porprogramar"
-                    [hidden]="progra_hidden" [source]="Searchemployee" list-formatter="full_name" path-to-data="employee" value-property-name="idemployees"
-                    display-property-name="full_name" min-chars="1" name="recorredor" #nameHace_1="ngModel" />
-            </div>
-
-            <label for=" " class="col-1 col-form-label label-required" [hidden]="progra_hidden">Fecha de Programación</label>
-            <div class="col-2">
-                <input class="form-control input-modified" type="date" [hidden]="progra_hidden" [(ngModel)]="date_porp" />
-            </div>
-        </div>
-        <button type="button" class="btn btn_danger btn-sm" (click)="search()">Buscar</button>
-        <button type="button" class="btn btn_success btn-sm" (click)="save()" data-dismiss="modal"> Guardar</button>
+      <label
+        for=" "
+        class="col-1 col-form-label label-required"
+        [hidden]="progra_hidden"
+        >Fecha de Programación</label
+      >
+      <div class="col-2">
+        <input
+          class="form-control input-modified"
+          type="date"
+          [hidden]="progra_hidden"
+          [(ngModel)]="date_porp"
+        />
+      </div>
     </div>
+    <button type="button" class="btn btn_danger btn-sm" (click)="search()">
+      Buscar
+    </button>
+    <button
+      type="button"
+      class="btn btn_success btn-sm"
+      (click)="save()"
+      data-dismiss="modal"
+    >
+      Guardar
+    </button>
+  </div>
 </div>
 
 <div class="container-fluid container-modified ">
-    <div class="row">
-        <div class="col-7">
-            <table id="table_p" class="table table-striped table-bordered table-hover text-center" style="font-size: 11px">
-                <thead>
-                    <tr>
-                        <th>
-                            <input type="checkbox" name="all" [checked]="isAllChecked()" (change)="checkAll($event)" />
-                        </th>
-                        <th>Item</th>
-                        <th>Cosecutivo</th>
-                        <th>Municipio</th>
-                        <th>Cod Instalación</th>
-                        <th>Direccion</th>
-                        <th>Solicitante</th>
-                        <th>Tel. Instalacion</th>
-                        <th>Tel.Contacto</th>
-                        <th>Estado</th>
-                        <th>Tipo De Obra</th>
-                        <th>Zona</th>
-                        <th>Recorredor </th>
+  <div class="row">
+    <div class="col-7">
+      <table
+        id="table_p"
+        class="table table-striped table-bordered table-hover text-center scroll"
+        style="font-size: 11px"
+        cellspacing="0"
+        width="200%"
+      >
+        <thead>
+          <tr>
+            <th>
+              <input
+                type="checkbox"
+                name="all"
+                [checked]="isAllChecked()"
+                (change)="checkAll($event)"
+              />
+            </th>
+            <th>Item</th>
+            <th>Cosecutivo</th>
+            <th>Tipo</th>
+            <th>Municipio</th>
+            <th>Suscriptor</th>
+            <th>Direccion</th>
+            <th>Solicitante</th>
+            <th>Tel. Instalacion</th>
+            <th>Barrio</th>
+            <th>Estado</th>
+            <th>Tipo De Obra</th>
+            <th>Recorredor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="item_actividad eliminar_tr"
+            *ngFor="let row of list_table; let i = index"
+          >
+            <td>
+              <input
+                class="form-control input-modified"
+                value="{{ row.Atualizacion }}"
+                name="checkbox[]"
+                #checkbox1
+                type="checkbox"
+                [(ngModel)]="row.checkbox"
+                (click)="prueba(i, row)"
+              />
+            </td>
+            <td>{{ i + 1 }}</td>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="item_actividad eliminar_tr" *ngFor="let row of list_table; let i=index">
-                        <td>
-                            <input class="form-control input-modified" value="{{row.Atualizacion}}" name="checkbox[]" #checkbox1 type="checkbox" [(ngModel)]="row.checkbox"
-                            />
-                        </td>
-                        <td>{{i+1}}</td>
+            <td>{{ row.consecutive }}</td>
+            <td>{{ row.id_list + "-" + row.tipos_obr_internas_name }}</td>
+            <td>{{ row.nmunicipio }}</td>
+            <td>{{ row.Instalacion }}</td>
+            <td>{{ row.Direccion }}</td>
+            <td>{{ row.Solicitante }}</td>
 
-                        <td>{{row.consecutive}}</td>
-                        <td>{{row.name_municipality}}</td>
-                        <td>{{row.Instalacion}}</td>
-                        <td>{{row.Direccion}}</td>
-                        <td>{{row.Solicitante}}</td>
-
-                        <td>{{row.Telefono}}</td>
-                        <td>{{row.Tel_Contacto}}</td>
-                        <td>{{row.state_obr_name}}</td>
-                        <td>{{row.tipos_obr_internas_name}}</td>
-                        <td>{{row.Zona}}</td>
-                        <td>{{row.nameprogramado}}</td>
-
-                    </tr>
-
-                </tbody>
-            </table>
-        </div>
-
-        <div class="col-5">
-            <div class="col-sm-10">
-                <div id="map" class="google-map" style="position: fixed;overflow: hidden;height:  400px;width:700px;margin-top: 10px;"></div>
-
-            </div>
-        </div>
+            <td>{{ row.Telefono }}</td>
+            <td>{{ row.Barrio }}</td>
+            <td>{{ row.state_obr_name }}</td>
+            <td>{{ row.tipos_obr_internas_name }}</td>
+            <td>{{ row.nameprogramado }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+
+    <div class="col-5">
+      <div class="col-sm-12">
+        <agm-map
+          #AgmMap
+          id="map"
+          [latitude]="lat"
+          [longitude]="lng"
+          [zoom]="zoom"
+          [disableDefaultUI]="true"
+          [zoomControl]="true"
+          [fullscreenControl]="true"
+        >
+          <agm-marker
+            *ngFor="let m of markers; let i = index"
+            (markerClick)="clickedMarker(m.label, i)"
+            [latitude]="m.lat"
+            [longitude]="m.lng"
+            [label]="m.label"
+            [markerDraggable]="m.draggable"
+            [iconUrl]="m.icon"
+          >
+          </agm-marker>
+        </agm-map>
+
+        <p *ngIf="loading">Loading...</p>
+      </div>
+    </div>
+  </div>
+
 </div>

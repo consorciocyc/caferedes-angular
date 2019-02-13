@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Http, Response, Headers, RequestOptions } from "@angular/http";
-import "rxjs/add/operator/map";
+
+import { map, filter } from "rxjs/operators";
 import { Observable } from "rxjs/Observable";
 import { Login } from "../../models/login_models";
 import { constantes } from "../../utilitis/constantes";

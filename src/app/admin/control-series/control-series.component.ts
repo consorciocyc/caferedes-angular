@@ -1,15 +1,13 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ListService } from "../../services/list/list.service";
 import { FileUtil } from "./file.util";
-import { constantes } from "../../utilitis/constantes";
+import { Constants } from "./control-series.constants";
+import { constantes } from '../../utilitis/constantes';
 import { DatatablesService } from "../../services/datatables/datatables.service";
 import { datatables } from "../../utilitis/datatables";
 import { SeriesService } from "../../services/series/series.service";
 
 import swal from "sweetalert2";
-import * as XLSX from "xlsx";
-type AOA = any[][];
-
 @Component({
   selector: "app-control-series",
   templateUrl: "./control-series.component.html",
@@ -37,13 +35,6 @@ export class ControlSeriesComponent implements OnInit {
   public series;
   public constantes;
   public url;
-  public btn_save = false;
-
-  public loader = true;
-
-  data: AOA = [[1, 2], [3, 4]];
-  wopts: XLSX.WritingOptions = { bookType: "xlsx", type: "array" };
-  fileName: string = "SheetJS.xlsx";
 
   constructor(
     private ListService: ListService,
@@ -55,10 +46,13 @@ export class ControlSeriesComponent implements OnInit {
     this.constantes = new constantes();
   }
 
+  @ViewChild("fileImportInput") fileImportInput: any;
+  csvRecords = [];
+
   ngOnInit() {
     this.company = localStorage.getItem("company");
     this.contract = localStorage.getItem("contract");
-    this.url = this.constantes.getRouterUrl();
+    this.url = this.constantes.getRouterUrl()
     this.empresa = localStorage.getItem("company_name");
     this.contrato = localStorage.getItem("contract_name");
     this.get_cellar(this.company);
@@ -91,43 +85,92 @@ export class ControlSeriesComponent implements OnInit {
     console.log("prueba");
   }
 
-  onFileChange(evt: any) {
-    this.data = [];
-    /* wire up file reader */
-    const target: DataTransfer = <DataTransfer>evt.target;
-    if (target.files.length !== 1) throw new Error("Cannot use multiple files");
-    const reader: FileReader = new FileReader();
-    reader.onload = (e: any) => {
-      /* read workbook */
-      const bstr: string = e.target.result;
-      const wb: XLSX.WorkBook = XLSX.read(bstr, {
-        type: "binary",
-        cellDates: true,
-        cellText: false,
-        cellNF: false
-      });
+  fileChangeListener($event): void {
+    var text = [];
+    var target = $event.target || $event.srcElement;
+    var files = target.files;
 
-      /* grab first sheet */
-      const wsname: string = wb.SheetNames[0];
-      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+    if (Constants.validateHeaderAndRecordLengthFlag) {
+      if (!this._fileUtil.isCSVFile(files[0])) {
+        alert("Please import valid .csv file.");
+        this.fileReset();
+      }
+    }
 
-      /* save data */
-      this.data = <AOA>XLSX.utils.sheet_to_json(ws, {
-        raw: false,
-        header: "A",
-        dateNF: "YYYY-MM-DD"
-      });
+    var input = $event.target;
+    var reader = new FileReader();
+    reader.readAsText(input.files[0]);
 
-      this.data;
-      this.rowDatatable = this.data;
-      this.datatables.reInitDatatable4("#example");
+    reader.onload = data => {
+      let csvData = reader.result;
+      let csvRecordsArray = csvData.split(/\r\n|\n/);
+
+      var headerLength = -1;
+      if (Constants.isHeaderPresentFlag) {
+        let headersRow = this._fileUtil.getHeaderArray(
+          csvRecordsArray,
+          Constants.tokenDelimeter
+        );
+        headerLength = headersRow.length;
+      }
+
+      this.csvRecords = this._fileUtil.getDataRecordsArrayFromCSVFile(
+        csvRecordsArray,
+        headerLength,
+        Constants.validateHeaderAndRecordLengthFlag,
+        Constants.tokenDelimeter
+      );
+      this.table();
+      if (this.csvRecords == null) {
+        //If control reached here it means csv file contains error, reset file.
+        this.fileReset();
+      }
     };
-    reader.readAsBinaryString(target.files[0]);
+
+    reader.onerror = function() {
+      alert("Unable to read " + input.files[0]);
+    };
+  }
+
+  fileReset() {
+    this.fileImportInput.nativeElement.value = "";
+    this.csvRecords = [];
+  }
+
+  table() {
+    let array = [];
+    for (let j = 0; j < this.csvRecords.length; j++) {
+      let serie_nro_serie = this.csvRecords[j][0];
+      let serie_flujo = this.csvRecords[j][1];
+      let serie_codigo = this.csvRecords[j][2];
+      let serie_marca = this.csvRecords[j][3];
+      let serie_lote = this.csvRecords[j][4];
+      let serie_entrega = this.csvRecords[j][5];
+      let serie_caja = this.csvRecords[j][6];
+      let serie_fecha = this.csvRecords[j][7];
+      let serie_obs = this.csvRecords[j][8];
+
+      array.push({
+        checkbox: false,
+        serie_nro_serie: serie_nro_serie,
+        serie_flujo: serie_flujo,
+        serie_codigo: serie_codigo,
+        serie_marca: serie_marca,
+        serie_lote: serie_lote,
+        serie_entrega: serie_entrega,
+        serie_caja: serie_caja,
+        serie_fecha: serie_fecha,
+        serie_obs: serie_obs
+      });
+    }
+
+    this.rowDatatable = array;
+    console.log(this.rowDatatable);
+    this.datatables.reInitDatatable("#example");
   }
 
   Onsave() {
-    this.loader = false;
-    this.btn_save = true;
+    console.log(this.rowDatatable);
 
     let params = {
       data: this.rowDatatable,
@@ -139,7 +182,6 @@ export class ControlSeriesComponent implements OnInit {
     this.SeriesService.insert(params).subscribe(
       result => {
         if (result.data == true) {
-          this.loader = true;
           swal("", "Se han Guardado los medidores ", "success");
         }
       },
@@ -152,22 +194,31 @@ export class ControlSeriesComponent implements OnInit {
   }
 
   search() {
-    this.loader = false;
+    console.log("prueba");
+
     let params = {
       date_ini: this.ini_date,
       date_end: this.end_date,
-      cellar: this.cellarsearch,
-      contract: this.contract
+      cellar: this.cellarsearch
     };
 
     this.SeriesService.search(params).subscribe(
       result => {
-        this.loader = true;
-        this.rowDatasearch = result.search;
-        this.datatables.reInitDatatable("#searchtable");
+        this.addRow(result.search);
       },
       error => {}
     );
+  }
+
+  public addRow(datos): void {
+    this.rowDatasearch = [];
+
+    let data1;
+    let json = datos;
+    for (data1 of json) {
+      this.rowDatasearch.push(data1);
+    }
+    this.datatables.reInitDatatable("#searchtable");
   }
 
   handleClick(index: number, newrow: any) {
@@ -187,12 +238,13 @@ export class ControlSeriesComponent implements OnInit {
     this.btn_add = false;
   }
 
-  // funcion para imprimir antes de guardar
+
+  // funcion para imprimir antes de guardar 
   print() {
     let params = { company: this.company, data: this.rowDatatable };
     this.SeriesService.print(params).subscribe(
       result => {
-        window.open(this.url + result.data);
+        window.open( this.url + result.data);
       },
       error => {}
     );
@@ -209,13 +261,16 @@ export class ControlSeriesComponent implements OnInit {
     );
   }
 
+
   // funcion para eliminar la serie
   delete(index: number, row: any) {
+
     let params = {
       idseries: row.idseries
     };
 
-    if (row.serie_estado == 1) {
+    if(row.serie_estado==1){
+
       swal("", "El serial no puede estar Disponible", "error");
       return;
     }
@@ -230,14 +285,16 @@ export class ControlSeriesComponent implements OnInit {
     );
   }
 
+
   // funcion para buscar por numero de serie
-  searchs() {
-    let params = { series: this.series };
-    this.SeriesService.searchs(params).subscribe(
-      result => {
-        this.rowDatasearch = result.search;
-      },
-      error => {}
-    );
+  searchs(){
+
+    let params={series:this.series}
+    this.SeriesService.searchs(params).subscribe(result=>{
+      this.rowDatasearch=result.search;
+
+    },error=>{
+      
+    })
   }
 }

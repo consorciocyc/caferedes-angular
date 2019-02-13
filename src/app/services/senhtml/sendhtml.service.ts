@@ -18,6 +18,10 @@ export class SendhtmlService {
 
     return this.http.post(this.url, form).map(res => res.json());
   }
+save(data){
+  this.url = this.constantes.getRouterGlobal() + "Scraping/save";
 
+  return this.http.post(this.url,data).map(res => res.json());
+}
 
 }

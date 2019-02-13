@@ -138,9 +138,9 @@ export class datatables {
 
 
   public reInitDatatable4(table): void {
-    if (this.tableWidget) {
-      this.tableWidget.destroy();
-      this.tableWidget = null;
+    if (this.tableWidget1) {
+      this.tableWidget1.destroy();
+      this.tableWidget1 = null;
     }
     setTimeout(() => this.initDatatablexcroll(table), 0);
   }

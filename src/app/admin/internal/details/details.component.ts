@@ -21,6 +21,7 @@ declare var ol: any;
 import swal from "sweetalert2";
 import Tesseract from "tesseract.js";
 declare let PDFJS: any;
+import { filter, catchError, tap, map, switchMap } from "rxjs/operators";
 import "rxjs/add/operator/filter";
 @Component({
   selector: "app-details",
@@ -113,6 +114,7 @@ export class DetailsComponent implements OnInit {
   public guard = 0;
   public cordenadas;
   public firstProjection;
+  public loader = true;
   title = "app";
 
   public map;
@@ -143,8 +145,6 @@ export class DetailsComponent implements OnInit {
         width: "600px",
         height: "400px",
         thumbnailsColumns: 4,
-        previewRotate: true,
-        previewDownload: true,
         imageAnimation: NgxGalleryAnimation.Slide
       },
       // max-width 800
@@ -160,12 +160,7 @@ export class DetailsComponent implements OnInit {
       // max-width 400
       {
         breakpoint: 400,
-        width: "100%",
-        height: "600px",
-        imagePercent: 80,
-        thumbnailsPercent: 20,
-        thumbnailsMargin: 20,
-        thumbnailMargin: 20
+        preview: false
       }
     ];
 
@@ -191,9 +186,8 @@ export class DetailsComponent implements OnInit {
         this.searchobr(this.idwork);
       }
     });
-    this.municipios();
 
-    this.center = { lat: 6.2922634763, lng: -75.543858111800006 };
+    this.center = { lat: 4.0000000, lng: -72.0000000 };
     this.map = new google.maps.Map(document.getElementById("map"), {
       center: this.center,
       zoom: 11
@@ -284,6 +278,7 @@ export class DetailsComponent implements OnInit {
     );
   }
   searchobr(param) {
+    this.loader = false;
     this.subtipo_obr_internas();
     this.sub_state();
     let params = { idwork: param };
@@ -291,6 +286,7 @@ export class DetailsComponent implements OnInit {
     this.InternalService.searchobr(params).subscribe(
       result => {
         this.internalmodel = result.result;
+        this.rowot = result.ot;
         this.guard = 0;
         let param = {
           consecutive: this.internalmodel.consecutive,
@@ -302,12 +298,6 @@ export class DetailsComponent implements OnInit {
           this.parametros.addCrib(this.internalmodel.idcontrato);
         }
 
-        let data1;
-
-        for (data1 of result.ot) {
-          this.rowot.push(data1);
-          let params = { id_tipo: data1.id_tipo };
-        }
         let dia = this.dia();
         var f1 = this.internalmodel.Atualizacion;
         var f2 = this.dia();
@@ -321,21 +311,35 @@ export class DetailsComponent implements OnInit {
         var dif = fFecha2 - fFecha1;
         var dias = Math.floor(dif / (1000 * 60 * 60 * 24));
         this.internalmodel.ans = dias;
-        console.log();
+
         this.cordenadas = proj4(this.firstProjection).inverse([
           Number(this.internalmodel.x),
           Number(this.internalmodel.y)
         ]);
+        let cor;
 
-        let cor = {
-          lat: this.cordenadas[1],
-          lng: this.cordenadas[0]
-        };
+        if (this.internalmodel.x == null) {
+          cor = {
+            lat: this.internalmodel.lat,
+            lng: this.internalmodel.lng
+          };
+          this.map = new google.maps.Map(document.getElementById("map"), {
+            center: cor,
+            zoom: 11
+          });
+        } else {
+          cor = {
+            lat: this.cordenadas[1],
+            lng: this.cordenadas[0]
+          };
+        }
+
         this.marker = new google.maps.Marker({
           position: cor,
           map: this.map,
           title: this.internalmodel.Direccion
         });
+        this.loader = true;
       },
       error => {}
     );
@@ -398,20 +402,6 @@ export class DetailsComponent implements OnInit {
 
   change_stat() {}
 
-  update_ot() {
-    let params = {
-      id_obr: this.internalmodel.idworkI,
-      consec: this.internalmodel.consecutive,
-      ot: this.rowot,
-      user: this.user.identification,
-      obs: this.internalmodel.Obs_servicio,
-      company: this.company,
-      contract: this.contract,
-      state: this.internalmodel.worki_state
-    };
-    this.InternalService.update_ot(params).subscribe(result => {}, error => {});
-  }
-
   Tipo_Anillo() {
     this.InternalService.Tipo_Anillo().subscribe(
       result => {
@@ -448,16 +438,6 @@ export class DetailsComponent implements OnInit {
     this.InternalService.Estado_Acometida().subscribe(
       result => {
         this.EstadoAcometida = result.estado_acometida;
-      },
-      error => {}
-    );
-  }
-
-  municipios() {
-    let params = { id_departamento: 5 };
-    this.InternalService.municipios(params).subscribe(
-      result => {
-        this.municipaly = result.municipality;
       },
       error => {}
     );
@@ -508,7 +488,6 @@ export class DetailsComponent implements OnInit {
         result => {
           if (this.Pprogramacion != 1) {
           } else {
-            this.update_ot();
           }
 
           if (result.state == true) {
@@ -521,6 +500,18 @@ export class DetailsComponent implements OnInit {
         error => {}
       );
     }
+  }
+
+  searchobri(index: number, newrow: any) {
+
+    let params = newrow.idworkI;
+    this.router.navigate(["/admin/internas/detalles"], {
+      queryParams: { queryParams: params}
+    });
+   // [queryParams]="{queryParams: queryParams}"
+    //(this.queryParam = this.pedido), (this.valor = "pedido");
+
+    //this.searchobr(newrow.idworkI);
   }
 
   search_itemsapli(index: number, newrow: any) {
@@ -1010,6 +1001,9 @@ export class DetailsComponent implements OnInit {
     }
   }
 
+
+
+  
   enviarpdf() {
     let data: any = (<HTMLInputElement>document.getElementById("consec")).value;
     console.log(data);
@@ -1019,4 +1013,7 @@ export class DetailsComponent implements OnInit {
       return window.confirm("Desea Salir Sin Guardar");
     }
   }
+
+
+  
 }

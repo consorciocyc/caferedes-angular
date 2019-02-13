@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-
+import { FileUtil } from "../control-series/file.util";
+import { Constants } from "../control-series/control-series.constants";
 import { datatables } from "../../utilitis/datatables";
 import { constantes } from "../../utilitis/constantes";
 import { ImportService } from "../../services/import/import.service";
@@ -36,11 +37,15 @@ export class UploadWorkComponent implements OnInit {
   wopts: XLSX.WritingOptions = { bookType: "xlsx", type: "array" };
   fileName: string = "SheetJS.xlsx";
 
-  constructor(private ImportService: ImportService) {
+  constructor(
+    private _fileUtil: FileUtil,
+    private ImportService: ImportService
+  ) {
     this.datatables = new datatables();
     this.constantes = new constantes();
   }
-
+  @ViewChild("fileImportInput") fileImportInput: any;
+  csvRecords = [];
   ngOnInit() {
     var strMimeType = "application/octet-stream;charset=iso-8859-9";
     this.company = localStorage.getItem("company");
@@ -48,6 +53,11 @@ export class UploadWorkComponent implements OnInit {
     this.url = this.constantes.getRouterUrl();
     this.empresa = localStorage.getItem("company_name");
     this.contrato = localStorage.getItem("contract_name");
+  }
+
+  fileReset() {
+    this.fileImportInput.nativeElement.value = "";
+    this.csvRecords = [];
   }
 
   onFileChange(evt: any) {

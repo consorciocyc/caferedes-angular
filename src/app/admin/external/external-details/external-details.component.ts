@@ -196,44 +196,6 @@ export class ExternalDetailsComponent implements OnInit {
   public codMaterial;
   public descMaterial;
 
-
- public ingresidente;
- public gestambiental;
- public gestsocial;
- public gestsst;
- public gestcalidad;
- public gestcomercial;
- public supervisor;
- public tecauxhseqsst;
- public eencargado;
- public oficiales;
- public operadores;
- public topografo;
- public soldador;
- public silleteros;
- public ayudantesobra;
- public ayudanteimpacto;
- public conductor;
- public cadenero;
- public concretadora;
- public canguros;
- public cortadora;
- public equiposoldadura;
- public pplanta;
- public pulidora;
- public martiloelec;
- public alimentadorh20;
- public camion;
- public retroexcavadora;
- public minicargador;
- public compresor;
- public volqueta;
- public eqteroelecfusion;
- public planta;
- public soldadura;
-
-
-
   // Subscription
   subscription: any;
 

@@ -4,7 +4,7 @@ import "rxjs/add/operator/map";
 
 
 import { constantes } from "../../utilitis/constantes";
-import { Observable } from "rxjs/Observable";
+import { Observable } from 'rxjs/Observable';
 import "rxjs/add/observable/of";
 import "rxjs/add/observable/timer";
 import "rxjs/add/operator/take";

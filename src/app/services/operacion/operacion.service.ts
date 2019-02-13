@@ -109,46 +109,4 @@ export class OperacionService {
       this.constantes.getRouterGlobal() + "operaction/list_type_activity";
     return this.http.post(this.url, params).map(res => res.json());
   }
-
-  Generarpdf() {
-    let params;
-    this.url = this.constantes.getRouterGlobal() + "operaction/consulta";
-    return this.http.post(this.url, params).map(res => res.json());
-  }
-
-  savepdf(data) {
-    this.url = this.constantes.getRouterGlobal() + "operaction/savepdf";
-    return this.http.post(this.url, data).map(res => res.json());
-  }
-
-  search_dac(params) {
-    this.url = this.constantes.getRouterGlobal() + "operaction/search_dac";
-    return this.http.post(this.url, params).map(res => res.json());
-  }
-
-  clasificacion() {
-    let params;
-    this.url = this.constantes.getRouterGlobal() + "operaction/clasificacion";
-    return this.http.post(this.url, params).map(res => res.json());
-  }
-
-  motivos_dac(params) {
-    this.url = this.constantes.getRouterGlobal() + "operaction/motivos_dac";
-    return this.http.post(this.url, params).map(res => res.json());
-  }
-
-  save_dac(params) {
-    this.url = this.constantes.getRouterGlobal() + "operaction/save_dac";
-    return this.http.post(this.url, params).map(res => res.json());
-  }
-
-  update_dac(params) {
-    this.url = this.constantes.getRouterGlobal() + "operaction/update_dac";
-    return this.http.post(this.url, params).map(res => res.json());
-  }
-
-  search_dacuno(params) {
-    this.url = this.constantes.getRouterGlobal() + "operaction/search_dacuno";
-    return this.http.post(this.url, params).map(res => res.json());
-  }
 }

@@ -49,9 +49,4 @@ export class IncomeService {
     this.url = this.constantes.getRouterGlobal() + "income/delete";
     return this.http.post(this.url, params).map(res => res.json());
   }
-
-  search_income(params) {
-    this.url = this.constantes.getRouterGlobal() + "income/search_income";
-    return this.http.post(this.url, params).map(res => res.json());
-  }
 }

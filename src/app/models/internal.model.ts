@@ -34,6 +34,13 @@ export class InternalModel {
   public Estado_Acome: any;
   public Encargado_Acom: any;
   public Barrio: any;
+  public nmunicipio: any;
+  public producto: any;
+  public orden: any;
+  public tipos_obr_internas_name: any;
+  public idtipoobr: any;
+  public vendedor: any;
+  public inmueble: any;
 
   public Inicio_Empal: any;
   public Fin_Empalme: any;
@@ -84,6 +91,11 @@ export class InternalModel {
   public ans: any;
   public x: any;
   public y: any;
+  public lat: any;
+  public lng: any;
+  public promo:any;
+  public puntos:any;
+  public tipo_instal:any;
 }
 
 export class InternalDac {

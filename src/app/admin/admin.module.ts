@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 
 import { CommonModule } from "@angular/common";
-
+import { BrowserModule } from "@angular/platform-browser";
 import { AdminRoutingModule } from "./admin-routing.module";
 
 import { AdminComponent } from "./admin.component";
@@ -45,11 +45,12 @@ import { LightboxModule } from "angular2-lightbox";
 import { NguiAutoCompleteModule } from "@ngui/auto-complete";
 import { SupportComponent } from "./support/support.component";
 import { OwComponent } from "./ow/ow.component";
-import { CotizacionComponent } from './cotizacion/cotizacion.component';
-import { ImporthtmlComponent } from './importhtml/importhtml.component';
-import { MunicipalityComponent } from './municipality/municipality.component';
-import { TypeOfWorkComponent } from './type-of-work/type-of-work.component';
+import { CotizacionComponent } from "./cotizacion/cotizacion.component";
+import { ImporthtmlComponent } from "./importhtml/importhtml.component";
+import { MunicipalityComponent } from "./municipality/municipality.component";
 
+import { TravelComponent } from "./travel/travel.component";
+import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
 @NgModule({
   imports: [
     CommonModule,
@@ -58,7 +59,12 @@ import { TypeOfWorkComponent } from './type-of-work/type-of-work.component';
     FormsModule,
     CustomFormsModule,
     LightboxModule,
-    NguiAutoCompleteModule
+    NguiAutoCompleteModule,
+        AgmCoreModule.forRoot({
+      // please get your own API key here:
+      // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
+      apiKey: "AIzaSyCBdcl6n4Tsm9OrYD-phLhSxAQWvdAwvoA"
+    })
   ],
   declarations: [
     AdminComponent,
@@ -74,7 +80,7 @@ import { TypeOfWorkComponent } from './type-of-work/type-of-work.component';
     CotizacionComponent,
     ImporthtmlComponent,
     MunicipalityComponent,
-    TypeOfWorkComponent,
+    TravelComponent
   ],
   providers: [
     CompanyService,
@@ -87,7 +93,8 @@ import { TypeOfWorkComponent } from './type-of-work/type-of-work.component';
     datatables,
     CanDeactivateGuard,
     constantes,
-    ProviderService
+    ProviderService,
+    GoogleMapsAPIWrapper
   ]
 })
 export class AdminModule {}

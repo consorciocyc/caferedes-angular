@@ -298,25 +298,18 @@ export class IncomeComponent implements OnInit {
 
     let data = { idpurchases: idpurchases };
 
-    this.IncomeService.search_income(data).subscribe(
+    this.PurchasesService.search_purchases_unit(data).subscribe(
       res => {
-        if (
-          res.purchases.purchases_state_purc != 1 &&
-          res.purchases.purchases_state_purc != 2
-        ) {
+        if (res.purchases.purchases_state_purc != 1) {
           swal("", "La Orden De Compra Ya Tiene un Ingreso", "error");
           return;
-        }
-        if (res.purchases.purchases_state_purc != 1) {
-          this.rowDatatable = res.detail_purchase;
-        } else {
-          this.rowDatatable = res.detail_purchases;
         }
         this.buttonaddrow = false;
         this.input_provider = true;
 
         this.headincome = res.purchases;
 
+        this.rowDatatable = res.detail_purchases;
         this.disabled = true;
         this.delete = true;
         this.buttonaddrow = true;
@@ -608,7 +601,6 @@ export class IncomeComponent implements OnInit {
     newrow.vlriva = 0;
     newrow.isubtotal = 0;
     newrow.itotal = 0;
-    newrow.cp = 0;
   }
 
   valuechagematedes(index: number, newrow: any) {
@@ -624,7 +616,6 @@ export class IncomeComponent implements OnInit {
     newrow.vlriva = 0;
     newrow.isubtotal = 0;
     newrow.itotal = 0;
-    newrow.cp = 0;
   }
   operaciones(index: number, newrow: any) {
     let cantidad = newrow.ceceived_amount;
@@ -649,8 +640,8 @@ export class IncomeComponent implements OnInit {
     newrow.itotal = cantidad * viva;
 
     this.operacion_automatica();
-    let cantidad_parcial = Number(newrow.ceceived_amount) + Number(newrow.cp);
-    if (Number(cantidad_parcial) > Number(newrow.requested_amount)) {
+
+    if (Number(newrow.ceceived_amount) > Number(newrow.requested_amount)) {
       newrow.ceceived_amount = 0;
       newrow.vlriva = 0;
       newrow.isubtotal = 0;

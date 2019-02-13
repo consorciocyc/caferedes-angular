@@ -62,15 +62,4 @@ export class OperactionModel {
   public obscr: any; //
   public ans: any; //ans
   public type_activity: any;
-  public day_vencidos: any;
-}
-
-export class OymDac {
-  public iddac_worki: any;
-  public obs: any;
-  public id_clasif: any;
-  public id_mot: any;
-  public date: any;
-  public dac_idoym: any;
-  public dac_company: any;
 }

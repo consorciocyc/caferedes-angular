@@ -18,14 +18,14 @@
         <div class="col-2" style="margin-left:-10px">
 
             <input class="form-control input-modified mx-2 fa fa-eye" (valueChanged)="PedidoChanged()"
-                ngui-auto-complete [(ngModel)]="pedido" placeholder="PEDIDO" [source]="SearchPedido" list-formatter="Pedido"
+                ngui-auto-complete [(ngModel)]="pedido" placeholder="Número de Solicitud" [source]="SearchPedido" list-formatter="Pedido"
                 path-to-data="Pedido" value-property-name="Pedido" display-property-name="Pedido" min-chars="1" name="pedido"
                 #ped="ngModel" />
         </div>
 
         <div class="col-2" style="margin-left:-10px">
 
-            <input class="form-control input-modified mx-2 fa fa-eye" ngui-auto-complete [(ngModel)]="ot" placeholder="OT"
+            <input class="form-control input-modified mx-2 fa fa-eye" ngui-auto-complete [(ngModel)]="ot" placeholder="Numero Orden"
                 [source]="SearchConsecutive" list-formatter="obr_anillos_oti" path-to-data="obr_anillos"
                 value-property-name="obr_anillos_oti" display-property-name="obr_anillos_oti" min-chars="1" name="ot"
                 #o="ngModel" />
@@ -50,12 +50,12 @@
         <div class="col-2" style="margin-left:-10px">
 
             <input class="form-control input-modified mx-2 fa fa-eye" (valueChanged)="instalChanged()"
-                ngui-auto-complete [(ngModel)]="instal" placeholder="INSTALACION" [source]="SearchInstal"
+                ngui-auto-complete [(ngModel)]="instal" placeholder="Producto" [source]="SearchInstal"
                 list-formatter="Instalacion" path-to-data="Instalacion" value-property-name="Instalacion"
                 display-property-name="Instalacion" min-chars="1" name="instal" #install="ngModel" />
         </div>
     </div>
-    <button class="btn btn-sm btn_success">Nuevo</button>
+   
 </div>
 
 <div class="container-fluid container-modified">
