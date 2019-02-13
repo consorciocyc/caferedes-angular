@@ -1,0 +1,110 @@
+<div class="container-fluid container-modified">
+  <div class="col-12"><h3 class="mb-3 title">Externas-Buscar</h3></div>
+
+  <div class="col-12 d-flex justify-content-between my-3">
+    <div class="col-1">
+      <input
+        class="form-control input-modified mx-2"
+        (change)="changeconsec($event)"
+        ngui-auto-complete
+        [(ngModel)]="codemate"
+        placeholder="CONSECUTIVO"
+        [source]="search_codigo"
+        list-formatter="obr_consecutivo"
+        path-to-data="consecutive"
+        value-property-name="obr_consecutivo"
+        display-property-name="obr_consecutivo"
+        min-chars="1"
+        name="code"
+        #code="ngModel"
+      />
+    </div>
+
+    <div class="col-1">
+      <input
+        class="form-control input-modified mx-2"
+        (valueChanged)="valueChanged($event)"
+        ngui-auto-complete
+        [(ngModel)]="oti"
+        placeholder="OTI"
+        [source]="search_oti"
+        list-formatter="obr_anillos_oti"
+        path-to-data="obr_anillos"
+        value-property-name="obr_anillos_oti"
+        display-property-name="obr_anillos_oti"
+        min-chars="1"
+        name="code"
+        #code="ngModel"
+      />
+    </div>
+
+    <div class="col-2">
+      <input
+        class="form-control input-modified mx-2"
+        (change)="changeaddrees($event)"
+        ngui-auto-complete
+        [(ngModel)]="addrees"
+        placeholder="Dirección"
+        [source]="search_addrees"
+        list-formatter="obr_direccion"
+        path-to-data="response"
+        value-property-name="obr_direccion"
+        display-property-name="obr_direccion"
+        min-chars="1"
+        name="code"
+        #code="ngModel"
+      />
+    </div>
+    <div class="col-2">
+      <select
+        class="form-control input-modified"
+        (change)="search_muni()"
+        name="obr_municipio"
+        #id_municipality="ngModel"
+        [(ngModel)]="obr_municipio"
+      >
+        <option
+          *ngFor="let city of list_city"
+          value="{{city.idmunicipality}}"
+          >{{ city.name_municipality }}</option
+        >
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid container-modified">
+  <div class="col-12">
+    <ul class="tap d-flex">
+      <li class="tap_items">
+        <a
+          routerLinkActive="active-link"
+          [routerLink]="['/admin/obra_externa/obra']"
+          [queryParams]="{ queryParams: queryParams, params: params }"
+          >Buscar</a
+        >
+      </li>
+      <li class="tap_items">
+        <a
+          routerLinkActive="active-link"
+          [routerLink]="['/admin/obra_externa/detalles_obra']"
+          [queryParams]="{ queryParams: queryParams }"
+          >detalles</a
+        >
+      </li>
+      <li class="tap_items">
+        <a
+          routerLinkActive="active-link"
+          [routerLink]="['/admin/obra_externa/quejas']"
+          [queryParams]="{
+            queryParams: queryParams,
+            company: company,
+            type: 2
+          }"
+          >quejas</a
+        >
+      </li>
+    </ul>
+  </div>
+  <div class="col-12"><router-outlet></router-outlet></div>
+</div>

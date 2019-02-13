@@ -1,0 +1,194 @@
+<div class="container-fluid container-modified">
+    <div class="col-12">
+        <h3 class="mb-3 title">ACTIVIDADES</h3>
+    </div>
+
+    <div class="col-12">
+        <form #type="ngForm">
+            <div class="form-group row">
+
+
+                <label class="col-auto col-form-label" for="">Tipo
+                    <span style="color:brown;">*</span>
+                </label>
+                <div class="col-2">
+                    <select name="" id="" class="form-control input-modified" name="search_typ" #s_search_type="ngModel" [(ngModel)]="search_typ"
+                        required>
+
+                        <option *ngFor="let search_type of search_type" value="{{search_type.idtype_item}}">{{search_type.type_item_name}}</option>
+
+                    </select>
+                    <span *ngIf="s_search_type.errors?.required && s_search_type.touched" class="error_message">el campo es requerido</span>
+                </div>
+
+            </div>
+        </form>
+        <button class="btn-sm btn btn-primary mr-3" data-toggle="modal" data-target="#crear_item">Nuevo</button>
+        <button class="btn btn-sm btn_success mr-3" (click)="search_activitis()" [disabled]="!type.valid || btn_serach">Buscar</button>
+
+    </div>
+</div>
+<div class="container-fluid container-modified">
+<div class="col-12">
+
+
+<div class="col-12">       
+    <table class="table table-striped table-bordered table-hover" id="table">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Descripcion</th>
+                <th>Valor</th>
+                <th>Estado</th>
+                <th>Tipo</th>
+                <th>Acción</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of tableactivities; let i=index">
+
+                <td>{{i+1}}</td>
+                <td>
+                    <input class="employee form-control input-modified" type="text" name="activities_name" #activities_name="ngModel" [(ngModel)]="row.activities_name">
+
+                </td>
+                <td>
+
+                    <input class="employee form-control input-modified" type="text" name="activities_value" #activities_value="ngModel" [(ngModel)]="row.activities_value">
+                </td>
+
+                <td>
+                    <select class="form-control input-modified" name="activities_state" #activities_state="ngModel" [(ngModel)]="row.activities_state">
+
+                        <option *ngFor="let state_list of state_list" value="{{state_list.idstate}}">{{state_list.state}}</option>
+
+                    </select>
+                </td>
+
+                <td>
+                    <select class="form-control input-modified" name="activities_type" #activities_type="ngModel" [(ngModel)]="row.activities_type">
+
+                        <option *ngFor="let typeobr of typeobr" value="{{typeobr.idtype_item}}">{{typeobr.type_item_name}}</option>
+
+                    </select>
+                </td>
+
+
+                <td>
+                    <button class="btn btn-sm btn_success mr-3" (click)="enviar(i, row)">Atualizar</button>
+                    <button class="btn btn-sm btn_danger mr-3" (click)="delete(i, row)">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+</div>
+</div>
+
+
+<!-- modal para editar y crear contratos -->
+<div class="modal fade" id="crear_item" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Crear Actividad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form #activitiesform="ngForm" class="px-4">
+                    <div class="form-group row">
+                        <label for="" class="col-3 col-form-label label-required">Id</label>
+                        <div class="col-9">
+                            <input class="form-control input-modified" type="text" name="idactivities" #idactivities="ngModel" [(ngModel)]="activities.idactivities"
+                                readonly />
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-3 col-form-label label-required">Descripción Actividad</label>
+                        <div class="col-9">
+                            <input class="form-control input-modified" type="text" name="activities_name" #activities_name="ngModel" [(ngModel)]="activities.activities_name"
+                                required/>
+                            <span *ngIf="activities_name.errors?.required && activities_name.touched" class="error_message">el campo es requerido</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="" class="col-3 col-form-label label-required">Valor</label>
+                        <div class="col-9">
+                            <input class="form-control input-modified" type="text" name="activities_value" #activities_value="ngModel" [(ngModel)]="activities.activities_value"
+                                required/>
+                            <span *ngIf="activities_value.errors?.required && activities_value.touched" class="error_message">el campo es requerido</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="" class="col-3 col-form-label label-required">Estado</label>
+                        <div class="col-9">
+                            <select class="form-control input-modified" name="activities_state" #activities_state="ngModel" [(ngModel)]="activities.activities_state"
+                                required>
+
+                                <option *ngFor="let state_list of state_list" value="{{state_list.idstate}}">{{state_list.state}}</option>
+
+                            </select>
+                            <span *ngIf="activities_state.errors?.required && activities_state.touched" class="error_message">el campo es requerido</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="" class="col-3 col-form-label label-required">Tipo</label>
+                        <div class="col-9">
+                            <select class="form-control input-modified" name="activities_type" #activities_type="ngModel" [(ngModel)]="activities.activities_type"
+                                required>
+
+                                <option *ngFor="let typeobr of typeobr" value="{{typeobr.idtype_item}}">{{typeobr.type_item_name}}</option>
+
+                            </select>
+                            <span *ngIf="activities_type.errors?.required && activities_type.touched" class="error_message">el campo es requerido</span>
+                        </div>
+                    </div>
+
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn_danger btn-sm" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn_success btn-sm" [disabled]="!activitiesform.valid" data-toggle="modal" data-target="#guardar_item">Guardar</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--MODAL DE CONFIMACION-->
+<div class="modal fade" id="guardar_item" tabindex="-1" role="dialog" aria-labelledby="guardar_provider" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Guardar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <p class="text-center text-muted p-3">Esta seguro que desea Crear El Item ?</p>
+                    </div>
+                </form>
+            </div>
+            <div class=" modal-footer">
+                <button type="button" class="btn btn_danger btn-sm" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn_success btn-sm" (click)="Onsave()" data-dismiss="modal" [disabled]='btn_insert'>Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,160 @@
+<div class="container-fluid container-modified">
+    <div class="col-12">
+        <h3 class="mb-3 title">Permisos</h3>
+    </div>
+
+
+    <div class="col-11">
+        <div class="form-group row">
+
+            <label class="col-1 col-form-label label-required">Nombre Perfil</label>
+            <div class="col-4">
+                <input class="form-control input-modified  w-60" type="text" name="profile_name" #profile_nam="ngModel" [(ngModel)]="profile_name"
+                />
+            </div>
+<div class="col-2">
+    <button class="btn btn_primary mr-3 btn-sm" (click)="create_profile()">Crear</button>
+</div>
+            <label class="col-1 col-form-label label-required">Seleccionar</label>
+            <div class="col-2">
+                <select (change)="select()" class="form-control input-modified" name="id_profile" #profile="ngModel" [(ngModel)]="id_profile">
+                    <option></option>
+                    <option *ngFor="let select of rowselect; let i=index" value="{{select.idP_profiles}}">{{select.name}}</option>
+                </select>
+            </div>
+            
+
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-4">
+            <table class="table table-striped table-bordered table-hover text-center" id="table_permits_resizing">
+                <thead>
+                    <tr>
+                        <th>Submenu</th>
+                        <th>Guardar</th>
+                        <th>Actualizar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let newrow of rowDatatable; let i=index">
+                        <td>{{newrow.name_sudmenu}}</td>
+                        <td>
+                            <input type="checkbox" [checked]="newrow.save" (change)="chebox(newrow.idP_profiles,'save',newrow.id_permiso,$event)">
+                        </td>
+                        <td>
+                            <input type="checkbox" [checked]="newrow.update" (change)="chebox(newrow.idP_profiles,'update',newrow.id_permiso,$event)">
+                        </td>
+                        <td>
+                            <input type="checkbox" [checked]="newrow.delete" (change)="chebox(newrow.idP_profiles,'delete',newrow.id_permiso,$event)">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-8">
+            <table class="table table-striped table-bordered table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>Internas</th>
+                        <th>Items de cobro</th>
+                        <th>Materiales</th>
+                        <th>Actividades</th>
+                        <th>Programacion</th>
+                        <th>Eventos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let new of intern; let i=index">
+                        <td>Internas</td>
+                        <td>
+                            <input type="checkbox" [checked]="new.items" (change)="internas(new.profile_submenu_idsubmenu,'items',new.id,$event)">
+                        </td>
+                        <td>
+                            <input type="checkbox" [checked]="new.materiales" (change)="internas(new.profile_submenu_idsubmenu,'materiales',new.id,$event)">
+                        </td>
+                        <td>
+                            <input type="checkbox" [checked]="new.actividades" (change)="internas(new.profile_submenu_idsubmenu,'actividades',new.id,$event)">
+                        </td>
+                        <td>
+                            <input type="checkbox" [checked]="new.programacion" (change)="internas(new.profile_submenu_idsubmenu,'programacion',new.id,$event)">
+                        </td>
+                        <td>
+                            <input type="checkbox" [checked]="new.eventos" (change)="internas(new.profile_submenu_idsubmenu,'eventos',new.id,$event)">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-striped table-bordered table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>Externas</th>
+                        <th>Presupuesto</th>
+                        <th>Oti</th>
+                        <th>Informe de Obra</th>
+                        <th>Items de Cobro</th>
+                        <th>Materiales</th>
+                        <th>Actividades</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let new of externas; let i=index">
+                        <td>Externas</td>
+                        <td>
+                            <input type="checkbox" [checked]="new.permit_obrex_presupuesto" (change)="externasp(new.permit_obrext_profile,'permit_obrex_presupuesto',new.idpermit_obrext,$event)">
+                        </td>
+                        <td>
+                            <input type="checkbox" [checked]="new.permit_obrext_oti" (change)="externasp(new.permit_obrext_profile,'permit_obrext_oti',new.idpermit_obrext,$event)">
+                        </td>
+                        <td>
+                            <input type="checkbox" [checked]="new.permit_obrext_informe" (change)="externasp(new.permit_obrext_profile,'permit_obrext_informe',new.idpermit_obrext,$event)">
+                        </td>
+                        <td>
+                            <input type="checkbox" [checked]="new.permit_obrext_Items" (change)="externasp(new.permit_obrext_profile,'permit_obrext_Items',new.idpermit_obrext,$event)">
+                        </td>
+                        <td>
+                            <input type="checkbox" [checked]="new.permit_obrext_mate" (change)="externasp(new.permit_obrext_profile,'permit_obrext_mate',new.idpermit_obrext,$event)">
+                        </td>
+                        <td>
+                            <input type="checkbox" [checked]="new.permit_obrext_activi" (change)="externasp(new.permit_obrext_profile,'permit_obrext_activi',new.idpermit_obrext,$event)">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <table class="table table-striped table-bordered table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>Contratos Empleados</th>
+                        <th>Ver Contratos</th>
+                        <th>Crear Contratos</th>
+                        <th>Editar Contrato</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let new of contract_employee; let i=index">
+                        <td>Contratos</td>
+                        <td>
+                            <input type="checkbox" [checked]="new.permits_view" (change)="contract(new.profile_id,'permits_view',new.permits_contracts_empl,$event)">
+                        </td>
+                        <td>
+                            <input type="checkbox" [checked]="new.permits_save" (change)="contract(new.profile_id,'permits_save',new.permits_contracts_empl,$event)">
+                        </td>
+                        <td>
+                            <input type="checkbox" [checked]="new.permits_edit" (change)="contract(new.profile_id,'permits_edit',new.permits_contracts_empl,$event)">
+                        </td>
+
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>

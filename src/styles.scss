@@ -1,0 +1,513 @@
+/*general style of the app*/
+
+/*colors for app*/
+
+$colorblue: #3598dc;
+$colorred: #e7505a;
+$colorgreen: #32c5d2;
+$coloryellow: #f1c40f;
+$colorwhite: #fff;
+$colorlightgrey: #eee;
+$colorblack: #2b3643;
+$colorwhiteopacity: rgba(255, 255, 255, 0.7);
+$colordarkgray: #bebfc1;
+$colorindigo: #3f51b5;
+$grisclaro: #e9e9e9;
+
+$blue: #007bff;
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #e83e8c;
+$red: #dc3545;
+$orange: #fd7e14;
+$yellow: #ffc107;
+$green: #28a745;
+$teal: #20c997;
+$cyan: #17a2b8;
+$white: #fff;
+$gray: #6c757d;
+$gray-dark: #343a40;
+$primary: #5867dd;
+$secondary: #ebedf2;
+$success: #34bfa3;
+$info: #36a3f7;
+$warning: #ffb822;
+$danger: #f4516c;
+$light: #f8f9fa;
+$dark: #343a40;
+
+/*mixin of shadows*/
+
+.modal-xl {
+  max-width: 95% !important;
+}
+
+@mixin box-shadow() {
+  -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.24);
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12),
+    0 4px 10px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.24);
+}
+
+@mixin generar-btn($color) {
+  background: $color;
+  border: none;
+  color: $colorwhite;
+  padding: 0;
+  width: 22px;
+  height: 22px;
+}
+
+@mixin btn-general($color) {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 0;
+  background: $color;
+  color: #ffffff;
+  &:hover {
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.24),
+      0 2px 20px 0 rgba(0, 0, 0, 0.16);
+  }
+}
+
+.border_botom {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+
+ul.ui-autocomplete {
+  z-index: 1100;
+}
+.ss {
+  z-index: 1300 !important;
+}
+.ss3 {
+  z-index: 3000 !important;
+}
+
+.ss4 {
+  z-index: 1400 !important;
+}
+/*style for buttons colors*/
+
+.btn_primary {
+  @include btn-general($colorblue);
+}
+
+.btn_danger {
+  @include btn-general($colorred);
+}
+
+.btn_success {
+  @include btn-general($colorgreen);
+}
+
+.btn_warning {
+  @include btn-general($coloryellow);
+}
+
+.btn_select {
+  border: 1px solid $colorblue;
+  color: $colorblue;
+  background: transparent;
+}
+
+/*font style*/
+
+$roboto: "Roboto", sans-serif;
+$oswaldo: "Oswald", sans-serif;
+
+/*general style*/
+
+body {
+  background: $grisclaro;
+}
+
+.container-modified {
+  width: 98%;
+  background: $colorwhite;
+  padding: 1em;
+  margin: 20px auto;
+  @include box-shadow();
+}
+
+.colp-3 {
+  width: 20%;
+}
+.container-modified:first-child {
+  margin-top: 60px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $colorblack;
+  font-family: $oswaldo;
+  padding-bottom: 0.2em;
+  &.title {
+    font-size: 1.8em;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
+  }
+}
+
+.sub-title {
+  font-size: 18px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
+  background: $colorwhiteopacity;
+}
+
+/*general style for input*/
+
+textarea,
+input,
+select {
+  font-size: 0.8em !important;
+  border-radius: 0 !important;
+  text-transform: uppercase !important;
+}
+
+.input-modified {
+  padding: 0 0.3em !important;
+  line-height: inherit !important;
+  height: 24px !important;
+}
+
+label {
+  padding: 0 !important;
+  font-family: "Roboto", sans-serif;
+  font-size: 13px;
+}
+
+.textarea-modified {
+  min-height: 80px;
+  max-height: 80px;
+}
+
+/*general style for cards*/
+
+.card-modified {
+  background: #fff;
+  padding: 1em;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),
+    0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+.ng-invalid.ng-touched:not(form) {
+  border-color: $colorred;
+}
+
+/*general style for error message*/
+
+.error_message {
+  position: absolute;
+  color: $colorred;
+  font-size: 0.8em;
+  bottom: -15px;
+}
+
+.label-required::after {
+  content: "*";
+  display: inline-block;
+  color: $colorred;
+  margin-left: 0.2em;
+}
+
+table thead tr > th {
+  line-height: 0.5em;
+  text-align: center;
+  background: $colorblack;
+  color: $colorwhite;
+  font-weight: 400;
+}
+
+.table td,
+.table th {
+  padding: 0.5em;
+}
+
+.btn_add {
+  @include generar-btn($colorgreen);
+}
+
+.btn_delete {
+  @include generar-btn($colorred);
+}
+
+.btn_edit {
+  @include generar-btn($colorblue);
+}
+
+//
+
+.width-table-01 {
+  width: 2%;
+}
+.width-table-02 {
+  width: 3%;
+}
+.width-table-03 {
+  width: 4%;
+}
+.width-table-1 {
+  width: 5%;
+}
+
+.width-table-2 {
+  width: 10%;
+}
+
+.width-table-3 {
+  width: 15%;
+}
+
+.width-table-4 {
+  width: 20%;
+}
+
+.width-table-5 {
+  width: 25%;
+}
+
+.width-table-6 {
+  width: 30%;
+}
+
+.width-table-7 {
+  width: 38%;
+}
+
+.width-table-07 {
+  width: 35%;
+}
+
+//estilos para las ventanas modal
+.modal-content {
+  border-radius: 0;
+  .modal-header {
+    background: $colorblack;
+    padding: 0.5em;
+    h5 {
+      border: none;
+      color: $colorwhiteopacity;
+    }
+  }
+  button.close > span {
+    color: $colorwhiteopacity;
+  }
+}
+
+.modal-table-contracts {
+  overflow-x: auto;
+  min-height: 400px;
+}
+
+.table-contracts {
+  min-width: 1700px;
+}
+
+.table-travel {
+  overflow-x: scroll;
+  padding-right: 0.8em;
+  table {
+    min-width: 4000px;
+    margin-bottom: 2em;
+  }
+} //estilos para las datatables
+.data-tables {
+  margin: 2em;
+}
+
+.page-item.active .page-link {
+  z-index: 2;
+  color: $colorwhite;
+  background-color: $colorblue;
+  border-color: $colorblue;
+}
+
+.page-link {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: $colorblue;
+  background-color: $colorwhite;
+  border: 1px solid #ddd;
+}
+
+.scroll-x {
+  overflow-x: scroll;
+  padding-bottom: 1em;
+  table {
+    min-width: 150%;
+  }
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  padding: 5px 10px;
+  background: #2196f3;
+  color: #fff;
+  border: none;
+}
+
+.loader {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  background: rgba(255, 255, 255, 0.5);
+  & > img {
+    margin: auto;
+  }
+}
+
+.config {
+  background: $colorblack;
+  min-width: 300px;
+  padding: 30px 20px;
+  position: fixed;
+  right: -300px;
+  top: 50px;
+  z-index: 1000;
+  display: flex;
+  color: $colorwhite;
+  flex-direction: column;
+  & > .btn-config {
+    background: rgba(255, 255, 255, 0.5);
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: -5px;
+    left: -40px;
+    display: flex;
+    & > .fa-cog {
+      margin: auto;
+      font-size: 1.6em;
+      color: $colorblack;
+      animation: rotate 3s infinite linear;
+    }
+  }
+  & > .form {
+    flex-basis: 100%;
+  }
+}
+
+.table-min-heigth {
+  min-height: 250px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  margin-bottom: 1.5em;
+}
+
+.tap,
+.nav-tabs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  padding-bottom: 2px;
+}
+
+.tap_items > a {
+  padding: 0.3em 0.8em;
+  text-decoration: none;
+  color: #2b3643;
+  transition: all 0.4s ease-in-out;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-left: 1px solid rgba(0, 0, 0, 0.12);
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.tap_items > a:hover,
+.active-link {
+  background: #32c5d2;
+  color: #fff !important;
+  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+    0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+    0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (min-width: 992px) {
+  .modal-lg {
+    max-width: 1200px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .modal-lg1 {
+    max-width: 1400px;
+  }
+}
+
+@media (min-width: 992px) {
+  .modal-extra-lg {
+    max-width: 95vw;
+  }
+}
+.swal2-container {
+  z-index: 1600 !important;
+}
+
+.parpadea {
+  animation-name: parpadeo;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  -webkit-animation-name: parpadeo;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+}
+
+@-moz-keyframes parpadeo {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes parpadeo {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes parpadeo {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

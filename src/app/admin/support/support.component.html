@@ -1,0 +1,572 @@
+<div class="container-fluid container-modified ">
+  <div class="col-12"><h3 class="mb-3 title">Soporte y Mantenimiento</h3></div>
+  <br />
+
+  <div class="row ">
+    <div class="col-sm-12 col-md-4 float-left d-inline-block dos">
+      <div class="form-group row">
+        <div class="col-12 mb-1 mt-1 uno ">
+          <label class="col-4 col-form-label pl-2  al"
+            >Nombre del equipo:
+          </label>
+          <div class="col-7 float-right">
+            <input
+              class="form-control input-modified"
+              style="width:90%; height: 25px"
+              type="text"
+              name="toolName"
+              [(ngModel)]="supportmodel.toolName"
+            />
+          </div>
+        </div>
+
+        <div class="col-12 mb-1 mt-1 uno ">
+          <label class="col-4 col-form-label pl-2 al ">Proveedor: </label>
+          <div class="col-7 float-right">
+            <input
+              class="form-control input-modified  "
+              style="width:90%;height: 25px"
+              type="text"
+              name="provider"
+              [(ngModel)]="supportmodel.provider"
+            />
+          </div>
+        </div>
+
+        <div class="col-12 mb-1 mt-1 uno">
+          <label class="col-4 col-form-label pl-2 al">Tipo de insumo: </label>
+          <div class="col-7 float-right">
+            <input
+              class=" form-control input-modified "
+              style="width:90%;height: 25px"
+              type="text"
+              name="typeOfMaterial"
+              [(ngModel)]="supportmodel.typeOfMaterial"
+            />
+          </div>
+        </div>
+
+        <div class="col-12 mb-1 mt-1 uno">
+          <label class="col-4 col-form-label pl-2 al">Propietario: </label>
+          <div class="col-7 float-right">
+            <input
+              class=" form-control input-modified "
+              style="width:90%;height: 25px"
+              type="text"
+              name="owner"
+              [(ngModel)]="supportmodel.owner"
+            />
+          </div>
+        </div>
+
+        <div class="col-12 mb-1 mt-1 uno ">
+          <label class="col-4 mb-1 col-form-label pl-2 al "
+            >Tipo mantenimiento:
+          </label>
+          <div class="col-7 float-right">
+            <select
+              name="supportType"
+              [(ngModel)]="supportmodel.supportType"
+              style="width:90%;height: 25px"
+            >
+            </select>
+          </div>
+        </div>
+
+        <div class="col-12 mb-1 mt-1 uno">
+          <label class="col-4 col-form-label pl-2 al"
+            >Nombre del tecnico:
+          </label>
+          <div class="col-7 float-right">
+            <input
+              class=" form-control input-modified "
+              style="width:90%;height: 25px"
+              type="text"
+              name="technicianName"
+              [(ngModel)]="supportmodel.technicianName"
+            />
+          </div>
+        </div>
+
+        <div class="col-12 mb-1 mt-1 uno">
+          <label class=" col-4 mb-1 col-form-label pl-2 al "
+            >Descripción del mantenimiento:
+          </label>
+          <div class="col-7 float-right">
+            <textarea
+              rows="3"
+              name="description"
+              [(ngModel)]="supportmodel.description"
+              style="width:100%;"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-4 float-left d-inline-block dos">
+      <div class="form-group row">
+        <div class="col-12 mb-1 mt-1 uno">
+          <label class="col-4 col-form-label pl-2 al">Valor comercial: </label>
+          <div class="col-7 float-right">
+            <input
+              class=" form-control input-modified "
+              style="width:90%;height: 25px"
+              type="text"
+              name="commercialValue"
+              [(ngModel)]="supportmodel.commercialValue"
+            />
+          </div>
+        </div>
+
+        <div class="col-12 mb-1 mt-1 uno">
+          <label class="col-4 col-form-label pl-2 al">Serie: </label>
+          <div class="col-7 float-right">
+            <input
+              class=" form-control input-modified"
+              style="width:90%;height: 25px"
+              type="text"
+              name="serie"
+              [(ngModel)]="supportmodel.serie"
+            />
+          </div>
+        </div>
+
+        <div class="col-12 mb-1 mt-1 uno">
+          <label class="col-4 col-form-label pl-2 al">Codigo sistema: </label>
+          <div class="col-7 float-right">
+            <input
+              class=" form-control input-modified "
+              style="width:90%;height: 25px"
+              type="text"
+              name="sistemCode"
+              [(ngModel)]="supportmodel.sistemCode"
+            />
+          </div>
+        </div>
+
+        <div class="col-12 mb-1 mt-1 uno ">
+          <label class="col-4 col-form-label pl-2  al">Fecha compra: </label>
+          <div class="col-7 float-right">
+            <input
+              class="form-control input-modified  "
+              style="width:90%;height: 25px"
+              type="date"
+              name="dateOfPurchase"
+              [(ngModel)]="supportmodel.dateOfPurchase"
+            />
+          </div>
+        </div>
+
+        <div class="col-12 mb-1 mt-1 uno ">
+          <label class="col-4 col-form-label pl-2 al"
+            >Fecha Mantenimiento:
+          </label>
+          <div class="col-7 float-right">
+            <input
+              class="form-control input-modified "
+              style="width:90%;height: 25px"
+              type="date"
+              name="supportDate"
+              [(ngModel)]="supportmodel.supportDate"
+            />
+          </div>
+        </div>
+
+        <div class="col-12 mb-1 mt-1 uno ">
+          <label class="col-4 col-form-label pl-2 al "
+            >Fecha Siguiente Mantenimiento:
+          </label>
+          <div class="col-7 float-right">
+            <input
+              class="form-control input-modified "
+              style="width:90%;height: 25px"
+              type="date"
+              name="nextSupport"
+              [(ngModel)]="supportmodel.nextSupport"
+            />
+          </div>
+        </div>
+
+        <div class="col-12 mb-1 mt-1 uno">
+          <label class=" col-4 col-form-label pl-2 al ">Observaciones: </label>
+          <div class="col-7 float-right">
+            <textarea
+              rows="3"
+              name="observation"
+              [(ngModel)]="supportmodel.observation"
+              style="width:100%;"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 p-auto tres">
+      <div class="form-group row">
+        <button type="button" class="btn btn-sm btn_primary m-2">
+          <i class="fa fa-save"></i> Guardar
+        </button>
+        <button type="button" class="btn btn-sm btn_primary m-2">
+          <i class="fa fa-sync"></i> Actualizar
+        </button>
+        <button type="button" class="btn btn-sm btn_danger m-2">
+          <i class="fa fa-trash"></i> Eliminar
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn_success m-2"
+          data-toggle="modal"
+          data-target="#buscar"
+        >
+          <i class="fa fa-search"></i> Buscar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for search of status -->
+  <div
+    class="modal fade"
+    id="buscar"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modalBuscar"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog  modal-lg" role="document">
+      <div class="modal-content ">
+        <div class="modal-header bg-#000 ">
+          <div class="row">
+            <div class="col-12">
+              <h2 class="modal-title mtitle ">Buscar</h2>
+            </div>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-8 ml-4 ">
+              <div class="col-12 ">
+                <label class="float-left col-3 col-form-label pl-2 uno"
+                  >Cod serie:
+                </label>
+
+                <div class="col-6 float-left">
+                  <input
+                    class=" uno form-control input-modified"
+                    style="width:35%;height: 25px"
+                    type="text"
+                    name="searchCodSerie"
+                    [(ngModel)]="searchConsecutive"
+                  />
+                </div>
+                <div class="col-1 float-left">
+                  <button type="button" class="uno btn btn-sm btn-success ml-1">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label class="float-left col-3 col-form-label pl-2 uno"
+                  >Nombre del equipo:
+                </label>
+                <div class="col-6 float-left">
+                  <input
+                    class=" form-control input-modified uno"
+                    style="width:95%;height: 25px"
+                    type="text"
+                    name="searchName"
+                    [(ngModel)]="searchName"
+                  />
+                </div>
+                <div class="col-1 float-left">
+                  <button type="button" class="uno btn btn-sm btn-success ml-1">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="col-12 mb-1 mt-1 uno ">
+                <label class="float-left col-3 col-form-label pl-2 uno "
+                  >Buscar por fecha:
+                </label>
+
+                <div class="col-3 float-left">
+                  <input
+                    class="form-control input-modified  uno"
+                    style="width:95%;height: 25px"
+                    type="date"
+                    name="searchDateinitial"
+                  />
+                </div>
+                <div class="col-3 float-left">
+                  <input
+                    class="form-control input-modified uno "
+                    style="width:95%;height: 25px"
+                    type="date"
+                    name="searchDatefinished"
+                  />
+                </div>
+                <div class="col-1 float-left">
+                  <button type="button" class="uno btn btn-sm btn-success ml-1">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 m-auto">
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th class="width-table-1">id</th>
+                    <th class="width-table-1">Serial</th>
+                    <th class="width-table-1">Nombre del equipo</th>
+                    <th class="width-table-1">Fecha</th>
+                    <th class="width-table-1">Informe</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let component of components; index as i">
+                    <td scope="row">{{ i + 1 }}</td>
+                    <td>{{ component.serie }}</td>
+                    <td>{{ component.toolName }}</td>
+                    <td>{{ component.suppportDate }}</td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-primary m-auto "
+                        data-toggle="modal"
+                        data-target="#file"
+                      >
+                        <i class="fa fa-book"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="float-right ">
+            <button
+              type="button"
+              class="btn btn-sm btn-danger"
+              data-dismiss="modal"
+            >
+              <i class="fa fa-window-close"></i> Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for search of staus -->
+  <div
+    class="modal fade"
+    id="file"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modalBuscar"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog  modal-lg" role="document">
+      <div class="modal-content ">
+        <div class="modal-header bg-#000 " *ngFor="let component of components">
+          <div class="row">
+            <div class="col-12">
+              <h2 class="modal-title mtitle ">
+                Informe del equipo {{ component.series }}
+              </h2>
+            </div>
+          </div>
+        </div>
+        <div class="modal-body" *ngFor="let component of components">
+          <div class="row">
+            <div class="contaner">
+              <div class="col-sm-12 col-md-6 float-left d-inline-block dos">
+                <div class="form-group row">
+                  <div class="col-12 mb-1 mt-1 uno ">
+                    <label class="col-4 col-form-label pl-2  "
+                      >Nombre del equipo:
+                    </label>
+                    <div class="col-7 float-right">
+                      <label class="col-4 col-form-label pl-2  ">{{
+                        component.toolNames
+                      }}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mb-1 mt-1 uno ">
+                    <label class="col-4 col-form-label pl-2  "
+                      >Proveedor:
+                    </label>
+                    <div class="col-7 float-right">
+                      <label class="col-4 col-form-label pl-2  ">{{
+                        component.providers
+                      }}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mb-1 mt-1 uno">
+                    <label class="col-4 col-form-label pl-2"
+                      >Tipo de insumo:
+                    </label>
+                    <div class="col-7 float-right">
+                      <label class="col-4 col-form-label pl-2  ">{{
+                        component.typeOfMaterials
+                      }}</label>
+                      <p></p>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mb-1 mt-1 uno">
+                    <label class="col-4 col-form-label pl-2"
+                      >Propietario:
+                    </label>
+                    <div class="col-7 float-right">
+                      <label class="col-4 col-form-label pl-2  ">{{
+                        component.owners
+                      }}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mb-1 mt-1 uno ">
+                    <label class="col-4 mb-1 col-form-label pl-2  "
+                      >Tipo mantenimiento:
+                    </label>
+                    <div class="col-7 float-right">
+                      <label class="col-4 col-form-label pl-2  ">falta</label>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mb-1 mt-1 uno">
+                    <label class="col-4 col-form-label pl-2"
+                      >Nombre del tecnico:
+                    </label>
+                    <div class="col-7 float-right">
+                      <label class="col-4 col-form-label pl-2  ">{{
+                        component.technicianNames
+                      }}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mb-1 mt-1 uno">
+                    <label class=" col-4 mb-1 col-form-label pl-2  "
+                      >Descripción del mantenimiento:
+                    </label>
+                    <div class="col-7 float-right">
+                      <label class="col-4 col-form-label pl-2  ">{{
+                        component.descriptions
+                      }}</label>
+                    </div>
+                  </div>
+
+                  -
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-6 float-left d-inline-block dos">
+                <div class="form-group row">
+                  <div class="col-12 mb-1 mt-1 uno">
+                    <label class="col-4 col-form-label pl-2"
+                      >Valor comercial:
+                    </label>
+                    <div class="col-7 float-right">
+                      <label class="col-4 col-form-label pl-2  ">{{
+                        component.commercialValues
+                      }}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mb-1 mt-1 uno">
+                    <label class="col-4 col-form-label pl-2">Serie: </label>
+                    <div class="col-7 float-right">
+                      <label class="col-4 col-form-label pl-2  ">{{
+                        component.series
+                      }}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mb-1 mt-1 uno">
+                    <label class="col-4 col-form-label pl-2"
+                      >Codigo sistema:
+                    </label>
+                    <div class="col-7 float-right">
+                      <label class="col-4 col-form-label pl-2  ">{{
+                        component.sistemCodes
+                      }}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mb-1 mt-1 uno ">
+                    <label class="col-4 col-form-label pl-2  "
+                      >Fecha compra:
+                    </label>
+                    <div class="col-7 float-right">
+                      <label class="col-4 col-form-label pl-2  ">{{
+                        component.dateOfPurchases
+                      }}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mb-1 mt-1 uno ">
+                    <label class="col-4 col-form-label pl-2 "
+                      >Fecha Mantenimiento:
+                    </label>
+                    <div class="col-7 float-right">
+                      <label class="col-4 col-form-label pl-2  ">{{
+                        component.suppportDates
+                      }}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mb-1 mt-1 uno ">
+                    <label class="col-4 col-form-label pl-2  "
+                      >Fecha Siguiente Mantenimiento:
+                    </label>
+                    <div class="col-7 float-right">
+                      <label class="col-4 col-form-label pl-2  ">{{
+                        component.nextSupports
+                      }}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mb-1 mt-1 uno">
+                    <label class=" col-4 col-form-label pl-2  "
+                      >Observaciones:
+                    </label>
+                    <div class="col-7 float-right">
+                      <label class="col-4 col-form-label pl-2  ">{{
+                        component.observations
+                      }}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <div class="float-right ">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-danger"
+                    data-dismiss="modal"
+                  >
+                    <i class="fa fa-window-close"></i> Cerrar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

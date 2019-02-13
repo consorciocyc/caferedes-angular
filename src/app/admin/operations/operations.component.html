@@ -1,0 +1,53 @@
+<div class="container-fluid container-modified">
+    <div class="col-12">
+        <h3 class="mb-3 title">Operaciones-Buscar</h3>
+    </div>
+
+    <div class="col-12 d-flex justify-content-between my-3">
+        <div class="col-1" style="margin-left:-10px">
+            <input class="form-control input-modified mx-2" (valueChanged)="ConsecChanged()" ngui-auto-complete
+                [(ngModel)]="consecutive" placeholder="CONSECUTIVO" [source]="SearchConsecutive" list-formatter="consecutive"
+                path-to-data="consecutive" value-property-name="consecutive" display-property-name="consecutive"
+                min-chars="1" name="consecutive" #consec="ngModel" />
+        </div>
+        <div class="col-1" style="margin-left:-10px">
+            <input class="form-control input-modified mx-2" (valueChanged)="PedidoChanged()" ngui-auto-complete
+                [(ngModel)]="pedido" placeholder="PEDIDO" [source]="SearchPedido" list-formatter="pedido" path-to-data="pedido"
+                value-property-name="pedido" display-property-name="pedido" min-chars="1" name="pedido" #consec="ngModel" />
+        </div>
+
+        <input type="text" class="form-control input-modified mx-2" placeholder="ot">
+        <input type="text" class="form-control input-modified mx-2" placeholder="cedula">
+        <input type="text" class="form-control input-modified mx-2" placeholder="dirección">
+        <input type="text" class="form-control input-modified mx-2" placeholder="instalación">
+    </div>
+</div>
+
+<div class="container-fluid container-modified">
+    <div class="col-12">
+        <ul class="tap d-flex">
+            <li class="tap_items">
+                <a routerLinkActive="active-link" [routerLink]="['/admin/operaciones/obra']" [queryParams]="{queryParams: queryParams,valor:valor}">obra</a>
+            </li>
+
+            <li class="tap_items">
+                <a routerLinkActive="active-link" [routerLink]="['/admin/operaciones/detalles']" [queryParams]="{queryParams: queryParams}">detalles</a>
+            </li>
+            <li class="tap_items">
+                <a routerLinkActive="active-link" [routerLink]="['/admin/operaciones/items']" [queryParams]="{queryParams: queryParams}">items</a>
+            </li>
+            <li class="tap_items">
+                <a routerLinkActive="active-link" [routerLink]="['/admin/operaciones/materiales']" [queryParams]="{queryParams: queryParams}">materiales</a>
+            </li>
+            <li class="tap_items">
+                <a routerLinkActive="active-link" [routerLink]="['/admin/operaciones/actividades']" [queryParams]="{queryParams: queryParams}">actividades</a>
+            </li>
+            <li class="tap_items">
+                <a routerLinkActive="active-link" [routerLink]="['/admin/operaciones/quejas']" [queryParams]="{queryParams: queryParams}">quejas</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-12">
+        <router-outlet></router-outlet>
+    </div>
+</div>

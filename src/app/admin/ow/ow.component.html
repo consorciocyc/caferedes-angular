@@ -1,0 +1,318 @@
+<div class="container-fluid container-modified ">
+  <div class="row">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-sm-12 col-md-4">
+          <h3 class="mb-3 title d-inline-block">OW</h3>
+        </div>
+        <div class="col-sm-12 col-md-7">
+          <button
+            type="button"
+            class="btn btn-sm btn-primary ml-1 float-right"
+            data-toggle="modal"
+            data-target="#owM"
+          >
+            <i class="fa fa-box-open"></i> OW
+          </button>
+          <button
+            type="button"
+            class="btn btn-sm btn-primary ml-1 float-right"
+            data-toggle="modal"
+            data-target="#recibido"
+          >
+            <i class="fa fa-receipt"></i> Recibidos
+          </button>
+          <button type="button" class="btn btn-sm btn-primary ml-1 float-right">
+            <i class="fa fa-save"></i> Guardar
+          </button>
+          <button type="button" class="btn btn-sm btn-primary ml-1 float-right">
+            <i class="fa fa-sync"></i> Actualizar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+
+  <div class="col-10">
+    <div class="form-group row">
+      <label class="col-1 col-form-label label-required"
+        >Fecha solicitud:
+      </label>
+      <div class="col-2">
+        <input
+          class="form-control input-modified "
+          style="height: 25px"
+          type="date"
+          name="applicationDate"
+          [(ngModel)]="owmodel.applicationDate"
+        />
+      </div>
+      <label class="col-1 col-form-label label-required "
+        >Fecha aprobación:
+      </label>
+      <div class="col-2">
+        <input
+          class="form-control input-modified"
+          type="date"
+          name="applicationDate"
+          [(ngModel)]="owmodel.applicationDate"
+        />
+      </div>
+      <label class="col-1 col-form-label label-required"
+        >Fecha confirmación:
+      </label>
+      <div class="col-2">
+        <input
+          class="form-control input-modified "
+          style="height: 25px"
+          type="date"
+          name="confirmDate"
+          [(ngModel)]="owmodel.confirmDate"
+        />
+      </div>
+      <label class="col-1 col-form-label label-required"
+        >Fecha de recepción:
+      </label>
+      <div class="col-2">
+        <input
+          class="form-control input-modified "
+          style="height: 25px"
+          type="date"
+          name="receiptDate"
+          [(ngModel)]="owmodel.receiptDate"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-1 col-form-label label-required"
+        >Fecha de entrega:
+      </label>
+      <div class="col-2">
+        <input
+          class="form-control input-modified "
+          style="height: 25px"
+          type="date"
+          name="deliveryDate"
+          [(ngModel)]="owmodel.deliveryDate"
+        />
+      </div>
+      <label class="col-1 col-form-label label-required">Proveedor: </label>
+      <div class="col-2">
+        <input
+          class=" form-control input-modified "
+          style="height: 25px"
+          type="text"
+          name="provider"
+          [(ngModel)]="owmodel.provider"
+        />
+      </div>
+      <label class="col-1 col-form-label label-required">Estado: </label>
+      <div class="col-2">
+        <select
+          class=" form-control input-modified "
+          style="height: 25px"
+          name="status"
+          [(ngModel)]="owmodel.status"
+        ></select>
+      </div>
+      <label class="col-1 col-form-label label-required">OW: </label>
+      <div class="col-2">
+        <input
+          class=" form-control input-modified "
+          style="width: 30%;height: 25px"
+          type="text"
+          name="ow"
+          [(ngModel)]="owmodel.ow"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for button recibido -->
+<div
+  class="modal fade"
+  data-backdrop="static"
+  data-keyboard="false"
+  id="owM"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledb.3y="modalRecibido"
+  aria-hidden="true"
+>
+  <div class="modal-dialog  modal-xl" role="document">
+    <div class="modal-content ">
+      <div class="modal-header bg-#000 ">
+        <div class="row">
+          <div class="col-12"><h2 class="modal-title mtitle ">OW</h2></div>
+        </div>
+      </div>
+      <div class="modal-body scroll tmodal">
+        <div class="row">
+          <div class="col-5 ">
+            <label class="float-left col-1 col-form-label  al">OTI: </label>
+
+            <div class="col-3 float-left">
+              <input
+                class="form-control input-modified"
+                style="width:100%;height: 25px"
+                type="text"
+                name="searchoTI"
+              />
+            </div>
+            <div class="col-1 float-left">
+              <button type="button" class="uno btn btn-sm btn-success ml-1">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-7">
+            <table
+              class="table table-striped table-bordered table-hover"
+              style="font-size: 12px; margin: 10px"
+            >
+              <thead>
+                <tr>
+                  <th class="width-table-01">Item</th>
+                  <th class="width-table-1">Código</th>
+                  <th class="width-table-3">descripción</th>
+                  <th class="width-table-1">Cantidad solicitada</th>
+                  <th class="width-table-1">Acumulado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="col-5">
+            <table
+              class="table table-striped table-bordered table-hover"
+              style="font-size: 12px; margin: 10px"
+            >
+              <thead>
+                <tr>
+                  <th class="width-table-01">Item</th>
+                  <th class="width-table-1">Código</th>
+                  <th class="width-table-3">descripción</th>
+                  <th class="width-table-1">Cantidad</th>
+                  <th class="width-table-01">Sel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn_primary">
+                      <i class="fa fa-box"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <br />
+      </div>
+
+      <div class="modal-footer">
+        <div class="float-right ">
+          <button type="button" class="btn btn-sm btn-primary">
+            <i class="fa fa-save"></i> Guardar
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-sm btn-danger"
+            data-dismiss="modal"
+          >
+            <i class="fa fa-window-close"></i> Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for button recibido -->
+<div
+  class="modal fade"
+  data-backdrop="static"
+  data-keyboard="false"
+  id="recibido"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledb.3y="modalRecibido"
+  aria-hidden="true"
+>
+  <div class="modal-dialog  modal-xl" role="document">
+    <div class="modal-content ">
+      <div class="modal-header bg-#000 ">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="modal-title mtitle ">Recibido</h2>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body scroll tmodal">
+        <div class="form-group row">
+          <table
+            class="table table-striped table-bordered table-hover"
+            style="font-size: 12px; margin: 10px"
+          >
+            <thead>
+              <tr>
+                <th class="width-table-1">Item</th>
+                <th class="width-table-1">Código</th>
+                <th class="width-table-3">descripción</th>
+                <th class="width-table-1">Cantidad solicitada</th>
+                <th class="width-table-2">Acumulado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <br />
+      </div>
+
+      <div class="modal-footer">
+        <div class="float-right ">
+          <button type="button" class="btn btn-sm btn-primary">
+            <i class="fa fa-save"></i> Guardar
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-sm btn-danger"
+            data-dismiss="modal"
+          >
+            <i class="fa fa-window-close"></i> Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

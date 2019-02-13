@@ -1,0 +1,85 @@
+<div class="container-fluid container-modified ">
+  <div class="col-12"><h3 class="mb-3 title">Listas Municipios</h3></div>
+  <br />
+
+
+
+
+
+  <div class="row ">
+    <div class="col-sm-12 col-md-12 float-left d-inline-block ">
+      <div class="form-group row">
+        
+
+          <div class="col-3 mb-1 mt-1 uno ">
+          <label class="col-4 mb-1 col-form-label  al "
+            > Departamento:
+          </label>
+          <div class="col-7 float-right">
+            <select
+              name="department"
+              [(ngModel)]="department"
+              style="width:100%;height: 25px"
+            >
+            </select>
+          </div>
+        </div>
+
+         <div class="col-3 mb-1 mt-1 uno ">
+          <label class="col-4 mb-1 col-form-label pl-2 al "
+            >Municipio:
+          </label>
+          <div class="col-7 float-right">
+            <select
+              name="town"
+              [(ngModel)]="town"
+              style="width:100%;height: 25px"
+            >
+            </select>
+          </div>
+        </div>
+
+        <div class="col-3 mb-1 mt-1 ">
+          <label class="col-4 col-form-label pl-2 al">Crear Municipio: </label>
+          <div class="col-7 float-right">
+            <input
+              class=" form-control input-modified "
+              style="width:100%;height: 25px"
+              type="text"
+              name="newTown"
+              [(ngModel)]="newTown"
+            />
+          </div>
+        </div>
+
+        <div class="col-3 mb-1 mt-1 ">
+          <label class="col-4 col-form-label pl-2 al">Id secundario: </label>
+          <div class="col-7 float-right">
+            <input
+              class=" form-control input-modified "
+              style="width:100%;height: 25px"
+              type="text"
+              name="secondId"
+              [(ngModel)]="secondId"
+            />
+          </div>
+        </div>
+
+		</div>
+	</div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6 p-auto tres">
+    <div class="form-group row">
+      <button type="button" class="btn btn-sm btn_primary m-2" (click)="save()">
+        <i class="fa fa-save"></i> Guardar
+      </button>
+      <button type="button" class="btn btn-sm btn_primary m-2" (click)="update()">
+        <i class="fa fa-sync"></i> Actualizar
+      </button>
+    </div>
+  </div>
+</div>
+
+</div>

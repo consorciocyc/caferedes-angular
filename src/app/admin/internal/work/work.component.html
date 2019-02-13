@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-12">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>ver</th>
+                    <th>Consecutivo</th>
+                    <th>Pedido</th>
+                    <th>OT</th>
+                    <th>Tipo Obra</th>
+                    <th>Instalacion</th>
+                    <th>Cedula</th>
+                    <th>Solicitante</th>
+                    <th>Tel</th>
+                    <th>Direccion</th>
+                    <th>Municipio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let newrow of rowDatatable; let i=index">
+                    <td>
+                        <button class="btn btn-sm btn_primary fa fa-eye" value="{{newrow.idworkI}}" (click)="searcobr($event)">
+
+                        </button>
+                    </td>
+                    <td>{{newrow.consecutive}}</td>
+                    <td>{{newrow.Pedido}}</td>
+                    <td>{{newrow.consecutive}}</td>
+                    <td>{{newrow.consecutive}}</td>
+                    <td>{{newrow.Instalacion}}</td>
+                    <td>{{newrow.Cedula}}</td>
+                    <td>{{newrow.Solicitante}}</td>
+                    <td>{{newrow.Tel_Contacto}}</td>
+                    <td>{{newrow.Direccion}}</td>
+                    <td>{{newrow.name_municipality}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

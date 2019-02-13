@@ -1,0 +1,72 @@
+<div class="row mt-3">
+    <div class="col-12 table-min-heigth">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="width-table-1">Item</th>
+                    <th class="width-table-1">Eliminar</th>
+                    <th class="width-table-1">Material</th>
+                    <th class="width-table-1">Codigo</th>
+                    <th class="width-table-3">Descripción</th>
+                    <th class="width-table-1">Fecha</th>
+                    <th class="width-table-1">Cantidad</th>
+                    <th class="width-table-1">Estado</th>
+                    <th class="width-table-1">Cat.Acta</th>
+                    <th class="width-table-1">Fecha Acta</th>
+                    <th class="width-table-1">Acta</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="item_actividad eliminar_tr" *ngFor="let row of table; let i=index">
+                    <td>
+                        {{i+1}}
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-sm btn_danger fa fa-trash" value="{{row.idmaterial_internas}}" (click)="delete($event)"></button>
+
+                    </td>
+                    <td>
+                        <input focusOnInit="2" class="form-control input-modified" (change)="valueChangedmate(i, row)" ngui-auto-complete [(ngModel)]="row.code"
+                            placeholder="codigo" [source]="search_codigo" list-formatter="code" path-to-data="materiales" value-property-name="idmateriales"
+                            display-property-name="code" min-chars="2" name="code1" #code="ngModel" />
+                        <td>
+                            <input type="text" class="form-control input-modified" [(ngModel)]="row.codigo" name="codigo" #codigo="ngModel" readonly>
+                        </td>
+                        <td>
+                            <input class="form-control input-modified" (change)="valueChangeddescri(i, row)" ngui-auto-complete [(ngModel)]="row.description"
+                                placeholder="Descripcion" [source]="search_desc" list-formatter="description" path-to-data="results"
+                                value-property-name="idmateriales" display-property-name="description" min-chars="2" name="description"
+                                #description="ngModel" />
+                        </td>
+                        <td>
+                            <input type="date" class="form-control input-modified" [(ngModel)]="row.date" name="date" #date="ngModel">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control input-modified" [(ngModel)]="row.quantity" name="quantity" #quantity="ngModel" (focusout)="add()">
+                        </td>
+                        <td>
+                            <select name="" class="form-control input-modified" name="id_state" [(ngModel)]="row.id_state">
+                                <option *ngFor="let stateitems of stateitems" value="{{stateitems.idestados_items}}">{{stateitems.estados_item_name}}</option>
+
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control input-modified" [(ngModel)]="row.quantity_acta" name="quantity_acta" #quantity_acta="ngModel">
+                        </td>
+                        <td>
+                            <input type="date" class="form-control input-modified" [(ngModel)]="row.date_acta" name="date_acta" #date_acta="ngModel">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control input-modified" [(ngModel)]="row.acta" name="acta" #acta="ngModel">
+                        </td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <button class="btn btn-sm btn_add fa fa-plus" (click)="add()">
+
+            </button>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,32 @@
+.scroll {
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 500px;
+  padding-bottom: 80px;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+.img-circle {
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+}
+
+.aux {
+  width: 20%;
+}
+.al {
+  text-align: right;
+}
+.mtitle{
+  color: #fff;
+  margin-left:4px;
+  text-align: center;
+}
+.tuno{
+  overflow:scroll;
+  height:600px;
+  
+}

@@ -1,0 +1,2620 @@
+<div class="row">
+    <div class="col-9">
+        <h1 class="sub-title">Datos/Obra</h1>
+        <div class="col-12">
+            <form #externa="ngForm" id="externa">
+                <div class="form-group row">
+                    <label class="col-1 col-form-label">Consecutivo</label>
+                    <div class="col-2">
+                        <input class="form-control input-modified" type="text" name="consecutive" [(ngModel)]="consecutive"
+                            readonly>
+                    </div>
+                    <label class="col-1 col-form-label">N°/Plano</label>
+                    <div class="col-2">
+                        <input class="form-control input-modified" type="text" name="obr_nplano" #obr_nplano="ngModel"
+                            [(ngModel)]="external.obr_nplano">
+                    </div>
+                    <label class="col-1 col-form-label">Fecha/Inicio</label>
+                    <div class="col-2">
+                        <input class="form-control input-modified" type="date" name="obr_date_ini" #obr_date_ini="ngModel"
+                            [(ngModel)]="external.obr_date_ini" (change)="calcular_fecha()">
+                    </div>
+                    <label class="col-1 col-form-label">Tipo
+                        <span style="color:brown;">*</span>
+                    </label>
+                    <div class="col-2">
+                        <select class="form-control input-modified" name="obr_tipo" #obr_tipo="ngModel" [(ngModel)]="external.obr_tipo"
+                            required>
+                            <option *ngFor="let tyobr of tipo_obra" value="{{tyobr.idtype_obraext}}">{{tyobr.name_obrext}}</option>
+                        </select>
+                        <span *ngIf="obr_tipo.errors?.required && obr_tipo.touched" class="error_message">el campo es
+                            requerido</span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-1 col-form-label">Dirección</label>
+                    <div class="col-2">
+                        <input class="form-control input-modified" type="text" name="obr_direccion" #obr_direccion="ngModel"
+                            [(ngModel)]="external.obr_direccion">
+                    </div>
+                    <label class="col-1 col-form-label">Municipio
+                        <span style="color:brown;">*</span>
+                    </label>
+                    <div class="col-2">
+                        <select class="form-control input-modified" name="obr_municipio" #obr_municipio="ngModel"
+                            [(ngModel)]="external.obr_municipio" required>
+                            <option *ngFor="let city of list_city" value="{{city.idmunicipality}}">{{city.name_municipality}}</option>
+                        </select>
+                        <span *ngIf="obr_municipio.errors?.required && obr_municipio.touched" class="error_message">el
+                            campo es requerido</span>
+                    </div>
+                    <label class="col-1 col-form-label">Ans/Días</label>
+                    <div class="col-2">
+                        <input class="form-control input-modified" type="text" name="obr_ans" #obr_ans="ngModel"
+                            [(ngModel)]="external.obr_ans" (change)="calcular_fecha()">
+                    </div>
+                    <label class="col-1 col-form-label">Estado
+                        <span style="color:brown;">*</span>
+                    </label>
+                    <div class="col-2">
+                        <select class="form-control input-modified" name="obr_extado" #obr_extado="ngModel" [(ngModel)]="external.obr_extado"
+                            required>
+                            <option *ngFor="let state of estado_obra" value="{{state.idstate_ext}}">{{state.name_state}}</option>
+                        </select>
+                        <span *ngIf="obr_extado.errors?.required && obr_extado.touched" class="error_message">el campo
+                            es requerido</span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-1 col-form-label">Nombre/Proyecto</label>
+                    <div class="col-5">
+                        <input class="form-control input-modified" type="text" name="obr_nproyecto" #obr_nproyecto="ngModel"
+                            [(ngModel)]="external.obr_nproyecto">
+                    </div>
+                    <label class="col-1 col-form-label">Fecha/Final</label>
+                    <div class="col-2">
+                        <input class="form-control input-modified" type="date" name="obr_date_end" #obr_date_end="ngModel"
+                            [(ngModel)]="external.obr_date_end" readonly>
+                    </div>
+                    <label class="col-1 col-form-label">Fecha/Asignacíon</label>
+                    <div class="col-2">
+                        <input class="form-control input-modified" type="date" name="obr_date" #obr_date="ngModel"
+                            [(ngModel)]="external.obr_date">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-1 col-form-label">Observaciones</label>
+                    <div class="col-11">
+                        <textarea class="form-control input-modified textarea-modified" name="obr_notas" #obr_notas="ngModel"
+                            [(ngModel)]="external.obr_notas"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <button class="btn btn_primary btn-sm" [disabled]="!externa.valid || btn_insert" data-toggle="modal"
+            data-target="#insert_obra">Guardar</button>
+        <button class="btn btn_success btn-sm" [disabled]="btn_update" data-toggle="modal" data-target="#update_obra">Actualizar</button>
+        <button class="btn btn_success btn-sm" (click)="new()">Nuevo</button>
+        <button class="btn btn_warning btn-sm" (click)="new_oti()" data-toggle="modal" data-target="#detalle_obra">Nuevo
+            OTI</button>
+
+
+    </div>
+
+    <div class="col-3">
+        <h1 class="sub-title">Detalles/OTI</h1>
+        <div class="col-12">
+        </div>
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+
+
+                    <th>Item</th>
+                    <th>OTI</th>
+                    <th>Estado</th>
+                    <th>Detalles</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let newrow of anillo_detail; let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{newrow.obr_anillos_oti}}</td>
+                    <td>{{newrow.state_anillo_name}}</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-info btn-sm" value="{{newrow.obr_anillos_oti}},{{newrow.idobr_anillos}}"
+                            data-toggle="modal" data-target="#detalle_obra" (click)="search_oti($event)">Seleccionar</button>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <!--MODAL DE CONFIMACION-->
+    <div class="modal fade" id="update_obra" tabindex="-1" role="dialog" aria-labelledby="guardar_provider" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Atualizar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <p class="text-center text-muted p-3">Esta seguro que desea Atualizar ?</p>
+                        </div>
+                    </form>
+                </div>
+                <div class=" modal-footer">
+                    <button type="button" class="btn btn_danger btn-sm" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn_success btn-sm" (click)="update()" data-dismiss="modal">Acetar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--MODAL DE CONFIMACION-->
+    <div class="modal fade" id="insert_obra" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Crear</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <p class="text-center text-muted p-3">Esta seguro que desea Crear ?</p>
+                        </div>
+                    </form>
+                </div>
+                <div class=" modal-footer">
+                    <button type="button" class="btn btn_danger btn-sm" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn_success btn-sm" (click)="insert()" data-dismiss="modal">Acetar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--MODAL DE CONFIMACION  ATUALIZAR OTI-->
+    <div class="modal fade ss" id="update_oti" tabindex="-20" role="dialog" aria-labelledby="update_oti" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Atualizar OTI</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <p class="text-center text-muted p-3">Esta seguro que desea Atualizar ?</p>
+                        </div>
+                    </form>
+                </div>
+                <div class=" modal-footer">
+                    <button type="button" class="btn btn_danger btn-sm" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn_success btn-sm" (click)="update_oti()" data-dismiss="modal">Acetar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--MODAL DE CONFIMACION  ATUALIZAR OTI-->
+    <div class="modal fade ss" id="insert_oti" tabindex="-20" role="dialog" aria-labelledby="insert_oti" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Crear OTI</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <p class="text-center text-muted p-3">Esta seguro que desea Crear ?</p>
+                        </div>
+                    </form>
+                </div>
+                <div class=" modal-footer">
+                    <button type="button" class="btn btn_danger btn-sm" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn_success btn-sm" (click)="insert_oti()" data-dismiss="modal">Acetar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--MODAL DE DE CREACION DE INFORME DE OBRA-->
+    <div class="modal fade ss" id="informe_obra" tabindex="-20" role="dialog" aria-labelledby="informe_obra"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">OBRA</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form #detalles_o="ngForm" class="px-4">
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label label-required">OTI</label>
+                            <div class="col-9">
+                                <input class="form-control input-modified" type="text" name="obr_anillos_oti"
+                                    #obr_anillos_oti="ngModel" [(ngModel)]="anillos.obr_anillos_oti" readonly />
+                                <!--  <span *ngIf="obr_anillos_oti.errors?.required && obr_anillos_oti.touched" class="error_message">el campo es requerido</span>   -->
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label label-required">Fecha</label>
+                            <div class="col-9">
+                                <input class="form-control input-modified" type="date" name="detalles_obra_date"
+                                    #detalles_obra_date="ngModel" [(ngModel)]="dobra.detalles_obra_date" required />
+                                <span *ngIf="detalles_obra_date.errors?.required && detalles_obra_date.touched" class="error_message">el
+                                    campo es requerido</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Encargado</label>
+                            <div class="col-9">
+
+
+                                <input class="form-control input-modified " ngui-auto-complete (change)="encargado()"
+                                    [(ngModel)]="dobra.detalles_obra_encargado1" [source]="searc_employee"
+                                    list-formatter="full_name" path-to-data="employee" value-property-name="idemployees"
+                                    display-property-name="full_name" min-chars="1" name="detalles_obra_encargado"
+                                    #detalles_obra_encargado="ngModel" />
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Pegador</label>
+                            <div class="col-9">
+
+
+
+                                <input class="form-control input-modified " ngui-auto-complete (change)="pegador()"
+                                    [(ngModel)]="dobra.detalles_obra_pegador1" [source]="searc_employee" list-formatter="full_name"
+                                    path-to-data="employee" value-property-name="detalles_obra_pegador"
+                                    display-property-name="full_name" min-chars="1" name="detalles_obra_pegador"
+                                    #detalles_obra_pegador="ngModel" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Proveedor Arenilla</label>
+                            <div class="col-9">
+
+                                <input type="text" class="  form-control input-modified " name="quejas" [(ngModel)]="dobra.quejas" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Proveedor Base</label>
+                            <div class="col-9">
+                                <input type="text" class=" form-control input-modified " name="problemss"
+                                    [(ngModel)]="dobra.problemss" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Tipo de cuadrilla</label>
+                            <div class="col-9">
+                                <select class="form-control input-modified " name="type_gans" [(ngModel)]="dobra.type_gans">
+                                    <option *ngFor="let list_gans of list_gans" value="{{list_gans.id_type}}">{{list_gans.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Observaciones</label>
+                            <div class="col-9">
+                                <textarea class="form-control input-modified textarea-modified" name="detalles_obraobser"
+                                    #detalles_obraobser="ngModel" [(ngModel)]="dobra.detalles_obraobser"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class=" modal-footer">
+                    <button type="button" class="btn btn_danger btn-sm" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn_success btn-sm" (click)="insert_dobra()" data-dismiss="modal"
+                        [disabled]="btn_dinsert">Crear</button>
+                    <button type="button" class="btn btn_success btn-sm" (click)="update_dobra()" data-dismiss="modal"
+                        [disabled]="btn_dupdate">Actualizar</button>
+                        <button class="btn btn-sm btn-primary"data-toggle="modal" data-target="#cmaterial"><i class="fa fa-folder"></i>
+                            Referenciación y ensayos </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--MODAL DE CREACIóN DE GERENCIAL   -2---->
+    <div class="modal fade ss" id="gerencial" tabindex="-20" role="dialog" data-keyboard="false" data-backdrop="static"
+        aria-labelledby="detalle" aria-hidden="true">
+        <div class="modal-dialog  modal-lg1" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Gerencial</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="width-table-01"># </th>
+                                <th class="width-table-01">Eli</th>
+                                <th class="width-table-02">Item</th>
+                                <th class="width-table-02">Codigo</th>
+                                <th class="width-table-07"> Descripcion del item</th>
+                                <th class="width-table-02"> Valor</th>
+                                <th class="width-table-02">Cantidad</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let row of items_gerenciales; let i=index">
+                                <td>{{i+1}}</td>
+                              
+                                <td>
+                                    <button class="fas fa-trash-alt btn btn-danger btn-sm" (click)="delete_det_itemp_gen($event)" value="{{row.idd_obra_ge}}">
+                                      
+                                    </button>
+
+                                </td>
+
+                                <td>
+                                    <input class="form-control input-modified mx-2" (change)="valueChanged_geren(i, row)"
+                                        ngui-auto-complete [(ngModel)]="row.item_cobro" placeholder="Item" [source]="autocomplecodeexternal4"
+                                        list-formatter="item_cobro_code" path-to-data="search" value-property-name="item_cobro_code"
+                                        display-property-name="item_cobro_code" min-chars="1" name="item_cobro_code2"
+                                        #code="ngModel" />
+
+
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control-sm col-12 input-modified" name="item"
+                                        [(ngModel)]="row.item" readonly>
+                                </td>
+                                <td>
+
+
+                                    <input class="form-control input-modified mx-2" (change)="valueChanged_name_geren(i, row)"
+                                        ngui-auto-complete [(ngModel)]="row.item_cobro_name" placeholder="Descripción"
+                                        [source]="autocomplename4" list-formatter="item_cobro_name" path-to-data="search"
+                                        value-property-name="item_cobro_name" display-property-name="item_cobro_name"
+                                        min-chars="1" name="item_cobro_name2" #name="ngModel" />
+
+
+                                </td>
+
+                                <td>
+                                    <input type="text" class="form-control-sm col-12 input-modified" name="valor"
+                                        [(ngModel)]="row.valor" readonly>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control-sm col-12 input-modified" name="d_cantidad"
+                                        [(ngModel)]="row.d_cantidad">
+                                </td>
+
+                        </tbody>
+                    </table>
+
+
+                    <button class="btn_add" (click)='adddobra_gerencial()'>
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+                <div class=" modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" (click)="closegeren()"> Cerrar</button>
+                    <button type="button" class="btn btn_danger btn-sm" data-dismiss="modal"  #btncerrargeren [hidden]="btnclosegeren">Cerrar</button>
+                    <button type="button" class="btn btn_success btn-sm" (click)="save_dobra_gerencial()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--MODAL DE DE CREACION DE INFORME DE OBRA-->
+    <div class="modal fade ss" id="detalle" tabindex="-20" role="dialog" data-keyboard="false" data-backdrop="static"
+        aria-labelledby="detalle" aria-hidden="true">
+        <div class="modal-dialog  modal-lg1" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">DETALLES DE OBRA</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="width-table-01">
+                                    #
+                                </th>
+                                <th class="width-table-01">
+                                    Eli
+                                </th>
+
+                                <th class="width-table-1">
+                                    Item
+                                </th>
+                                <th class="width-table-01">
+                                    Codigo
+                                </th>
+                                <th class="width-table-07">
+                                    Descripcion del item
+                                </th>
+                                <th class="width-table-1">
+                                        Un
+                                    </th>
+                                <th class="width-table-1">
+                                        L1
+                                    </th>
+                                    <th class="width-table-1">
+                                            L2
+                                        </th>
+                                        <th class="width-table-1">
+                                                E
+                                            </th>
+                                            <th class="width-table-1">
+                                                    Cantidad
+                                                </th>
+                                <th class="width-table-1">
+                                    Ipid
+                                </th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let row of detalle_items; let i=index">
+                                <td>{{i+1}}</td>
+                                <td>
+                                    <button class="fas fa-trash-alt btn btn-danger btn-sm" (click)="delete_det_itemp($event)" value="{{row.idd_obra}}">
+                                       
+                                    </button>
+
+                                </td>
+
+                                <td>
+                                    <input class="form-control input-modified mx-2" (change)="valueChanged(i, row)"
+                                        ngui-auto-complete [(ngModel)]="row.item_cobro_code" placeholder="Item"
+                                        [source]="search_oti1" list-formatter="item_cobro_code" path-to-data="search"
+                                        value-property-name="item_cobro_code" display-property-name="item_cobro_code"
+                                        min-chars="1" name="item_cobro_code" #code="ngModel" />
+
+
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control-sm col-12 input-modified" name="item"
+                                        [(ngModel)]="row.item" readonly>
+                                </td>
+                                <td>
+
+
+                                    <input class="form-control input-modified mx-2" (change)="valueChanged_name(i, row)"
+                                        ngui-auto-complete [(ngModel)]="row.item_cobro_name" placeholder="Descripción"
+                                        [source]="search_oti_name" list-formatter="item_cobro_name" path-to-data="search"
+                                        value-property-name="item_cobro_name" display-property-name="item_cobro_name"
+                                        min-chars="1" name="item_cobro_name" #name="ngModel" />
+
+
+                                </td>
+                             
+                                <td>
+                                    {{row.item_cobro_unidad}}
+                                </td>
+                                <td>
+                                        <input type="text" class="form-control-sm col-12 input-modified" (keyup)="formula(i, row)"  name="item"
+                                            [(ngModel)]="row.l1" >
+                                    </td>
+                                    <td>
+                                            <input type="text" class="form-control-sm col-12 input-modified" (keyup)="formula(i, row)"  name="item"
+                                                [(ngModel)]="row.l2" >
+                                        </td>
+                                        <td>
+                                                <input type="text" class="form-control-sm col-12 input-modified" (keyup)="formula(i, row)"  name="item"
+                                                    [(ngModel)]="row.e" >
+                                            </td>
+                                            <td>
+                                                    <input type="text" class="form-control-sm col-12 input-modified"  name="item_presupuesto_cantidad"
+                                                        [(ngModel)]="row.item_presupuesto_cantidad">
+                                                </td>
+                                <td>
+                                    <select class="form-control input-modified" name="ipid"
+                                    #ipid="ngModel" [(ngModel)]="row.ipid">
+                                    <option *ngFor="let list_ipid of list_ipid" value="{{list_ipid.idipd}}">{{list_ipid.ipid}}</option>
+                                </select>
+
+                                </td>
+
+                        </tbody>
+                    </table>
+
+
+                    <button class="btn_add" (click)='adddobra()'>
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+                <div class=" modal-footer">
+
+                    <button type="button" class="btn btn-sm btn-danger" (click)="closedo()">Cerrar</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal"   [hidden]="btnclosedo" #btncerrardo >Cerrar</button>
+                    <button type="button" class="btn btn_success btn-sm" (click)="save_dobra()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade ss" id="subir_pdf" tabindex="-20" role="dialog" aria-labelledby="subir_pdf" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">VER IMAGENES Y DOCUMENTOS </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    
+                    <div class="modal-body">
+    
+                        <hr>
+    
+                        <div class="row data-tables">
+                            <div class="col-sm-12">
+                                <div class="form-group row">
+                                    <div class="col-sm-7">
+    
+    
+                                        <table id="table_income" class="table table-striped table-hover table-bordered table-relative">
+                                            <thead>
+                                                <tr>
+                                                    <th class="width-table-1">Item</th>
+                                                    <th class="width-table-1">Nombre</th>
+                                                    <th class="width-table-1">Nombre</th>
+    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="item_actividad eliminar_tr" *ngFor="let imageacta of _album; let i=index">
+                                                    <td>
+                                                        {{i+1}}
+                                                    </td>
+                                                    <td>
+                                                        {{imageacta.name}}
+                                                    </td>
+                                                    <td>
+                                                        <img [src]="imageacta.thumb" (click)="open(i)" class="img-circle" />
+                                                    </td>
+    
+                                                <tr>
+                                            </tbody>
+                                        </table>
+    
+    
+                                    </div>
+                                    <div class="col-sm-5">
+    
+    
+                                        <table id="table_income" class="table table-striped table-hover table-bordered table-relative">
+                                            <thead>
+                                                <tr>
+                                                    <th class="width-table-1">Nombre</th>
+                                                    <th class="width-table-2">documento</th>
+                                                    <th class="width-table-2">Eliminar</th>
+    
+    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+    
+                                            </tbody>
+                                        </table>
+                                    </div>
+    
+                                </div>
+    
+    
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" modal-footer">
+                        <button type="button" class="btn btn_danger btn-sm" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!--MODAL DE CONFIMACION DETALLES DE OBRA
+    -->
+    <div class="modal fade" id="detalle_obra" tabindex="-0" role="dialog" data-keyboard="false" data-backdrop="static"
+        aria-hidden="true">
+        <div class="modal-dialog  modal-xl" role="document" style="width:95%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Detalle De Obra OTI {{oti}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#presupuesto" role="tab">Presupuesto</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#presu" role="tab" (click)="presupuesto()">Presupuesto
+                                        OTI</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" #OTI data-toggle="tab" href="#oti" role="tab">OTI</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#informe" role="tab" (click)="informe()">Informe/obra</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#itemscobro" role="tab" (click)="items_cbr()">Items/Cobro</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#materiales" role="tab" (click)="tab_mate()">Materiales/Utilizados</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#actividades" role="tab" (click)="tabactivity()">Actividades</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#actasv" (click)="actasv()" role="tab">Actas/Vecindad</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#itemscosto" role="tab">Items/Costo</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#topografia" role="tab">Topografia</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#ow" (click)="ow()" role="tab">Despiece</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#ipid" role="tab">Ipid</a>
+                                </li>
+                            </ul>
+
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane  active" id="presupuesto" role="tabpanel">
+                                    <div class="table-min-heigth">
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Item</th>
+                                                    <th>Clasificación/Obra</th>
+                                                    <th>Cod/Item</th>
+                                                    <th>Detalle/Obra</th>
+                                                    <th>Presupuesto</th>
+                                                    <th>Acumulado</th>
+                                                    <th>Faltante</th>
+                                                    <th>%Avance</th>
+                                                    <th>%Avanze</th>
+                                                    <th>%faltante</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane" id="presu" role="tabpanel">
+                                       
+                                    <div class="table-min-heigth scroll">
+                                    
+
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th width="5%">Item</th>
+                                                    <th width="6%">Eliminar</th>
+                                  
+                                                    <th width="7%">cod/Item</th>
+                                                    <th width="7%">Item</th>
+                                                    <th width="25%">Descripción/Item</th>
+                                                    <th width="7%">Cantidad</th>
+                                                    <th width="10%">Acomulado</th>
+                                                    <th>%avance</th>
+                                                    <th>Faltante</th>
+                                                    <th>Ipid</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of items_table; let i=index">
+                                                    <td>{{i+1}}</td>
+                                                    <td>
+                                                        <button class="fas fa-trash-alt btn btn-danger btn-sm" (click)="delete_itemp($event)"
+                                                            value="{{row.iditem_presupuesto}}">
+
+                                                        </button>
+
+                                                    </td>                   
+                                                   
+                                                    <td>
+                                                        <input  class="form-control input-modified mx-2" 
+                                                            ngui-auto-complete [(ngModel)]="row.item_cobro_code"
+                                                            placeholder="Item" [source]="search_oti1" list-formatter="item_cobro_code"
+                                                            path-to-data="search" 
+                                                            display-property-name="item_cobro_code" min-chars="1" name="item_cobro_code"
+                                                            />
+
+                                                    </td>
+                                                    <td>
+                                                      
+                                                            {{row.item}}
+                                                    </td>
+                                                    <td>
+
+
+                                                        <input class="form-control input-modified mx-2" 
+                                                            ngui-auto-complete [(ngModel)]="row.item_cobro_name"
+                                                            placeholder="Descripción" [source]="search_oti_name"
+                                                            list-formatter="item_cobro_name" path-to-data="search"
+                                                            display-property-name="item_cobro_name"
+                                                            min-chars="1" name="item_cobro_name"  />
+
+
+                                                    </td>
+
+                                                    <td>
+                                                        <input type="text" class="form-control-sm col-12 input-modified"
+                                                            name="item_presupuesto_cantidad" [(ngModel)]="row.item_presupuesto_cantidad" >
+                                                    </td>
+                                                    <td>
+                                                        {{row.acomulado}}
+
+                                                    </td>
+                                                    <td> {{row.avance}} %</td>
+
+                                                    <td>{{row.faltante}} %</td>
+                                                    <td><select class="form-control input-modified" name="id_ipid"
+                                                        #ipid="ngModel" [(ngModel)]="row.id_ipid">
+                                                        <option *ngFor="let list_ipid of list_ipid" value="{{list_ipid.idipd}}">{{list_ipid.ipid}}</option>
+                                                    </select></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                        <div>
+                                                <button class="btn_add" (click)='add()'>
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </div>
+                                   
+
+                                 
+                                    
+                                    
+                                </div>
+
+
+                                <div class="tab-pane active" id="oti" role="tabpanel">
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-8">
+
+                                                <div class="row">
+                                                    <div class="col-10">
+                                                        <form #anillo="ngForm" id="externa">
+                                                            <div class="form-group row">
+                                                                <label class="col-1 col-form-label">N°/Anillo</label>
+                                                                <div class="col-2">
+                                                                    <input class="form-control input-modified" type="text"
+                                                                        name="obr_anillos_anillo" #obr_anillos_anillo="ngModel"
+                                                                        [(ngModel)]="anillos.obr_anillos_anillo"
+                                                                        (keyup)="onchange_oti()">
+                                                                </div>
+                                                                <label class="col-1 col-form-label">Instalación</label>
+                                                                <div class="col-2">
+                                                                    <input class="form-control input-modified" type="text"
+                                                                        name="obr_anillos_instalacion"
+                                                                        #obr_anillos_instalacion="ngModel" [(ngModel)]="anillos.obr_anillos_instalacion">
+                                                                </div>
+                                                                <label class="col-1 col-form-label">Cierre/Anillo</label>
+                                                                <div class="col-1 text-center">
+                                                                    <input type="checkbox" name="obr_anillos_cierreanillo"
+                                                                        #obr_anillos_cierreanillo="ngModel" [(ngModel)]="anillos.obr_anillos_cierreanillo">
+                                                                </div>
+                                                                <label class="col-1 col-form-label">Gasificado</label>
+                                                                <div class="col-1 text-center">
+                                                                    <input type="checkbox" name="obr_anillos_gasificacion"
+                                                                        #obr_anillos_gasificacion="ngModel" [(ngModel)]="anillos.obr_anillos_gasificacion">
+                                                                </div>
+                                                                <label class="col-1 col-form-label">Hermeticidad</label>
+                                                                <div class="col-1 text-center">
+                                                                    <input type="checkbox" name="obr_anillos_herme"
+                                                                        #obr_anillos_herme="ngModel" [(ngModel)]="anillos.obr_anillos_herme">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group row">
+                                                                <label class="col-1 col-form-label">GPZ/TRAMO</label>
+                                                                <div class="col-2">
+                                                                    <input class="form-control input-modified" type="text"
+                                                                        name="obr_anillos_gpz" #obr_anillos_gpz="ngModel"
+                                                                        [(ngModel)]="anillos.obr_anillos_gpz" (keydown)="onchange_gpz()">
+                                                                </div>
+                                                                <label class="col-1 col-form-label">Pedido</label>
+                                                                <div class="col-2">
+                                                                    <input class="form-control input-modified" type="text"
+                                                                        name="obr_anillos_pedido" #obr_anillos_pedido="ngModel"
+                                                                        [(ngModel)]="anillos.obr_anillos_pedido">
+                                                                </div>
+                                                                <label class="col-1 col-form-label">Referenciación</label>
+                                                                <div class="col-1 text-center">
+                                                                    <input type="checkbox" name="obr_anillos_refer"
+                                                                        #obr_anillos_refer="ngModel" [(ngModel)]="anillos.obr_anillos_refer">
+                                                                </div>
+                                                                <label class="col-1 col-form-label">R/Concreto</label>
+                                                                <div class="col-1 text-center">
+                                                                    <input type="checkbox" name="obr_anillos_concre"
+                                                                        #obr_anillos_concre="ngModel" [(ngModel)]="anillos.obr_anillos_concre">
+                                                                </div>
+                                                                <label class="col-1 col-form-label">R/Pavimento</label>
+                                                                <div class="col-1 text-center">
+                                                                    <input type="checkbox" name="obr_anillos_pav"
+                                                                        #obr_anillos_pav="ngModel" [(ngModel)]="anillos.obr_anillos_pav">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group row">
+                                                                <label class="col-1 col-form-label">OTI
+                                                                    <span style="color:brown;">*</span>
+                                                                </label>
+                                                                <div class="col-2">
+                                                                    <input class="form-control input-modified" type="text"
+                                                                        name="obr_anillos_oti" #obr_anillos_oti="ngModel"
+                                                                        [(ngModel)]="anillos.obr_anillos_oti" required
+                                                                        readonly>
+                                                                    <span *ngIf="obr_anillos_oti.errors?.required && obr_anillos_oti.touched"
+                                                                        class="error_message">el campo es requerido</span>
+                                                                </div>
+
+                                                                <label class="col-1 col-form-label">OT</label>
+                                                                <div class="col-2">
+                                                                    <input class="form-control input-modified" type="text"
+                                                                        name="obr_anillos_ot" #obr_anillos_ot="ngModel"
+                                                                        [(ngModel)]="anillos.obr_anillos_ot">
+                                                                </div>
+                                                                <label class="col-1 col-form-label">Estado
+                                                                    <span style="color:brown;">*</span>
+                                                                </label>
+                                                                <div class="col-2">
+
+
+                                                                    <select class="form-control input-modified" name="obr_anillos_state"
+                                                                        #obr_anillos_state="ngModel" [(ngModel)]="anillos.obr_anillos_state"
+                                                                        required>
+                                                                        <option *ngFor="let statea of state_anillo"
+                                                                            value="{{statea.idstate_anillo}}">{{statea.state_anillo_name}}</option>
+                                                                    </select>
+                                                                    <span *ngIf="obr_anillos_state.errors?.required && obr_anillos_state.touched"
+                                                                        class="error_message">el campo es requerido</span>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-1 col-form-label">N°/Solicitud</label>
+                                                                <div class="col-2">
+                                                                    <input class="form-control input-modified" type="text"
+                                                                        name="obr_anillos_solicitud"
+                                                                        #obr_anillos_solicitud="ngModel" [(ngModel)]="anillos.obr_anillos_solicitud">
+                                                                </div>
+
+
+                                                                <label class="col-1 col-form-label">Fecha
+                                                                    inicial</label>
+                                                                <div class="col-2">
+                                                                    <input class="form-control input-modified" type="date"
+                                                                        name="otiStartDate" [(ngModel)]="anillos.otiStartDate" #otiStartDate="ngModel">
+                                                                </div>
+
+
+                                                                <label class="col-1 col-form-label">Fecha final</label>
+                                                                <div class="col-2">
+                                                                    <input class="form-control input-modified" type="date"
+                                                                        name="otiLastDate" [(ngModel)]="anillos.otiLastDate" #otiLastDate="ngModel">
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="form-group row">
+                                                                <label class="col-1 col-form-label">Observaciones</label>
+                                                                <div class="col-11">
+                                                                    <textarea class="form-control input-modified textarea-modified"
+                                                                        name="obr_anillos_obser" #obr_anillos_obser="ngModel"
+                                                                        [(ngModel)]="anillos.obr_anillos_obser"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <button class="btn btn-sm btn_primary" [disabled]="!anillo.valid || btn_inser_oti"
+                                                                data-toggle="modal" data-target="#insert_oti">
+                                                                Guardar</button>
+                                                            <button class="btn btn-sm btn_success" [disabled]="btn_update_oti"
+                                                                data-toggle="modal" data-target="#update_oti">Actualizar</button>
+                                                        </form>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <h1 class="sub-title mt-5">Cargar/Archivos</h1>
+                                                <input id="upload_file" type="file" class="mb-3">
+                                                <input name="image[]" (change)="imagesend($event)" type="file" multiple=""
+                                                    class="btn-file mb-3" [(ngModel)]="image">
+
+                                                <button class="btn btn-sm btn-block btn_primary mb-3">Cargar Documentos</button>
+                                                <h1 class="sub-title mt-5">Ver/Documentos</h1>
+                                                <button class="btn btn-sm btn-block btn_primary mb-3">Ver Documentos</button>
+
+
+                                                <h1 class="sub-title mt-5">Importar Presupuesto</h1>
+
+                                                <input type="file" (change)="onFileChange($event)" multiple="false"
+                                                    class="mb-3" />
+                                                <h1 class="sub-title mt-5"></h1>
+                                                <button class="btn btn-sm btn-block btn_primary mb-3" (click)="import_presu()">Subir</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="informe" role="tabpanel">
+                                    <div class="table-min-heigth">
+                                        <table class="table table-striped table-bordered table-hover" id="table_informe">
+                                            <thead>
+                                                <tr>
+                                                    <th width="2%">Item</th>
+                                                    <th width="5%">Fecha</th>
+                                                    <th width="15%">Encargado</th>
+                                                    <th width="15%">Pegador</th>
+                                                    <th width="15%">Cuadrillas</th>
+                                                    <th width="2%">OTI</th>
+                                                    <th width="2%">Gerencial</th>
+                                                    <th width="2%">Editar</th>
+                                                    <th width="1%">Eliminar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of informe_table; let i=index">
+                                                    <td>{{i+1}}</td>
+
+                                                    <td>
+                                                        {{row.detalles_obra_date}}
+                                                    </td>
+                                                    <td>
+                                                        {{row.detalles_obra_encargado}}
+                                                    </td>
+                                                    <td>
+                                                        {{row.detalles_obra_pegador}}
+                                                    </td>
+                                                    <td>
+                                                        {{row.detalles_obraobser}}
+                                                    </td>
+                                                    <td>
+                                                        <button class="fas fa-clone btn btn-sm btn_primary" data-toggle="modal"
+                                                            data-target="#detalle" value="{{row.iddetalles_obra}}"
+                                                            (click)="searc_detalle($event)"> Oti
+                                                        </button>
+                                                    </td>
+
+                                                    <td>
+                                                        <button class="fas fa-clone  btn btn-sm btn_primary" data-toggle="modal"
+                                                            data-target="#gerencial" value="{{row.iddetalles_obra}}"
+                                                            (click)="searc_detalle_gerencial($event)"> Gerencial
+
+                                                        </button>
+                                                    </td>
+
+                                                    <td>
+                                                        <button class="btn btn-sm btn_success fa fa-edit" data-toggle="modal"
+                                                            data-target="#informe_obra" value="{{row.iddetalles_obra}}"
+                                                            (click)="searc_detalle_obra_edit($event)">Editar
+
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <button class="fas fa-trash-alt btn btn-danger btn-sm" value="{{row.iddetalles_obra}}"
+                                                            (click)="delete_detalle_obra($event)">
+
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                                                  
+                                            </tbody>
+                                        </table>  <div>
+                                        <button class="btn_add fa fa-plus" data-toggle="modal" data-target="#informe_obra"
+                                            (click)="btn_insert_d()">
+
+                                        </button>
+                                    </div>
+                                    </div>
+
+                                    <button class="btn_add fa fa-folder" data-toggle="modal" data-target="#pru123"
+                                    (click)="btn_insert_d()">
+
+                                </button>
+                                    
+                                </div>
+
+
+                                <div class="tab-pane" id="itemscobro" role="tabpanel">
+                                    <div class="table-min-heigth">
+                                        <table class="table table-striped table-bordered table-hover" style="font-size: 12px;">
+                                            <thead>
+                                                <tr>
+                                                    <th class="width-table-1">#</th>
+                                                    <th class="width-table-01">Eli</th>
+                                                    <th class="width-table-03">Cod</th>
+                                                    <th class="width-table-02">Item</th>
+                                                    <th class="width-table-6">Descripción</th>
+                                                    <th class="width-table-1">Fecha</th>
+                                                    <th class="width-table-02">Cantidad</th>
+                                                    <th class="width-table-2">Estado</th>
+                                                    <th class="width-table-1">Cat/Acta</th>
+                                                    <th class="width-table-02">Actas</th>
+                                                    <th class="width-table-1">Fecha/Acta</th>
+                                                    <th class="width-table-1">Ipi</th>
+                                                    <th class="width-table-1">Papeleta</th>
+                                                    <th class="width-table-1">N°/Solicitud</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of items_cobro; let i=index">
+                                                    <td>{{i+1}}</td>
+                                                    <td>
+                                                        <button class="fas fa-trash-alt btn btn-danger btn-sm" value="{{row.iditems_externas}}"
+                                                            (click)="delete_item_cbr($event)">
+
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control input-modified mx-2" (change)="valueChanged(i, row)"
+                                                            ngui-auto-complete [(ngModel)]="row.item_cobro_code"
+                                                            placeholder="Item" [source]="search_oti1" list-formatter="item_cobro_code"
+                                                            path-to-data="search" value-property-name="item_cobro_code"
+                                                            display-property-name="item_cobro_code" min-chars="1" name="item_cobro_code"
+                                                            #code="ngModel" />
+
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control-sm col-12 input-modified"
+                                                            name="item" [(ngModel)]="row.item" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control input-modified mx-2" (change)="valueChanged_name(i, row)"
+                                                            ngui-auto-complete [(ngModel)]="row.item_cobro_name"
+                                                            placeholder="Descripción" [source]="search_oti_name"
+                                                            list-formatter="item_cobro_name" no-match-found-text="no se encontro ningun resultado"
+                                                            path-to-data="search" value-property-name="item_cobro_name"
+                                                            display-property-name="item_cobro_name" min-chars="1" name="item_cobro_name"
+                                                            #name="ngModel" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" class="form-control input-modified" name="items_externas_date"
+                                                            [(ngModel)]="row.items_externas_date">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control input-modified" name="items_externas_cantidad"
+                                                            [(ngModel)]="row.items_externas_cantidad">
+                                                    </td>
+                                                    <td>
+                                                        <select name="" class="form-control input-modified" name="items_externas_state"
+                                                            [(ngModel)]="row.items_externas_state">
+                                                            <option *ngFor="let stateitems of stateitems" value="{{stateitems.idestados_items}}">{{stateitems.estados_item_name}}</option>
+
+                                                        </select>
+                                                    </td>
+
+                                                    <td>
+                                                        <input type="text" class="form-control input-modified" name="items_externas_cantidadacta"
+                                                            [(ngModel)]="row.items_externas_cantidadacta">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control input-modified" name="items_externas_acta"
+                                                            [(ngModel)]="row.items_externas_acta">
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" class="form-control input-modified" name="items_externas_date_acta"
+                                                            [(ngModel)]="row.items_externas_date_acta">
+                                                    </td>
+                                                    <td>
+                                                     
+                                                            <select class="form-control input-modified" name="items_externas_ipi"
+                                                        #ipid="ngModel" [(ngModel)]="row.items_externas_ipi">
+                                                        <option *ngFor="let list_ipid of list_ipid" value="{{list_ipid.idipd}}">{{list_ipid.ipid}}</option>
+                                                    </select>
+                                                    </td>
+
+                                                    <td>
+                                                        <input type="text" class="form-control input-modified" name="items_externas_papeleta"
+                                                            [(ngModel)]="row.items_externas_papeleta">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control input-modified" name="items_externas_solicitud"
+                                                            [(ngModel)]="row.items_externas_solicitud">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div>
+                                            <button class="btn_add" (click)='add_item()'>
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="tab-pane" id="topografia" role="tabpanel">
+
+                                    <div class="col-sm-12 col-md-8 float-left d-inline-block dos">
+                                        <div class="form-group row">
+
+                                            <div class="col-sm-12 col-md-6 float-left d-inline-block dos">
+                                                <div class="form-group row">
+
+
+                                                    <div class="col-12 mb-1 mt-1 uno">
+                                                        <label class="col-4 col-form-label pl-2 al">Material: </label>
+                                                        <div class="col-7 float-right">
+                                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                type="text" name="topoMaterial" [(ngModel)]="topografiamodel.topoMaterial">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 mb-1 mt-1 uno">
+                                                        <label class="col-4 col-form-label pl-2 al">IPID: </label>
+                                                        <div class="col-7 float-right">
+                                                                <input class="form-control input-modified " ngui-auto-complete (change)="search_dataipid()"
+                                                                [(ngModel)]="topografiamodel.topoipid" [source]="search_ipi" list-formatter="ipid"
+                                                                path-to-data="response" value-property-name="ipid"
+                                                                display-property-name="ipid" min-chars="1" name="topoipid"
+                                                                #topoipid="ngModel" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 mb-1 mt-1 uno">
+                                                        <label class="col-4 col-form-label pl-2 al">Nodo inicial: </label>
+                                                        <div class="col-7 float-right">
+                                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                type="text" name="toponodoinicial" [(ngModel)]="topografiamodel.toponodoinicial">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 mb-1 mt-1 uno">
+                                                        <label class="col-4 col-form-label pl-2 al">Nodo final: </label>
+                                                        <div class="col-7 float-right">
+                                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                type="text" name="toponodofinal" [(ngModel)]="topografiamodel.toponodofinal">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12 col-md-6 float-left d-inline-block dos">
+                                                <div class="form-group row">
+
+                                                    <div class="col-12 mb-1 mt-1 uno">
+                                                        <label class="col-4 col-form-label pl-2 al">Longitud entre
+                                                            nodos: </label>
+                                                        <div class="col-7 float-right">
+                                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                type="number" name="toponodeslength " [(ngModel)]="topografiamodel.toponodeslength">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 mb-1 mt-1 uno">
+                                                        <label class="col-4 col-form-label pl-2 al">Diametro (mm):
+                                                        </label>
+                                                        <div class="col-7 float-right">
+                                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                type="number" name="topoDiameter" [(ngModel)]="topografiamodel.topoDiameter">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 mb-1 mt-1 uno">
+                                                            <label class="col-4 col-form-label pl-2 al">Fecha:
+                                                            </label>
+                                                            <div class="col-7 float-right">
+                                                                <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                    type="date" name="topoDate" [(ngModel)]="topografiamodel.topoDate">
+                                                            </div>
+                                                        </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12  float-left d-inline-block dos">
+                                        <div class="form-group row">
+                                            <div class="col-sm-12 col-md-6 float-left d-inline-block dos">
+                                                <div class="form-group row">
+
+                                                    <div class="col-12">
+                                                        <h4 class="mb-3 title">Inicial</h4>
+                                                    </div>
+
+                                                    <div class="col-sm-12 col-md-6 float-left d-inline-block dos">
+                                                        <div class="form-group row">
+
+
+                                                            <div class="col-12 mb-1 mt-1 uno">
+                                                                <label class="col-4 col-form-label pl-2 al">Nodo:
+                                                                </label>
+                                                                <div class="col-7 float-right">
+                                                                    <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                        type="text" name="ininode" [(ngModel)]="topografiamodel.ininode">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 mb-1 mt-1 uno">
+                                                                <label class="col-4 col-form-label pl-2 al">Direccion:
+                                                                </label>
+                                                                <div class="col-7 float-right">
+                                                                    <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                        type="text" name="iniaddress" [(ngModel)]="topografiamodel.iniaddress">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 mb-1 mt-1 uno">
+                                                                <label class="col-4 col-form-label pl-2 al">Tipo
+                                                                    material: </label>
+                                                                <div class="col-7 float-right">
+                                                                    <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                        type="text" name="iniTypeMaterial" [(ngModel)]="topografiamodel.iniTypeMaterial">
+                                                                </div>
+                                                            </div>
+
+
+
+                                                            <div class="col-12 mb-1 mt-1 uno">
+                                                                <label class="col-4 col-form-label pl-2 al">Diametro
+                                                                    Material (mm): </label>
+                                                                <div class="col-7 float-right">
+                                                                    <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                        type="number" name="inidiameterMaterial"
+                                                                        [(ngModel)]="topografiamodel.inidiameterMaterial">
+                                                                </div>
+                                                            </div>
+
+
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-12 col-md-6 float-left d-inline-block dos">
+                                                        <div class="form-group row">
+
+                                                            <div class="col-12 mb-1 mt-1 uno">
+                                                                <label class="col-4 col-form-label pl-2 al">Coor este:
+                                                                </label>
+                                                                <div class="col-7 float-right">
+                                                                    <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                        type="number" name="inicoorEste" [(ngModel)]="topografiamodel.inicoorEste">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 mb-1 mt-1 uno">
+                                                                <label class="col-4 col-form-label pl-2 al">Coor norte:
+                                                                </label>
+                                                                <div class="col-7 float-right">
+                                                                    <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                        type="number" name="inicoorNorte" [(ngModel)]="topografiamodel.inicoorNorte">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 mb-1 mt-1 uno">
+                                                                <label class="col-4 col-form-label pl-2 al">Cota clave:
+                                                                </label>
+                                                                <div class="col-7 float-right">
+                                                                    <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                        type="number" name="inicotaKey" [(ngModel)]="topografiamodel.inicotaKey">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 mb-1 mt-1 uno">
+                                                                <label class="col-4 col-form-label pl-2 al">Cota
+                                                                    terreno: </label>
+                                                                <div class="col-7 float-right">
+                                                                    <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                        type="number" name="inicotaTerreno" [(ngModel)]="topografiamodel.inicotaTerreno">
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-12 col-md-11 float-left d-inline-block dos">
+                                                        <div class="form-group row">
+
+                                                                <div class="col-12 mb-1 mt-1 uno">
+                                                                        <label class="col-1 col-form-label pl-2 al">
+                                                                            Item Material: </label>
+                                                                        <div class="col-10 float-right">
+                                                                           
+    
+    
+                                                                                <input class="" (change)="valueChanged_iniitemtopo()"
+                                                                                ngui-auto-complete [(ngModel)]="topografiamodel.inimate"
+                                                                                placeholder="Item" [source]="items_topo" list-formatter="item_cobro_code"
+                                                                                path-to-data="search" value-property-name="item_cobro_code"
+                                                                                display-property-name="item_cobro_name" min-chars="1" name="item_cobro_code"
+                                                                                style="width:100%;"
+                                                                                />
+                    
+                                                                        </div>
+                                                                    </div>
+
+                                                            <div class="col-12 mb-1 mt-1 uno">
+                                                                <label class=" col-1 col-form-label  al ">Observaciones:
+                                                                </label>
+                                                                <div class="col-10 float-right">
+                                                                    <textarea rows="3" name="iniObservation"
+                                                                        [(ngModel)]="topografiamodel.iniObservation" style="width:100%;"></textarea>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-sm-12 col-md-6 float-left d-inline-block dos">
+                                                <div class="form-group row">
+
+                                                    <div class="col-12">
+                                                        <h4 class="mb-3 title">Final</h4>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-6 float-left d-inline-block dos">
+                                                        <div class="form-group row">
+
+
+                                                            <div class="col-12 mb-1 mt-1 uno">
+                                                                <label class="col-4 col-form-label pl-2 al">Nodo:
+                                                                </label>
+                                                                <div class="col-7 float-right">
+                                                                    <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                        type="text" name="finnode" [(ngModel)]="topografiamodel.finnode">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 mb-1 mt-1 uno">
+                                                                <label class="col-4 col-form-label pl-2 al">Direccion:
+                                                                </label>
+                                                                <div class="col-7 float-right">
+                                                                    <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                        type="text" name="finaddress" [(ngModel)]="topografiamodel.finaddress">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 mb-1 mt-1 uno">
+                                                                <label class="col-4 col-form-label pl-2 al">Tipo
+                                                                    material: </label>
+                                                                <div class="col-7 float-right">
+                                                                    <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                        type="text" name="finTypeMaterial" [(ngModel)]="topografiamodel.finTypeMaterial">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 mb-1 mt-1 uno">
+                                                                <label class="col-4 col-form-label pl-2 al">Diametro
+                                                                    Material (mm): </label>
+                                                                <div class="col-7 float-right">
+                                                                    <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                        type="number" name="findiameterMaterial"
+                                                                        [(ngModel)]="topografiamodel.findiameterMaterial">
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-12 col-md-6 float-left d-inline-block dos">
+                                                        <div class="form-group row">
+
+                                                            <div class="col-12 mb-1 mt-1 uno">
+                                                                <label class="col-4 col-form-label pl-2 al">Coor este:
+                                                                </label>
+                                                                <div class="col-7 float-right">
+                                                                    <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                        type="number" name="fincoorEste" [(ngModel)]="topografiamodel.fincoorEste">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 mb-1 mt-1 uno">
+                                                                <label class="col-4 col-form-label pl-2 al">Coor norte:
+                                                                </label>
+                                                                <div class="col-7 float-right">
+                                                                    <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                        type="number" name="fincoorNorte" [(ngModel)]="topografiamodel.fincoorNorte">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 mb-1 mt-1 uno">
+                                                                <label class="col-4 col-form-label pl-2 al">Cota clave:
+                                                                </label>
+                                                                <div class="col-7 float-right">
+                                                                    <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                        type="number" name="fincotaKey" [(ngModel)]="topografiamodel.fincotaKey">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 mb-1 mt-1 uno">
+                                                                <label class="col-4 col-form-label pl-2 al">Cota
+                                                                    terreno: </label>
+                                                                <div class="col-7 float-right">
+                                                                    <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                                        type="number" name="fincotaTerreno" [(ngModel)]="topografiamodel.fincotaTerreno">
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-12 col-md-11 float-left d-inline-block dos">
+                                                        <div class="form-group row">
+
+                                                                <div class="col-12 mb-1 mt-1 uno">
+                                                                        <label class=" col-1 col-form-label  al ">
+                                                                            Item Material: </label>
+                                                                        <div class="col-10 float-right">       
+                                                                                <input class="" (change)="valueChanged_enditemtopo()"
+                                                                                ngui-auto-complete [(ngModel)]="topografiamodel.finmate"
+                                                                                placeholder="Item" [source]="items_topo" list-formatter="item_cobro_code"
+                                                                                path-to-data="search" value-property-name="item_cobro_code"
+                                                                                display-property-name="item_cobro_name" min-chars="1" name="item_cobro_code"
+                                                                                style="width:100%;"
+                                                                                />
+                    
+                                                                        </div>
+                                                                    </div>
+    
+                                                            <div class="col-12 mb-1 mt-1 uno">
+                                                                <label class=" col-1 col-form-label  al ">Observaciones:
+                                                                </label>
+                                                                <div class="col-10 float-right">
+                                                                    <textarea rows="3" name="finObservation"
+                                                                        [(ngModel)]="topografiamodel.finObservation" style="width:100%;"></textarea>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <div class="float-right ">
+                                            <button type="button" class="btn btn-sm btn_primary m-2" (click)="savetopo()" [disabled]="btnsavetopo"><i class="fa fa-save"></i>
+                                                Guardar</button>
+                                            <button type="button" class="btn btn-sm btn_primary m-2" (click)="updatetopo()" [disabled]="btnupdatetopo"><i class="fa fa-sync"></i>
+                                                Actualizar</button>
+                                             <button type="button" class="btn btn-sm btn_primary m-2" (click)="newtopo()"  [disabled]="btnnewtopo"><i class="fa fa-plus"></i>
+                                                 Nuevo </button>
+                                            <button type="button" class="btn btn-sm btn_success m-2" (click)="searchtopo()" data-toggle="modal" data-target="#searcht"><i class="fa fa-search"></i>
+                                                Buscar </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="tab-pane" id="materiales" role="tabpanel">
+                                    <div class="table-min-heigth">
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="width-table-01">Item</th>
+                                                    <th class="width-table-1">Eliminar</th>
+                                                    <th class="width-table-1">Codigo</th>
+                                                    <th class="width-table-1">Item</th>
+                                                    <th class="width-table-5">Descripción/Material</th>
+                                                    <th class="width-table-1">Cantidad</th>
+                                                    <th class="width-table-1">Fecha</th>
+                                                    <th class="width-table-01">Ipid</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of table_materiales; let i=index">
+                                                    <td>{{i+1}}</td>
+                                                    <td>
+                                                        <button class="fas fa-trash-alt btn btn-danger btn-sm" value="{{row.idmateriales_obr_ext}}"
+                                                            (click)="delete_mate($event)">
+
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control input-modified" (change)="valueChangedmate(i, row)"
+                                                            ngui-auto-complete [(ngModel)]="row.code" placeholder="codigo"
+                                                            [source]="search_codigo" list-formatter="code" path-to-data="materiales"
+                                                            value-property-name="idmateriales" display-property-name="code"
+                                                            min-chars="2" name="code1" #code="ngModel" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control input-modified" name="material"
+                                                            [(ngModel)]="row.material" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control input-modified" (change)="valueChangeddescri(i, row)"
+                                                            ngui-auto-complete [(ngModel)]="row.description"
+                                                            placeholder="Descripcion" [source]="search_desc"
+                                                            list-formatter="description" path-to-data="results"
+                                                            value-property-name="idmateriales" display-property-name="description"
+                                                            min-chars="2" name="description" #description="ngModel" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control input-modified" name="materiales_obr_cantidad"
+                                                            [(ngModel)]="row.materiales_obr_cantidad">
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" class="form-control input-modified" name="date"
+                                                            [(ngModel)]="row.date">
+                                                    </td>
+                                                    <td>
+
+
+                                                        <select class="form-control input-modified" name="ipid"
+                                                            #ipid="ngModel" [(ngModel)]="row.ipid">
+                                                            <option *ngFor="let list_ipid of list_ipid" value="{{list_ipid.idipd}}">{{list_ipid.ipid}}</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <button class="btn_add" (click)='add_materiales()'>
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="tab-pane" id="actividades" role="tabpanel">
+                                    <div class="table-min-heigth scroll">
+
+                                        <table class="table table-striped table-bordered table-hover" id="activity">
+                                            <thead>
+                                                <tr>
+                                                    <th>Item</th>
+                                                    <th>Eliminar</th>
+                                                    <th>Atualizar</th>
+                                                    <th>Empleado</th>
+                                                    <th>Fecha</th>
+                                                    <th>Tipo/actividad</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Valor/actividad</th>
+                                                    <th>Estado</th>
+                                                    <th>Fecha/pago</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of table_activiti1; let i=index">
+                                                    <td>{{i+1}}</td>
+                                                    <td>
+
+
+                                                        <button class="fas fa-trash-alt btn btn-danger btn-sm" value="{{row.idactivity_externas}}"
+                                                            (click)="delete_activity($event)">
+
+                                                        </button>
+
+
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn_success mr-3" value="{{row.idactivity_externas}}"
+                                                            (click)="update_activity($event)">Atualizar</button>
+                                                    </td>
+                                                    <td>
+
+                                                        {{row.employee}}
+
+                                                    </td>
+                                                    <td>
+
+                                                        {{row.activity_externas_date}}
+                                                    </td>
+                                                    <td>
+
+                                                        {{row.activity}}
+                                                    </td>
+                                                    <td>
+                                                        {{row.activity_externas_queantity}}
+
+                                                    </td>
+                                                    <td>
+                                                        {{row.value}}
+
+                                                    </td>
+                                                    <td>
+
+                                                        <select name="activity_externas_state" [(ngModel)]="row.activity_externas_state">
+                                                            <option *ngFor="let list_state_activity of list_state_activity"
+                                                                value="{{list_state_activity.idstate_activity}}">{{list_state_activity.state_activity_name}}</option>
+
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        {{row.activity_externas_datepago}}
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>Eliminar</th>
+                                                <th>Empleado</th>
+                                                <th>Fecha</th>
+                                                <th>Tipo/actividad</th>
+                                                <th>Cantidad</th>
+                                                <th>Valor/actividad</th>
+                                                <th>Estado</th>
+                                                <th>Fecha/pago</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let row of table_activiti; let i=index">
+                                                <td>{{i+1}}</td>
+                                                <td>
+                                                    <button class="fas fa-trash-alt btn btn-danger btn-sm">
+                                                       
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <input ngui-auto-complete (change)="employe(i, row)" [(ngModel)]="row.employee"
+                                                        [source]="searc_employee" list-formatter="full_name"
+                                                        path-to-data="employee" value-property-name="idemployees"
+                                                        display-property-name="full_name" min-chars="1" name="detalles_obra_encargado"
+                                                        #detalles_obra_encargado="ngModel" />
+                                                </td>
+                                                <td>
+                                                    <input type="date" name="activity_externas_date" [(ngModel)]="row.activity_externas_date">
+                                                </td>
+                                                <td>
+                                                    <input ngui-auto-complete (change)="activitychange(i, row)"
+                                                        [(ngModel)]="row.activity" [source]="search_activity"
+                                                        list-formatter="activities_name" path-to-data="response"
+                                                        value-property-name="activities_name" display-property-name="activities_name"
+                                                        min-chars="1" name="activity" #activity="ngModel" />
+                                                </td>
+                                                <td>
+                                                    <input type="number" name="cuantity" [(ngModel)]="row.activity_externas_queantity">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="value" [(ngModel)]="row.value">
+                                                </td>
+                                                <td>
+                                                    <select name="activity_externas_state" [(ngModel)]="row.activity_externas_state">
+                                                        <option *ngFor="let list_state_activity of list_state_activity"
+                                                            value="{{list_state_activity.idstate_activity}}">{{list_state_activity.state_activity_name}}</option>
+
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="date" name="activity_externas_datepago" [(ngModel)]="row.activity_externas_datepago">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+
+                                    <div>
+                                        <button class="btn_add fa fa-plus" (click)='add_activiti()'>
+
+                                        </button>
+                                    </div>
+                                </div>
+
+
+                                <div class="tab-pane" id="ow" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-2">
+
+                                        </div>
+                                        <div class="col-12">
+
+                                            <div class="table-min-heigth">
+                                                <table class="table table-striped table-bordered table-hover" style="font-size: 12px;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="width-table-01">#</th>
+                                                            <th class="width-table-01">Eliminar</th>
+                                                            <th class="width-table-1">Cod material</th> 
+                                                            <th class="width-table-5">Desc material</th>
+                                                            <th class="width-table-1">Item</th>
+                                                            <th class="width-table-5">Descripción </th>
+                                                            <th class="width-table-1">Estado </th>
+                                                            <th class="width-table-1">Codigo</th>
+                                                            
+                                                           
+                                                            <th class="width-table-01">Unidad</th>
+                                                            
+                                                            
+                                                            <th class="width-table-01">Cantidad</th>
+                                 
+                                                            <th class="width-table-1">Ipid</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let row of list_items_ow; let i=index">
+                                                            <td>{{i+1}}</td>
+                                                            <td><button class="fas fa-trash-alt btn btn-danger btn-sm"
+                                                                    value="{{row.iditem_ow}}" (click)='delete($event)'></button></td>
+                                                         
+                                                                    <td>
+
+                                                                            <input class="form-control input-modified mx-2"
+                                                                            (change)="valueChangedcodemate(i, row)" ngui-auto-complete
+                                                                            [(ngModel)]="row.codemate" placeholder="Material"
+                                                                            [source]="search_codigo" list-formatter="code"
+                                                                            path-to-data="materiales" value-property-name="code"
+                                                                            display-property-name="code" min-chars="1"
+                                                                            name="code" #code="ngModel" />
+                                                                    </td>
+                                                           
+                                                                    <td> <input class="form-control input-modified mx-2"
+                                                                        (change)="valueChanged_namemate(i, row)"
+                                                                        ngui-auto-complete [(ngModel)]="row.desmate"
+                                                                        placeholder="Descripción Material" [source]="search_desc"
+                                                                        list-formatter="code description "
+                                                                        no-match-found-text="no se encontro ningun resultado"
+                                                                        path-to-data="results" value-property-name="description"
+                                                                        display-property-name="description" min-chars="1"
+                                                                        name="item_cobro_name" #name="ngModel" /></td>
+
+                                                                    <td>
+                                                                            <input class="form-control input-modified mx-2"
+                                                                                (change)="valueChanged_name(i, row)"
+                                                                                ngui-auto-complete [(ngModel)]="row.item_cobro_name"
+                                                                                placeholder="Descripción" [source]="search_oti_name"
+                                                                                list-formatter="item_cobro_name"
+                                                                                no-match-found-text="no se encontro ningun resultado"
+                                                                                path-to-data="search" value-property-name="item_cobro_name"
+                                                                                display-property-name="item_cobro_name" min-chars="1"
+                                                                                name="item_cobro_name" #name="ngModel" />
+                                                                        </td>
+
+                                                                       
+
+                                                                    <td>
+                                                                <input class="form-control input-modified mx-2"
+                                                                    (change)="valueChanged(i, row)" ngui-auto-complete
+                                                                    [(ngModel)]="row.item_cobro_code" placeholder="Item"
+                                                                    [source]="search_oti1" list-formatter="item_cobro_code"
+                                                                    path-to-data="search" value-property-name="item_cobro_code"
+                                                                    display-property-name="item_cobro_code" min-chars="1"
+                                                                    name="item_cobro_code" #code="ngModel" />
+
+                                                            </td>
+
+                                                            <td><select name="statusdes" id="" ></select></td>
+
+                                                             <td>
+                                                             <input type="text" class="form-control-sm col-12 input-modified"
+                                                                 name="item" [(ngModel)]="row.item" readonly>
+                                                         </td>
+
+                                                            <td>
+                                                                    {{row.item_cobro_unidad}}
+                                                            </td>
+
+
+                                                       
+                                                                    <td>
+                                                                            <input class="form-control input-modified" type="number"
+                                                                                [(ngModel)]="row.cantidad">
+                                                                        </td>
+
+                                                          
+                                                           
+                                                            <td>
+
+
+                                                                <select class="form-control input-modified" name="ipid"
+                                                                    #ipid="ngModel" [(ngModel)]="row.ipid">
+                                                                    <option *ngFor="let list_ipid of list_ipid" value="{{list_ipid.idipd}}">{{list_ipid.ipid}}</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <div>
+                                                    <button class="btn_add fa fa-plus" (click)='add_ow()'>
+
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-2">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane" id="ipid" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-sm-10 col-md-4 ">
+
+
+                                            <div class="col-10 mb-1 mt-1 uno ">
+                                                <label class="col-3 col-form-label pl-2 al ">IPID: </label>
+                                                <div class="col-9 float-right">
+                                                    <input class="form-control input-modified " style="height: 25px"
+                                                        type="text" name="ipidipid" [(ngModel)]="ipidmodel.ipidipid">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-10 mb-1 mt-1 uno ">
+                                                <label class="col-3 col-form-label pl-2 al ">Dirección: </label>
+                                                <div class="col-9 float-right">
+                                                    <input class="form-control input-modified" type="text" name="ipidaddress"
+                                                        [(ngModel)]="ipidmodel.ipidaddress">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class=" modal-footer">
+                                        <button type="button" class="btn btn_primary btn-sm" (click)="saveipid()"><i class="fa fa-save"></i>
+                                            Guardar</button>
+                                     <button type="button" class="btn btn_primary btn-sm" (click)="updateipid()"><i class="fa fa-sync"></i>
+                                         Actualizar</button>
+                                      <button type="button" class="btn btn_primary btn-sm"(click)="searchipid()"><i class="fa fa-search"></i>
+                                          Buscar</button>
+                                        <button type="button" class="btn btn_success btn-sm" (click)="editipid()"><i class="fa fa-edit"></i>
+                                            Editar</button>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="tab-pane" id="actasv" role="tabpanel">
+                                    <div class="col-12">
+
+                                        <div class="form-group row">
+                                            <label class="col-1 col-form-label">Consecutivo</label>
+                                            <div class="col-1">
+                                                <input class="form-control input-modified" type="text" readonly name="consecutive"
+                                                    [(ngModel)]="consecutive">
+                                            </div>
+
+                                            <label class="col-1 col-form-label">Acta #</label>
+                                            <div class="col-1">
+                                                <input class="form-control input-modified" type="text" name="acta"
+                                                    [(ngModel)]="actavmodel.acta">
+                                            </div>
+
+
+                                            <label class="col-1 col-form-label">Ficha Numero</label>
+                                            <div class="col-1">
+                                                <input class="form-control input-modified" type="text" name="ficha"
+                                                    [(ngModel)]="actavmodel.ficha">
+                                            </div>
+                                            <label class="col-1 col-form-label">Fecha De Envio</label>
+                                            <div class="col-2">
+                                                <input class="form-control input-modified" type="datetime-local" name="date_send"
+                                                    [(ngModel)]="actavmodel.date_send">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group row">
+
+
+                                            <label class="col-1 col-form-label">Dirección</label>
+                                            <div class="col-2">
+                                                <input class="form-control input-modified" type="text" name="address"
+                                                    [(ngModel)]="actavmodel.address">
+                                            </div>
+
+
+                                            <label class="col-1 col-form-label">Telefono</label>
+                                            <div class="col-2">
+                                                <input class="form-control input-modified" type="text" name="phone"
+                                                    [(ngModel)]="actavmodel.phone">
+                                            </div>
+
+                                            <label class="col-1 col-form-label">Celular</label>
+                                            <div class="col-1">
+                                                <input class="form-control input-modified" type="text" name="cel"
+                                                    [(ngModel)]="actavmodel.cel">
+                                            </div>
+
+
+                                            <label class="">Fecha Acta</label>
+                                            <div class="col-2">
+                                                <input class="form-control input-modified" type="date" name="cel"
+                                                    [(ngModel)]="actavmodel.date">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+
+                                            <label class="col-1 col-form-label">Usuario</label>
+                                            <div class="col-3">
+                                                <input class="form-control input-modified" type="text" name="user"
+                                                    [(ngModel)]="actavmodel.user">
+                                            </div>
+
+                                            <label class="col-1 col-form-label">Cedula</label>
+                                            <div class="col-1">
+                                                <input class="form-control input-modified" type="text" name="identification"
+                                                    [(ngModel)]="actavmodel.identification">
+                                            </div>
+
+                                            <label class="col-1 col-form-label">Email</label>
+                                            <div class="col-3">
+                                                <input class="form-control input-modified" type="text" name="email"
+                                                    [(ngModel)]="actavmodel.email">
+                                            </div>
+
+
+
+                                            <label class="col-1">Tipo</label>
+                                            <select class="col-1 form-control input-modified" name="type" [(ngModel)]="actavmodel.type">
+
+                                                <option *ngFor="let lis_type_acta of lis_type_acta" value="{{lis_type_acta.id_type_acta}}">{{lis_type_acta.name_type_acta}}</option>
+                                            </select>
+
+                                        </div>
+
+                                        <div class="form-group row">
+
+                                            <label class="col-1 col-form-label">Observaciones</label>
+                                            <div class="col-10">
+                                                <textarea class="form-control input-modified textarea-modified" name="obs"
+                                                    [(ngModel)]="actavmodel.obs"></textarea>
+                                            </div>
+
+                                        </div>
+
+                                        <button type="button" class="btn btn_danger btn-sm" (click)="save_acta()"
+                                            [disabled]="btninsert_acta">Guardar</button>
+                                        <button type="button" class="btn btn_danger btn-sm" (click)="update_acta()"
+                                            [disabled]="btnupdateacta">Atualizar</button>
+                                        <button type="button" class="btn btn_danger btn-sm" (click)="send_mail()"
+                                            [disabled]="btnsendmail">Enviar Mail</button>
+                                        <button type="button" class="btn btn_danger btn-sm" (click)="download()"
+                                            [disabled]="btnsendmail">Descargar Archivos</button>
+
+
+                                        <button type="button" class="btn btn_danger btn-sm" (click)="nuevo()"
+                                            [disabled]="btnupdateacta">Nueva</button>
+
+
+
+
+
+                                            <button #pickfiles class="btn btn-primary  btn-sm">
+                                                Seleccionar Imegene(s) 
+                                             </button>
+                                             <button (click)="uploadFiles()" class="btn btn-warning  btn-sm" [disabled]="btnupload">
+                                                 Subir Imagen(s)
+                                             </button> 
+
+                                        <button type="button" class="btn btn_primary btn-sm" data-toggle="modal"
+                                            data-target="#subir_pdf" (click)="search_image()">Ver Documentos</button>
+                                        <!-- Files being uploaded -->
+                                        <ul *ngIf="fileList.length > 0">
+                                            <li *ngFor="let file of fileList">
+                                                {{ file.name }} ({{ file.size }}) - {{ file.percent }}%
+                                            </li>
+                                        </ul>
+                                        <table class="table table-striped table-bordered table-hover" id="actas" style="margin-top: 30px;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Item</th>
+                                                    <th>Editar</th>
+                                                    <th>Consecutivo</th>
+                                                    <th>Acta</th>
+                                                    <th>Usuario</th>
+                                                    <th>Cedula</th>
+                                                    <th>Email</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let list_acta of list_acta; let i=index">
+                                                    <td>
+                                                        {{i+1}}
+                                                    </td>
+                                                    <td>
+
+                                                        <button class=" btn btn_success btn-sm mr-3 fa fa-edit" (click)="search_acta($event)"
+                                                            value="{{list_acta.id_actav}}">
+
+                                                        </button>
+                                                    </td>
+
+                                                    <td>
+                                                        {{list_acta.consecutive}}
+                                                    </td>
+                                                    <td>
+                                                        {{list_acta.acta}}
+                                                    </td>
+                                                    <td>
+                                                        {{list_acta.user}}
+                                                    </td>
+                                                    <td>
+                                                        {{list_acta.identification}}
+                                                    </td>
+                                                    <td>
+                                                        {{list_acta.email}}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+
+
+                                    </div>
+
+                                </div>
+
+
+
+
+
+
+
+
+                                <div class="tab-pane" id="obraexterna" role="tabpanel">
+                                    <div class="table-min-heigth">
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Item</th>
+                                                    <th>Eliminar</th>
+                                                    <th>Descripcíon</th>
+                                                    <th>Fecha</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Valor</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="itemscosto" role="tabpanel">
+                                    <div class="table-min-heigth scroll-x">
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Item</th>
+                                                    <th>Eliminar</th>
+                                                    <th>Instalacion</th>
+                                                    <th>Direccion</th>
+                                                    <th>Nombre/Usuario</th>
+                                                    <th>Fecha</th>
+                                                    <th>Descripcion/Item</th>
+                                                    <th>Codigo/Item</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Estado</th>
+                                                    <th>Cantidad/Acta</th>
+                                                    <th>Acta</th>
+                                                    <th>Fecha/Acta</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class=" modal-footer">
+                    <button type="button" class="btn btn_danger btn-sm" data-dismiss="modal">Cerrar</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="loader" *ngIf="loader==false" style="z-index: 7000;">
+        <img src="../../assets/images/preload.svg" alt="">
+    </div>
+
+
+    <div class="modal fade" id="searcht" tabindex="-1" role="dialog" aria-labelledby="modalBuscar" aria-hidden="true">
+            <div class="modal-dialog  modal-lg" role="document">
+              <div class="modal-content ">
+                <div class="modal-header bg-#000 ">
+                  <div class="row">
+                    <div class="col-12">
+                      <h2 class="modal-title mtitle "> Buscar</h2>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-12">
+        
+                       <div class="table-min-heigth tuno">
+                              <table class="table table-striped table-bordered table-hover ">
+                                  <thead class="thead1">
+                                      <tr>
+                                          <th class="width-table-1">Item</th>
+                                          <th class="width-table-3">ipid</th>
+                                          <th class="width-table-4">Dirección</th>
+                                          <th class="width-table-1">Seleccionar</th>
+                                          <th class="width-table-1">Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody1">
+                                    <tr  *ngFor="let row of list_topo; let i=index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{row.topoipid}}</td>
+                                        <td>{{row.iniaddress}}</td>
+                                        <td><button type="button" class="fas fa-eye btn btn-sm btn-primary" value="{{row.id_topografia}}" (click)="searchOne($event)"></button></td>
+                                        <td><button type="button" class="fas fa-trash-alt btn btn-sm btn-danger"></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+        
+              </div>
+
+                   <div class="modal-footer">
+                    <div class="float-right ">
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal"><i class="fa fa-window-close"></i> Cerrar </button>
+                    </div>
+                </div>           
+            </div>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
+
+          <div class="modal fade ss3" id="cmaterial" tabindex="-1"role="dialog" aria-labelledby="modalBuscar" aria-hidden="true">
+            <div class="modal-dialog  modal-lg " role="document">
+              <div class="modal-content ">
+                <div class="modal-header bg-#000 ">
+                  <div class="row">
+                    <div class="col-12">
+                      <h2 class="modal-title mtitle ">Clasificación material</h2>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-body">
+        
+        
+                  <div class="row">
+                    <div class="col-12 m-auto">
+                      <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                          <tr>
+                            <th class="width-table-1">Ipid</th>
+                            <th class="width-table-1">DireccióN</th>
+                            <th class="width-table-1">T ensayo</th>
+                            <th class="width-table-1">Longitud</th>
+                            <th class="width-table-1">Referencia</th>
+                            <th class="width-table-1">Proveedor</th>
+                            <th class="width-table-1">Laboratorio</th>
+                            <th class="width-table-1">Resultado</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let row of list_cmaterial; ">
+                            <td ></td>
+                            <td ></td>
+                            <td ></td>
+                            <td ></td>
+                            <td ></td>
+                            <td ></td>
+                            <td ></td>
+                            <td ></td>
+                          </tr>
+                          <button class="btn btn-sm btn-primary"><i class="fa fa-plus"></i></button>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+        
+                <div class="modal-footer">
+                  <div class="float-right ">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-danger"
+                      data-dismiss="modal"
+                    >
+                      <i class="fa fa-window-close"></i> Cerrar
+                    </button>
+
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-primary"
+                    (click)="searchcmaterial()">
+                      <i class="fa fa-save"></i> Guardar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+
+
+        <div class="modal fade ss3" id="pru123" tabindex="-1"role="dialog" aria-labelledby="modalBuscar" aria-hidden="true">
+            <div class="modal-dialog  modal-lg " role="document">
+              <div class="modal-content ">
+                <div class="modal-header bg-#000 ">
+                  <div class="row">
+                    <div class="col-12">
+                      <h2 class="modal-title mtitle ">Clasificación material</h2>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-body">
+
+                    <div class="col-sm-12  float-left d-inline-block dos">
+                        <div class="form-group row">
+
+                            <div class="col-sm-12 col-md-7 float-left d-inline-block dos">
+                                <div class="form-group row">
+
+                                    <div class="col-12">
+                                        <h2 class="modal-title mtitle " style="color:black">Personal</h2>
+                                      </div>
+
+                            <div class="col-sm-12 col-md-4 float-left d-inline-block dos">
+                                <div class="form-group row">
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Ing residente: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="ingResident" [(ngModel)]="ingresidente">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Gest ambiental: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="gestAmbiental" [(ngModel)]="gestambiental">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Gest social: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="gestSocial" [(ngModel)]="gestsocial">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Gest sst: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="gestSST" [(ngModel)]="gestsst">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al"> Gest calidad: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="gestCalidad" [(ngModel)]="gestcalidad">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Gest Comercial: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="gestComercial" [(ngModel)]="gestcomercial">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Supervisor: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="supervisor" [(ngModel)]="supervisor">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al"> Tec aux HSEQ-SST: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="tecauxhseqsst" [(ngModel)]="tecauxhseqsst">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-12 col-md-4 float-left d-inline-block dos">
+                                <div class="form-group row">
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Encargado: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="encargado" [(ngModel)]="eencargado">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Oficiales: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="oficiales" [(ngModel)]="oficiales">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Operadores: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="operadores" [(ngModel)]="operadores">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Topografo: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="topografo" [(ngModel)]="topografo">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Soldador: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="soldador" [(ngModel)]="soldador">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Silleteros: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="silleteros" [(ngModel)]="silleteros">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Ayudantes obra: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="ayudantesobra" [(ngModel)]="ayudantesobra">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Ayudante impacto: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="ayudanteimpacto" [(ngModel)]="ayudanteimpacto">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-12 col-md-4 float-left d-inline-block dos">
+                                <div class="form-group row">
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Conductor: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="conductor" [(ngModel)]="conductor">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Cadenero: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="cadenero" [(ngModel)]="cadenero">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-5 float-left d-inline-block dos">
+                            <div class="form-group row">
+
+                                    <div class="col-12">
+                                            <h2 class="modal-title mtitle " style="color:black">Equipos & Vehiculos</h2>
+                                          </div>
+
+                            <div class="col-sm-12 col-md-6 float-left d-inline-block dos">
+                                <div class="form-group row">
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Concretadora: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="concretadora" [(ngModel)]="concretadora">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Canguros: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="canguros" [(ngModel)]="canguros">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Cortadora: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="cortadora" [(ngModel)]="cortadora">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Equipo soldadura: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="equipoSoldadura" [(ngModel)]="equiposoldadura">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Planta: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="planta" [(ngModel)]="pplanta">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Pulidora: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="pulidora" [(ngModel)]="pulidora">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Martillo Elec: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="martilloelec" [(ngModel)]="martiloelec">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Alimentador H20: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="alimentadorh20" [(ngModel)]="alimentadorh20">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-6 float-left d-inline-block dos">
+                                <div class="form-group row">
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Camion: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="camion" [(ngModel)]="camion">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Retro-excavadora: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="retroexcavadora" [(ngModel)]="retroexcavadora">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Mini-cargador: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="minicargador" [(ngModel)]="minicargador">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Compresor: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="compresor" [(ngModel)]="compresor">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Volqueta: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="volqueta" [(ngModel)]="volqueta">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Eq. term o elect, fusión: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="eqteroelecfusion" [(ngModel)]="eqteroelecfusion">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Planta: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="planta" [(ngModel)]="planta">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-1 mt-1 uno">
+                                        <label class="col-6 col-form-label pl-2 al">Soldadura: </label>
+                                        <div class="col-6 float-right">
+                                            <input class=" form-control input-modified " style="width:100%;height: 25px"
+                                                type="number" name="soldadura" [(ngModel)]="soldadura">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+
+                                </div>
+                            </div>
+
+
+                            </div>
+                        </div>
+
+                </div>
+        
+
+              </div>
+            </div>
+        </div>
+

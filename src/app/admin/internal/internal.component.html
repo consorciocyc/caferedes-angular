@@ -1,0 +1,89 @@
+<div class="container-fluid container-modified">
+    <div class="col-12">
+        <h3 class="mb-3 title">Internas-Buscar</h3>
+    </div>
+
+    <div class="col-12 d-flex justify-content-between my-3">
+
+        <div class="col-1" style="margin-left:-10px">
+
+            <input class="form-control input-modified mx-2 fa fa-eye" (valueChanged)="ConsecChanged()"
+                ngui-auto-complete [(ngModel)]="consecutive" placeholder="CONSECUTIVO" [source]="SearchConsecutive"
+                list-formatter="consecutive" path-to-data="consecutive" value-property-name="consecutive"
+                display-property-name="consecutive" min-chars="1" name="consecutive" #consec="ngModel" />
+        </div>
+
+
+
+        <div class="col-2" style="margin-left:-10px">
+
+            <input class="form-control input-modified mx-2 fa fa-eye" (valueChanged)="PedidoChanged()"
+                ngui-auto-complete [(ngModel)]="pedido" placeholder="PEDIDO" [source]="SearchPedido" list-formatter="Pedido"
+                path-to-data="Pedido" value-property-name="Pedido" display-property-name="Pedido" min-chars="1" name="pedido"
+                #ped="ngModel" />
+        </div>
+
+        <div class="col-2" style="margin-left:-10px">
+
+            <input class="form-control input-modified mx-2 fa fa-eye" ngui-auto-complete [(ngModel)]="ot" placeholder="OT"
+                [source]="SearchConsecutive" list-formatter="obr_anillos_oti" path-to-data="obr_anillos"
+                value-property-name="obr_anillos_oti" display-property-name="obr_anillos_oti" min-chars="1" name="ot"
+                #o="ngModel" />
+        </div>
+
+        <div class="col-2" style="margin-left:-10px">
+
+            <input class="form-control input-modified mx-2 fa fa-eye" (valueChanged)="cedulaChanged()"
+                ngui-auto-complete [(ngModel)]="cedula" placeholder="CEDULA" [source]="SearchCedula" list-formatter="Cedula"
+                path-to-data="Cedula" value-property-name="Cedula" display-property-name="Cedula" min-chars="1" name="cedula"
+                #ced="ngModel" />
+        </div>
+
+        <div class="col-2" style="margin-left:-10px">
+
+            <input class="form-control input-modified mx-2 fa fa-eye" (valueChanged)="addressChanged()"
+                ngui-auto-complete [(ngModel)]="address" placeholder="DIRECCION" [source]="SearchAddress"
+                list-formatter="Direccion" path-to-data="Direccion" value-property-name="Direccion"
+                display-property-name="Direccion" min-chars="1" name="address" #addres="ngModel" />
+        </div>
+
+        <div class="col-2" style="margin-left:-10px">
+
+            <input class="form-control input-modified mx-2 fa fa-eye" (valueChanged)="instalChanged()"
+                ngui-auto-complete [(ngModel)]="instal" placeholder="INSTALACION" [source]="SearchInstal"
+                list-formatter="Instalacion" path-to-data="Instalacion" value-property-name="Instalacion"
+                display-property-name="Instalacion" min-chars="1" name="instal" #install="ngModel" />
+        </div>
+    </div>
+    <button class="btn btn-sm btn_success">Nuevo</button>
+</div>
+
+<div class="container-fluid container-modified">
+    <div class="col-12">
+        <ul class="tap d-flex">
+            <li class="tap_items">
+                <a routerLinkActive="active-link" [routerLink]="['/admin/internas/obra']" [queryParams]="{queryParams: queryParam,valor:valor}">obra</a>
+            </li>
+            <li class="tap_items">
+                <a routerLinkActive="active-link" [routerLink]="['/admin/internas/detalles']" [queryParams]="{queryParams: queryParams}">detalles</a>
+            </li>
+            <li class="tap_items">
+                <a routerLinkActive="active-link" [routerLink]="['/admin/internas/items']" [queryParams]="{queryParams: queryParams,company:company}">items
+                </a>
+            </li>
+            <li class="tap_items">
+                <a routerLinkActive="active-link" [routerLink]="['/admin/internas/materiales']" [queryParams]="{ queryParams: queryParams,company:company }">materiales</a>
+            </li>
+            <li class="tap_items">
+                <a routerLinkActive="active-link" [routerLink]="['/admin/internas/actividades']" [queryParams]="{ queryParams: queryParams,company:company }">actividades</a>
+            </li>
+            <li class="tap_items">
+                <a routerLinkActive="active-link" [routerLink]="['/admin/internas/quejas']" [queryParams]="{queryParams: queryParams,company:company,type:1}">quejas</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-12">
+        <router-outlet></router-outlet>
+    </div>
+</div>

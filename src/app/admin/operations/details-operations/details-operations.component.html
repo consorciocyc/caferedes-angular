@@ -1,0 +1,853 @@
+<div class="row">
+  <div class="col-9">
+    <h1 class="sub-title">Datos/cliente</h1>
+    <div class="col-12">
+      <div class="form-group row">
+        <label class="col-1 col-form-label">Consecutivo</label>
+        <div class="col-2">
+          <input
+            class="form-control input-modified"
+            type="text"
+            name="consecutive"
+            [(ngModel)]="operationmodel.consecutive"
+            readonly
+          />
+        </div>
+        <label class="col-1 col-form-label">Pedido</label>
+        <div class="col-2">
+          <input
+            class="form-control input-modified"
+            type="text"
+            name="pedido"
+            [(ngModel)]="operationmodel.pedido"
+            readonly
+          />
+        </div>
+        <label class="col-1 col-form-label">OT</label>
+        <div class="col-2">
+          <input
+            class="form-control input-modified"
+            type="text"
+            name="ot"
+            [(ngModel)]="operationmodel.ot"
+          />
+        </div>
+        <label class="col-1 col-form-label">Instalación</label>
+        <div class="col-2">
+          <input
+            class="form-control input-modified"
+            type="text"
+            name="cod_instalacion"
+            [(ngModel)]="operationmodel.cod_instalacion"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-1 col-form-label">Usuario</label>
+        <div class="col-2">
+          <input
+            class="form-control input-modified"
+            type="text"
+            name="user"
+            [(ngModel)]="operationmodel.user"
+          />
+        </div>
+        <label class="col-1 col-form-label">Dirección</label>
+        <div class="col-2">
+          <input
+            class="form-control input-modified"
+            type="text"
+            name="address"
+            [(ngModel)]="operationmodel.address"
+          />
+        </div>
+        <label class="col-1 col-form-label"> Telefono</label>
+        <div class="col-2">
+          <input
+            class="form-control input-modified"
+            type="text"
+            name="phone"
+            [(ngModel)]="operationmodel.phone"
+          />
+        </div>
+        <label class="col-1 col-form-label">Asignacion</label>
+        <div class="col-2">
+          <input
+            class="form-control input-modified"
+            type="date"
+            name="date_assignment"
+            [(ngModel)]="operationmodel.date_assignment"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-1 col-form-label">Municipio</label>
+        <div class="col-2">
+          <select class="form-control input-modified" name="secuencia" [(ngModel)]="operationmodel.municipio">
+            <option
+              *ngFor="let municipali_list of municipali_list"
+              value="{{municipali_list.id_dane}}"
+              >{{ municipali_list.name_municipality }}</option
+            >
+          </select>
+        </div>
+
+        <label class="col-1 col-form-label">Secuencia</label>
+        <div class="col-2">
+          <select class="form-control input-modified" name="secuencia" [(ngModel)]="operationmodel.secuencia">
+            <option value=""> </option>
+            <option value="0"> Si </option>
+            <option value="1"> No </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-1 col-form-label">Vencimiento</label>
+        <div class="col-2">
+          <input
+            class="form-control input-modified"
+            type="date"
+            name="date_expiration"
+            [(ngModel)]="operationmodel.date_expiration"
+          />
+        </div>
+        <label class="col-1 col-form-label">Fecha/llegada</label>
+        <div class="col-2">
+          <input
+            class="form-control input-modified"
+            type="date"
+            name="date_arriaval"
+            [(ngModel)]="operationmodel.date_arriaval"
+          />
+        </div>
+        <label class="col-1 col-form-label">Fecha/control</label>
+        <div class="col-2">
+          <input
+            class="form-control input-modified"
+            type="date"
+            name="date_control"
+            [(ngModel)]="operationmodel.date_control"
+          />
+        </div>
+        <label class="col-1 col-form-label">Fecha/Cierre</label>
+        <div class="col-2">
+          <input
+            class="form-control input-modified"
+            type="date"
+            name="closing_date"
+            [(ngModel)]="operationmodel.closing_date"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-1 col-form-label">Estado</label>
+        <div class="col-2">
+          <select
+            class="form-control input-modified"
+            name="state"
+            [(ngModel)]="operationmodel.state"
+          >
+            <option
+              *ngFor="let list_state of list_state"
+              value="{{list_state.id_state}}"
+              >{{ list_state.name_state }}</option
+            >
+          </select>
+        </div>
+
+        <label class="col-1 col-form-label">Tipo</label>
+        <div class="col-2">
+          <input
+            class="form-control input-modified"
+            type="text"
+            name="name_class"
+            [(ngModel)]="operationmodel.name_class"
+            readonly
+          />
+        </div>
+
+        <label class="col-1 col-form-label">Tipo de Trabajo</label>
+        <div class="col-2">
+          <input
+            class="form-control input-modified"
+            type="text"
+            name="name_job"
+            [(ngModel)]="operationmodel.name_job"
+            readonly
+          />
+        </div>
+
+        <label class="col-1 col-form-label">Actividad</label>
+        <div class="col-2">
+          <input
+            class="form-control input-modified"
+            type="text"
+            name="name_activity"
+            [(ngModel)]="operationmodel.name_activity"
+            readonly
+          />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-1 col-form-label">Accion Ejecutada</label>
+        <div class="col-2">
+          <select
+            class="form-control input-modified"
+            name="action"
+            [(ngModel)]="operationmodel.action"
+          >
+            <option
+              *ngFor="let list_action of list_action"
+              value="{{list_action.id_descripcion}}"
+              >{{ list_action.name_descripcion }}</option
+            >
+          </select>
+        </div>
+
+        <label class="col-1 col-form-label">Servicio</label>
+        <div class="col-2">
+          <select
+            class="form-control input-modified"
+            name="service"
+            [(ngModel)]="operationmodel.service"
+          >
+            <option
+              *ngFor="let list_service of list_service"
+              value="{{list_service.id_descripcion}}"
+              >{{ list_service.name_descripcion }}</option
+            >
+          </select>
+        </div>
+
+        <label class="col-1 col-form-label">Tipo De Red</label>
+        <div class="col-2">
+          <select
+            class="form-control input-modified"
+            name="type_net"
+            [(ngModel)]="operationmodel.type_net"
+          >
+            <option
+              *ngFor="let list_type_net of list_type_net"
+              value="{{list_type_net.id_descripcion}}"
+              >{{ list_type_net.name_descripcion }}</option
+            >
+          </select>
+        </div>
+        <label class="col-1 col-form-label">Tipo Actividad</label>
+        <div class="col-2">
+          <select
+            class="form-control input-modified"
+            name="cause_event"
+            [(ngModel)]="operationmodel.type_activity"
+          >
+            <option
+              *ngFor="let list_type_activity of list_type_activity"
+              value="{{list_type_activity.id_type}}"
+              >{{ list_type_activity.name_type }}</option
+            >
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-1 col-form-label">Elemento Afectado</label>
+        <div class="col-2">
+          <select
+            class="form-control input-modified"
+            name="cause_event"
+            [(ngModel)]="operationmodel.cause_event"
+          >
+            <option
+              *ngFor="let list_elemnt of list_elemnt"
+              value="{{list_elemnt.id_descripcion}}"
+              >{{ list_elemnt.name_descripcion }}</option
+            >
+          </select>
+        </div>
+
+        <label class="col-1 col-form-label">Causa Evento</label>
+        <div class="col-2">
+          <select
+            class="form-control input-modified"
+            name="element"
+            [(ngModel)]="operationmodel.element"
+          >
+            <option
+              *ngFor="let list_causa of list_causa"
+              value="{{list_causa.id_descripcion}}"
+              >{{ list_causa.name_descripcion }}</option
+            >
+          </select>
+        </div>
+
+        <label class="col-1 col-form-label">Material</label>
+        <div class="col-2">
+          <select
+            class="form-control input-modified"
+            name="material"
+            [(ngModel)]="operationmodel.material"
+          >
+            <option
+              *ngFor="let list_material of list_material"
+              value="{{list_material.id_descripcion}}"
+              >{{ list_material.name_descripcion }}</option
+            >
+          </select>
+        </div>
+        <label class="col-1 col-form-label">Dias ANS</label>
+        <div class="col-2">
+          <input
+            class="form-control input-modified"
+            type="text"
+            name="ANS"
+            [(ngModel)]="ANS"
+            readonly
+          />
+        </div>
+       
+      </div>
+
+      <div class="form-group row">
+
+          <label class="col-1 col-form-label">Dias Vencidos</label>
+          <div class="col-2">
+            <input
+              class="form-control input-modified"
+              type="text"
+              name="day_vencidos"
+              [(ngModel)]="operationmodel.day_vencidos"
+              readonly
+            />
+          </div>
+
+          <div class="col-2">
+              <div class="col-2"><button type="button" #myButton></button></div>
+            </div>
+        </div>
+
+      <div class="row">
+        <div class="col-8">
+          <div class="form-group row">
+            <label class="col-1 col-form-label">Observaciones</label>
+            <div class="col-11">
+              <textarea
+                class="form-control input-modified textarea-modified"
+                name="obs"
+                [(ngModel)]="operationmodel.obs"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <table
+            class="table table-striped table-bordered table-hover"
+            style="font-size: 12px;"
+          >
+            <thead>
+              <th>Concepto</th>
+              <th>Retiro</th>
+              <th>Nuevo</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Tipo Medidor</td>
+                <td>
+                  <input
+                    class="form-control input-modified"
+                    type="text"
+                    name="meter_type_r"
+                    [(ngModel)]="operationmodel.meter_type_r"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="form-control input-modified"
+                    type="text"
+                    name="meter_type_n"
+                    [(ngModel)]="operationmodel.meter_type_n"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Marca Medidor</td>
+                <td>
+                  <input
+                    class="form-control input-modified"
+                    type="text"
+                    name="meter_brand_r"
+                    [(ngModel)]="operationmodel.meter_brand_r"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="form-control input-modified"
+                    type="text"
+                    name="meter_brand_n"
+                    [(ngModel)]="operationmodel.meter_brand_n"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Serie Medidor</td>
+                <td>
+                  <input
+                    class="form-control input-modified"
+                    type="text"
+                    name="meter_series_r"
+                    [(ngModel)]="operationmodel.meter_series_r"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="form-control input-modified"
+                    type="text"
+                    name="meter_series_n"
+                    [(ngModel)]="operationmodel.meter_series_n"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Lectura Medidor</td>
+                <td>
+                  <input
+                    class="form-control input-modified"
+                    type="text"
+                    name="meter_reading_r"
+                    [(ngModel)]="operationmodel.meter_reading_r"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="form-control input-modified"
+                    type="text"
+                    name="meter_reading_n"
+                    [(ngModel)]="operationmodel.meter_reading_n"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-8">
+          <div class="form-group row">
+            <label class="col-1 col-form-label">Observaciones Cierre</label>
+            <div class="col-11">
+              <textarea
+                class="form-control input-modified textarea-modified"
+                name="obs"
+                [(ngModel)]="operationmodel.obscr"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-3">
+    <div class="col-12" style=" font-size: 12px;">
+      <div class="form-group row">
+        <label for="" class="col-4 col-form-label">Programado a:</label>
+        <div class="col-8">
+          <input
+            class="form-control input-modified "
+            ngui-auto-complete
+            (change)="programado_AChanged()"
+            [(ngModel)]="operationmodel.nameprogramado"
+            [source]="Searchemployee"
+            list-formatter="full_name"
+            path-to-data="employee"
+            value-property-name="idemployees"
+            display-property-name="full_name"
+            min-chars="1"
+            name="nameprogramado"
+            #nameprogramado="ngModel"
+            tab-to-select="true"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="" class="col-4 col-form-label">Fecha/ Programado a</label>
+        <div class="col-8">
+          <input
+            class="form-control input-modified"
+            type="date"
+            #Fecha_Recorrido="ngModel"
+            name="Fecha_Prog"
+            [(ngModel)]="operationmodel.Fecha_Prog"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="" class="col-1 col-form-label">Planea</label>
+        <div class="col-6">
+          <input
+            class="form-control input-modified "
+            ngui-auto-complete
+            (change)="PlaneaChanged()"
+            [(ngModel)]="operationmodel.namePlanea"
+            [source]="Searchemployee"
+            list-formatter="full_name"
+            path-to-data="employee"
+            value-property-name="idemployees"
+            display-property-name="full_name"
+            min-chars="1"
+            name="namePlanea"
+            #namePlanea="ngModel"
+          />
+        </div>
+
+        <div class="col-5">
+          <input
+            class="form-control input-modified"
+            type="date"
+            #f_Planea="ngModel"
+            name="f_Planea"
+            [(ngModel)]="operationmodel.f_Planea"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="" class="col-1 col-form-label">Hace/1</label>
+        <div class="col-6">
+          <input
+            class="form-control input-modified "
+            ngui-auto-complete
+            (change)="Hace1Changed()"
+            [(ngModel)]="operationmodel.nameHace_1"
+            [source]="Searchemployee"
+            list-formatter="full_name"
+            path-to-data="employee"
+            value-property-name="idemployees"
+            display-property-name="full_name"
+            min-chars="1"
+            name="nameHace_1"
+            #nameHace_1="ngModel"
+          />
+        </div>
+        <div class="col-5">
+          <input
+            class="form-control input-modified"
+            type="date"
+            #f_Hace_1="ngModel"
+            name="f_Hace_1"
+            [(ngModel)]="operationmodel.f_Hace_1"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="" class="col-1 col-form-label">Hace/2</label>
+        <div class="col-6">
+          <input
+            class="form-control input-modified "
+            ngui-auto-complete
+            (change)="Hace2Changed()"
+            [(ngModel)]="operationmodel.nameHace_2"
+            [source]="Searchemployee"
+            list-formatter="full_name"
+            path-to-data="employee"
+            value-property-name="idemployees"
+            display-property-name="full_name"
+            min-chars="1"
+            name="nameHace_2"
+            #nameHace_2="ngModel"
+          />
+        </div>
+        <div class="col-5">
+          <input
+            class="form-control input-modified"
+            type="date"
+            #f_Hace_2="ngModel"
+            name="f_Hace_2"
+            [(ngModel)]="operationmodel.f_Hace_2"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="" class="col-1 col-form-label">Verifica</label>
+        <div class="col-6">
+          <input
+            class="form-control input-modified "
+            ngui-auto-complete
+            (change)="VerificaChanged()"
+            [(ngModel)]="operationmodel.nameVerifica"
+            [source]="Searchemployee"
+            list-formatter="full_name"
+            path-to-data="employee"
+            value-property-name="idemployees"
+            display-property-name="full_name"
+            min-chars="1"
+            name="nameVerifica"
+            #nameVerifica="ngModel"
+          />
+        </div>
+        <div class="col-5">
+          <input
+            class="form-control input-modified"
+            type="date"
+            #f_Verifica="ngModel"
+            name="f_Verifica"
+            [(ngModel)]="operationmodel.f_Verifica"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="" class="col-1 col-form-label">Aprueba</label>
+        <div class="col-6">
+          <input
+            class="form-control input-modified "
+            ngui-auto-complete
+            (change)="ApruebaChanged()"
+            [(ngModel)]="operationmodel.nameAprueba"
+            [source]="Searchemployee"
+            list-formatter="full_name"
+            path-to-data="employee"
+            value-property-name="idemployees"
+            display-property-name="full_name"
+            min-chars="1"
+            name="nameAprueba"
+            #nameAprueba="ngModel"
+          />
+        </div>
+        <div class="col-5">
+          <input
+            class="form-control input-modified"
+            type="date"
+            #f_Aprueba="ngModel"
+            name="f_Aprueba"
+            [(ngModel)]="operationmodel.f_Aprueba"
+          />
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-sm btn-block btn_primary mb-3" data-toggle="modal" data-target="#eventos_dac" (click)="event_dac()">Eventos y Dac</button>
+    <h1 class="sub-title mt-5">Historial/Movimientos</h1>
+    <button class="btn btn-sm btn-block btn_primary mb-3">
+      Historial Movimiento
+    </button>
+    <button #pickfiles class="button btn btn-sm btn-primary">
+      <i class="fa fa-folder-minus"></i> Seleccionar archivo
+    </button>
+
+    <button
+      (click)="uploadFiles()"
+      class="button btn btn-sm btn-primary"
+      [disabled]="btnupload"
+    >
+      <i class="fa fa-upload"></i> Subir archivo(s)
+    </button>
+
+    <!-- Files being uploaded -->
+    <ul *ngIf="fileList.length > 0">
+      <li *ngFor="let file of fileList">
+        {{ file.name }} ({{ file.size }}) - {{ file.percent }}%
+      </li>
+    </ul>
+
+    <h1 class="sub-title mt-5">Ver/Documentos</h1>
+    <button
+      class="btn btn-sm btn-block btn_primary mb-3"
+      data-toggle="modal"
+      data-target="#ver_imagenes"
+      (click)="view_image()"
+    >
+      Ver Documentos
+    </button>
+  </div>
+  <!-- MODAL VER DOCUMENTOS -->
+  <div
+    class="modal fade"
+    id="ver_imagenes"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="subir_pdf"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            VER IMAGENES Y DOCUMENTOS
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <hr />
+
+          <div class="row data-tables">
+            <div class="col-sm-12">
+              <div class="form-group row">
+                <div class="col-sm-7">
+                  <ngx-gallery
+                    [options]="galleryOptions"
+                    [images]="galleryImages"
+                  ></ngx-gallery>
+                </div>
+                <div class="col-sm-5">
+                  <table
+                    id="table_income"
+                    class="table table-striped table-hover table-bordered table-relative"
+                  >
+                    <thead>
+                      <tr>
+                        <th class="width-table-1">Nombre</th>
+                        <th class="width-table-2">documento</th>
+                        <th class="width-table-2">Eliminar</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        class="item_actividad eliminar_tr"
+                        *ngFor="let view_pdf of view_pdf; let i = index"
+                      >
+                        <td>{{ i + 1 }}</td>
+                        <td>
+                          <a target="_blank" href="{{view_pdf.ulr}}">
+                            {{ view_pdf.name }}</a
+                          >
+                        </td>
+                        <td></td>
+                      </tr>
+
+                      <tr></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class=" modal-footer">
+          <button
+            type="button"
+            class="btn btn_danger btn-sm"
+            data-dismiss="modal"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loader" *ngIf="loader == false" style="z-index: 7000;">
+  <img src="../../assets/images/preload.svg" alt="" />
+</div>
+<!--MODAL PARA EVENTOS DAC-->
+<div class="modal fade" id="eventos_dac" tabindex="-1" role="dialog" aria-labelledby="eventos_dac" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">EVENTOS DAC</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+
+
+              <div class="modal-body">
+                  <form id="dac" #dac="ngForm">
+                      <div class="form-group row">
+                          <label for="" class="col-1 col-form-label">Clasificacion</label>
+                          <div class="col-2">
+                              <select class="form-control input-modified" (change)="motivos()" #clasificacion_da="ngModel" name="id_clasif" [(ngModel)]="oymDac.id_clasif"
+                                  required>
+                                  <option *ngFor="let clasificacion of clasificacion" value="{{clasificacion.idclasificacion_dac}}">
+                                      {{clasificacion.name_dac}}</option>
+                              </select>
+                              <span *ngIf="clasificacion_da.errors?.required && clasificacion_da.touched" class="error_message">el campo es requerido</span>
+                          </div>
+
+                          <label for="" class="col-1 col-form-label">Motivos DAC o no atencion</label>
+                          <div class="col-3">
+
+                              <select class="form-control input-modified" #motivo_da="ngModel" name="id_mot" [(ngModel)]="oymDac.id_mot" required>
+                                  <option *ngFor="let motv of motv" value="{{motv.idmotivos_dac}}">
+                                      {{motv.name_mot}}</option>
+                              </select>
+                              <span *ngIf="motivo_da.errors?.required && motivo_da.touched" class="error_message">el campo es requerido</span>
+                          </div>
+
+
+                          <label for="" class="col-1 col-form-label">Fecha</label>
+                          <div class="col-2">
+                              <input class="form-control input-modified" type="date" #date_da="ngModel" name="date" [(ngModel)]="oymDac.date" required>
+                              <span *ngIf="date_da.errors?.required && date_da.touched" class="error_message">el campo es requerido</span>
+                          </div>
+
+                      </div>
+                      <div class="form-group row">
+                          <label for="" class="col-1 col-form-label">Observaciones</label>
+
+                          <textarea class="form-control input-modified textarea-modified" #obs_da="ngModel" name="obs" [(ngModel)]="oymDac.obs"></textarea>
+
+
+
+                      </div>
+                  </form>
+                  <div class="form-group row">
+                      <div class="col-1">
+                          <button type="button" class="btn btn_danger btn-sm" [disabled]="!dac.valid || btnupdate" (click)="update_dac()">Atualizar</button>
+                      </div>
+                      <div class="col-1">
+                          <button type="button" class="btn btn-sm btn_primary" (click)="save_dac()" data-dismiss="modal" [disabled]="!dac.valid || btninsert">Guardar</button>
+                      </div>
+                  </div>
+
+                  <table id="table_income" class="table table-striped table-hover table-bordered table-relative">
+                      <thead>
+                          <tr>
+                              <th class="width-table-1">Editar</th>
+                              <th class="width-table-2">Clasificación</th>
+                              <th class="width-table-2">Motivo DAC</th>
+                              <th class="width-table-4">Fecha</th>
+                              <th class="width-table-2">Observaciones</th>
+
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr class="item_actividad eliminar_tr" *ngFor="let newrow of rowdac; let i=index">
+                              <td>
+                                  <button class="btn btn-sm btn_success" value="{{newrow.iddac_worki}}" (click)="search_dac($event)">Editar</button>
+                              </td>
+                              <td>
+                                  {{newrow.name_dac}}
+                              </td>
+                              <td>
+                                  {{newrow.name_mot}}
+                              </td>
+                              <td>
+                                  {{newrow.date}}
+                              </td>
+                              <td>
+                                  {{newrow.obs}}
+                              </td>
+                              <tr>
+                      </tbody>
+                  </table>
+              </div>
+
+
+              <div class=" modal-footer">
+                  <button type="button" class="btn btn_danger btn-sm" data-dismiss="modal">Cerrar</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+</div>

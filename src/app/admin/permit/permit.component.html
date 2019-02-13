@@ -1,0 +1,691 @@
+<div class="container-fluid container-modified ">
+  <div class="col-12"><h3 class="mb-3 title">Permisos</h3></div>
+  <br />
+  <div class="row">
+    <div class="col-sm-12 col-md-6 float-left d-inline-block">
+      <div class="row">
+        <div class="col-12"><h4 class="mb-3 title">Infraestructura</h4></div>
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Codigo: </label>
+          <input
+            type="text"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            name="icode"
+            [(ngModel)]="permitmodel.icode"
+          />
+        </div>
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Municipio: </label>
+          <input
+            type="text"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            name="imunicipio"
+            [(ngModel)]="permitmodel.imunicipio"
+          />
+        </div>
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Estado permiso: </label>
+          <select
+            name="ipermissionStatus"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            [(ngModel)]="permitmodel.ipermissionStatus"
+          ></select>
+        </div>
+        <hr />
+        <hr />
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Entidad: </label>
+          <input
+            type="text"
+            name="ientidad"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            [(ngModel)]="permitmodel.ientidad"
+          />
+        </div>
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Fecha pedido: </label>
+          <input
+            type="date"
+            name="idate"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            [(ngModel)]="permitmodel.idate"
+          />
+        </div>
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Radicado: </label>
+          <input
+            type="text"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            name="iradicado"
+            [(ngModel)]="permitmodel.iradicado"
+          />
+        </div>
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Resolución: </label>
+          <input
+            type="text"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            name="iresolution"
+            [(ngModel)]="permitmodel.iresolution"
+          />
+        </div>
+
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Fecha final: </label>
+          <input
+            type="date"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            name="ifinal"
+            [(ngModel)]="permitmodel.ifinaldate"
+          />
+        </div>
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Fecha inicial: </label>
+          <input
+            type="date"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            name="istart"
+            [(ngModel)]="permitmodel.istartdate"
+          />
+        </div>
+
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Duración: </label>
+          <input
+            type="text"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            name="iduration"
+            [(ngModel)]="permitmodel.iduration"
+          />
+        </div>
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Estado: </label>
+          <input
+            type="text"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            name="istatus"
+            [(ngModel)]="permitmodel.istatus"
+          />
+        </div>
+      </div>
+      <hr />
+    </div>
+
+    <div class="col-sm-12 col-md-6 float-right d-inline-block">
+      <div class="row">
+        <div class="col-12"><h4 class="mb-3 title">Transporte</h4></div>
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Codigo: </label>
+          <input
+            type="text"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            name="tcode"
+            [(ngModel)]="permitmodel.tcode"
+          />
+        </div>
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Municipio: </label>
+          <input
+            type="text"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            name="tmunicipio"
+            [(ngModel)]="permitmodel.tmunicipio"
+          />
+        </div>
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Estado permiso: </label>
+          <select
+            name="tpermissionStatus"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            [(ngModel)]="permitmodel.tpermissionStatus"
+          ></select>
+        </div>
+        <hr />
+        <hr />
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Entidad: </label>
+          <input
+            type="text"
+            name="tentidad"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            [(ngModel)]="permitmodel.tentidad"
+          />
+        </div>
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Fecha pedido: </label>
+          <input
+            type="date"
+            name="tfecha"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            [(ngModel)]="permitmodel.tdate"
+          />
+        </div>
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Radicado: </label>
+          <input
+            type="text"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            name="tradicado"
+            [(ngModel)]="permitmodel.tradicado"
+          />
+        </div>
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Resolución: </label>
+          <input
+            type="text"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            name="tresolution"
+            [(ngModel)]="permitmodel.tresolution"
+          />
+        </div>
+
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Fecha final: </label>
+          <input
+            type="date"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            name="tfinal"
+            [(ngModel)]="permitmodel.tfinaldate"
+          />
+        </div>
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Fecha inicial: </label>
+          <input
+            type="date"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            name="tstart"
+            [(ngModel)]="permitmodel.tstartdate"
+          />
+        </div>
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Duración: </label>
+          <input
+            type="text"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            name="tduration"
+            [(ngModel)]="permitmodel.tduration"
+          />
+        </div>
+        <div class="col-sm-12 col-md-6 mb-1 mt-1">
+          <label class="ml-2 float-left">Estado: </label>
+          <input
+            type="text"
+            class="mr-2 float-right form-control input-modified"
+            style="width:50%;"
+            name="tstatus"
+            [(ngModel)]="permitmodel.tstatus"
+          />
+        </div>
+      </div>
+      <hr />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="col-md-6 ">
+        <button
+          type="button"
+          class="fa fa-save btn btn-primary m-1 p-1"
+          (click)="save()"
+        >
+          Guardar
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary m-1 p-1"
+          (click)="update()"
+        >
+          <i class="fa fa-sync "></i> Actualizar
+        </button>
+        <button
+          type="button"
+          class=" btn btn-primary  m-1 p-1"
+          (click)="newPermit()"
+        >
+          <i class="fa fa-plus-circle"></i> Nuevo
+        </button>
+        <button
+          type="button "
+          class=" btn btn-primary m-1 p-1"
+          (click)="search()"
+          data-toggle="modal"
+          data-target="#search"
+        >
+          <i class="fa fa-search"></i> Buscar
+        </button>
+        <button
+          type="button"
+          class="btn btn-success m-1 p-1"
+          data-toggle="modal"
+          data-target="#mObrasExternas"
+        >
+          <i class="fa fa-road"></i> Obras externas
+        </button>
+        <button
+          type="button"
+          class="btn btn-success m-1 p-1"
+          data-toggle="modal"
+          data-target="#mOyM"
+        >
+          <i class="fa fa-truck"></i> O y M
+        </button>
+        <button
+          type="button"
+          class="btn btn-success m-1 p-1"
+          data-toggle="modal"
+          data-target="#mObrasInternas"
+        >
+          <i class="fa fa-wrench"></i> Obras internas
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-border table-hover table-striped font-table">
+        <thead>
+          <tr>
+            <th>Entidad</th>
+            <th>Fecha pedido</th>
+            <th>Radicado</th>
+            <th>Resolucion</th>
+
+            <th>Hasta</th>
+            <th>Duracion</th>
+            <th>Estado</th>
+            <th>Editar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <button
+                type="button"
+                name="ddit"
+                class="btn btn-primary pl-1 pr-1"
+              >
+                <i class="fa fa-edit "></i>
+              </button>
+              <button
+                type="button"
+                name="remove"
+                class="btn btn-primary pl-1 pr-1"
+              >
+                <i class="fa fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal for internas -->
+  <div
+    class="modal fade"
+    id="mObrasInternas"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modalObrasInternas"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog  modal-xl" role="document">
+      <div class="modal-content ">
+        <div class="modal-header bg-#000 ">
+          <div class="row">
+            <div class="col-12">
+              <h2 class="modal-title mtitle ">Buscar Obra</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="col-md-3 ">
+            <div class="row">
+              <div class="col-12  mb-1 mt-1 m-auto">
+                <label class="ml-5 float-left">Consecutivo: </label>
+                <input
+                  type="text"
+                  class="mr-5 float-right form-control input-modified"
+                  style="width:50%;"
+                  name="oiconsecutive"
+                  [(ngModel)]="oiconsecutive"
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12  mb-1 mt-1">
+                <label class="ml-5 float-left">Municipio: </label>
+                <select
+                  name="oimunicipio"
+                  class="mr-5 float-right form-control input-modified"
+                  style="width:50%;"
+                  [(ngModel)]="oimunicipio"
+                ></select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12  mb-1 mt-1">
+                <label class="ml-5 float-left">Cod Instalación: </label>
+                <input
+                  type="text"
+                  class="mr-5 float-right form-control input-modified"
+                  style="width:50%;"
+                  name="oicodinstalation"
+                  [(ngModel)]="oicodInstalation"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12  mb-1 mt-1">
+                <label class="ml-5 float-left">Pedido: </label>
+                <input
+                  type="text"
+                  class="mr-5 float-right form-control input-modified"
+                  style="width:50%;"
+                  name="oipedido"
+                  [(ngModel)]="oipedido"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12  mb-1 mt-1">
+                <label class="ml-5 float-left">Estado: </label>
+                <input
+                  type="text"
+                  class="mr-5 float-right form-control input-modified"
+                  style="width:50%;"
+                  name="oistatus"
+                  [(ngModel)]="oistatus"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Cancelar
+          </button>
+          <button type="button" class="btn btn-primary">Buscar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for OyM -->
+  <div
+    class="modal fade"
+    id="mOyM"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modalOyM"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog  modal-xl" role="document">
+      <div class="modal-content ">
+        <div class="modal-header bg-#000 ">
+          <div class="row">
+            <div class="col-12">
+              <h2 class="modal-title mtitle ">Buscar Obra</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="col-md-3 ">
+            <div class="row">
+              <div class="col-12  mb-1 mt-1 m-auto">
+                <label class="ml-5 float-left">Consecutivo: </label>
+                <input
+                  type="text"
+                  class="mr-5 float-right form-control input-modified"
+                  style="width:50%;"
+                  name="oymconsecutive"
+                  [(ngModel)]="oymconsecutive"
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12  mb-1 mt-1">
+                <label class="ml-5 float-left">Municipio: </label>
+                <select
+                  name="oymmunicipio"
+                  class="mr-5 float-right form-control input-modified"
+                  style="width:50%;"
+                  [(ngModel)]="oymmunicipio"
+                ></select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12  mb-1 mt-1">
+                <label class="ml-5 float-left">Cod instalación: </label>
+                <input
+                  type="text"
+                  class="mr-5 float-right form-control input-modified"
+                  style="width:50%;"
+                  name="oymcodinstalation"
+                  [(ngModel)]="oymcodinstalation"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12  mb-1 mt-1">
+                <label class="ml-5 float-left">Pedido: </label>
+                <input
+                  type="text"
+                  class="mr-5 float-right form-control input-modified"
+                  style="width:50%;"
+                  name="oympedido"
+                  [(ngModel)]="oympedido"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12  mb-1 mt-1">
+                <label class="ml-5 float-left">Estado: </label>
+                <input
+                  type="text"
+                  class="mr-5 float-right form-control input-modified"
+                  style="width:50%;"
+                  name="oymstatus"
+                  [(ngModel)]="oymstatus"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Cancelar
+          </button>
+          <button type="button" class="btn btn-primary">Buscar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Obras externas -->
+  <div
+    class="modal fade"
+    id="mObrasExternas"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modalObrasExternas"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog  modal-xl" role="document">
+      <div class="modal-content ">
+        <div class="modal-header bg-#000 ">
+          <div class="row">
+            <div class="col-12">
+              <h2 class="modal-title mtitle ">Buscar Obra</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="col-md-3 ">
+            <div class="row">
+              <div class="col-12  mb-1 mt-1 m-auto">
+                <label class="ml-5 float-left">Consecutivo: </label>
+                <input
+                  type="text"
+                  class="mr-5 float-right form-control input-modified"
+                  style="width:50%;"
+                  name="oeconsecutive"
+                  [(ngModel)]="oeconsecutive"
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12  mb-1 mt-1">
+                <label class="ml-5 float-left">Municipio: </label>
+                <select
+                  name="oemunicipio"
+                  class="mr-5 float-right form-control input-modified"
+                  style="width:50%;"
+                  [(ngModel)]="oemunicipio"
+                ></select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12  mb-1 mt-1">
+                <label class="ml-5 float-left">OTI: </label>
+                <input
+                  type="text"
+                  class="mr-5 float-right form-control input-modified"
+                  style="width:50%;"
+                  name="oeoti"
+                  [(ngModel)]="oeoti"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Cancelar
+          </button>
+          <button type="button" class="btn btn-primary">Buscar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Obras externas -->
+  <div
+    class="modal fade"
+    id="search"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modalObrasExternas"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog  modal-lg" role="document">
+      <div class="modal-content ">
+        <div class="modal-header bg-#000 ">
+          <div class="row">
+            <div class="col-12">
+              <h2 class="modal-title mtitle ">Buscar</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="content ml-2">
+            <div class="form-group row">
+              <label class="col-1 col-form-label mr-3">Fecha inicial:</label>
+              <div class="col-2">
+                <input
+                  type="date"
+                  class="mr-5 float-right form-control input-modified"
+                  name="startDate"
+                />
+              </div>
+              <label class="col-1 col-form-label mr-3">Fecha final: </label>
+              <div class="col-2">
+                <input
+                  type="date"
+                  class="mr-5 float-right form-control input-modified"
+                  name="finalDate"
+                />
+              </div>
+              <div class="col-2">
+                <button type="button" class="btn btn-success">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 m-2">
+            <table
+              class="table table-border table-hover table-striped font-table"
+            >
+              <thead>
+                <tr>
+                  <th>Codigo</th>
+                  <th>Municipio</th>
+                  <th>Estado permiso</th>
+                  <th>Fecha pedido</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">
+            <i class="fa fa-window-close"></i> Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+.table-permisos {
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.table-permisos>li {
+    display: flex;
+    justify-content: center;
+    flex-basis: 25%;
+    align-items: center;
+}
+div.center{
+    width: 100%;
+    background-color: red;
+}

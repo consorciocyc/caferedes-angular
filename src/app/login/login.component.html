@@ -1,0 +1,87 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12 container-forms">
+            <div class="row">
+                <div class="col-8 p-5 forms-content">
+                    <h1 class="mb-5">Login</h1>
+                    <form class="mb-5" #form_login="ngForm">
+                        <input type=" text" class="form-control  input_login" placeholder="Ingrese Usuario" name="user" #user="ngModel" required
+                            number [(ngModel)]="user.user">
+                        <span class="error_login" *ngIf="user.errors?.required && user.touched || user.errors?.number">Ingrese un numero de documento valido</span>
+                        <input type="password" class="form-control mt-4 input_login" placeholder="Ingrese Contraseña" name="password" #password="ngModel"
+                            [(ngModel)]="user.password" required>
+                        <span class="error_login" *ngIf="password.errors?.required && password.touched">el valor de contraseña no puede ser vacio</span>
+
+                        <label for="" class="mt-4 d-block" style="margin-bottom:0">seleccione una empresa</label>
+                        <select name="company" class="form-control select_login" #company="ngModel" [(ngModel)]="user.company" (change)="get_contracts(company.value)"
+                            required>
+                            <option *ngFor="let company of company_list " value="{{company.idbusiness}}">{{company.company_name}}</option>
+                        </select>
+                        <span class="error_login " *ngIf="company.errors?.required && company.touched">Seleccione una empresa</span>
+
+                        <label for="" class="mt-4 d-block" style="margin-bottom:0">seleccione un contrato</label>
+                        <select name="contract" class="form-control select_login" #contract="ngModel" [(ngModel)]="user.contract" required>
+                            <option *ngFor="let contract of contracts_list" value="{{contract.idcontract}}">{{contract.contract_name}}</option>
+                        </select>
+                        <span class="error_login" *ngIf="contract.errors?.required && contract.touched">Seleccione un contrato</span>
+                        <button type="submit" class="btn float-right btn_login" [disabled]="!form_login.valid" (click)="SessionStart(form_login.value) ">Login</button>
+                        
+                        <button type="button" class="btn float-right btn_login mr-3" data-toggle="modal" data-target="#resetPassword">
+                            Cambiar contraseña
+                          </button>
+                          
+                          <!-- Modal for change of password-->
+                          <div class="modal fade" id="resetPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header"class="bg-#000 " style="text-align:center;">
+                                    <div class="row" >
+                                        <div class="col-12">
+                                          <h2 class="modal-title tres" id="titleMResetPassword">Restaurar Contraseña</h2><hr>
+                                        </div>
+                                    </div>
+                                </div>
+                          
+                                <div class="modal-body">
+                                  <div class="row">
+                                      <div class="col-sm-12 col-md.6">
+                                          <label class="ml-3 uno">Correo Electronico: </label>
+                                          <input type="emal" class ="float-right mr-3 dos" name="mail" [(ngModel)]="mail">
+                                          <label class="ml-3 uno">Contraseña actual: </label>
+                                          <input type="password" class ="float-right mr-3 dos"name="lastPassword" [(ngModel)]="lastPassword">
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-sm-12 col-md.6">
+                                          <label class="ml-3 uno">Nueva contraseña: </label>
+                                          <input type="password" class ="float-right mr-3 dos"name="newPassword" [(ngModel)]="newPassword">
+                                          <label class="ml-3 uno">Confirmar contraseña: </label>
+                                          <input type="password" class ="float-right mr-3 dos" name="confirmNewPassword" [(ngModel)]="confirmNewPassword">
+                                      </div>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                  <button type="button" class="btn btn-primary">Guardar</button>
+                                </div>
+
+                        
+                              </div>
+                            </div>
+                          </div>
+                          
+                          
+                          
+                    
+                    </form>
+                    <!--<a class="change-password ">Cambiar contraseña</a>-->
+                </div>
+                <div class="col-4 text-center d-flex flex-column justify-content-center forms-text ">
+                    <h1>Bienvenido</h1>
+                    <p>SIP V2.0 ©2018</p>
+                </div>
+            </div>
+        </div>
+        <p class="mt-5 text-center copy w-100 ">©COPYRIGHT CONSTRUINTEGRALES 2018</p>
+    </div>
+</div>

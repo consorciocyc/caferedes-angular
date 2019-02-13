@@ -1,0 +1,704 @@
+<div class="container-fluid container-modified">
+  <div class="col-12"><h3 class="mb-3 title">Cotización</h3></div>
+  <div class="col-12">
+    <form id="form" #form_purchases="ngForm">
+      <div class="form-group row" id="purchase">
+        <label for="" class="col-1 col-form-label">Orden cotización</label>
+        <div class="col-2">
+          <input
+            class="form-control input-modified"
+            type="text"
+            name="consecutive_purc"
+            readonly
+          />
+
+          <input
+            class="form-control input-modified"
+            type="text"
+            name="idpurchases"
+            [(ngModel)]="cotizacionmodel.idpurchases"
+            hidden
+          />
+        </div>
+        <label for="" class="col-1 col-form-label label-required"
+          >Proveedor</label
+        >
+        <div class="col-2">
+          <input
+            class="form-control input-modified "
+            ngui-auto-complete
+            (valueChanged)="valueChanged($event)"
+            [(ngModel)]="cotizacionmodel.providers_name"
+            [source]="search_provider"
+            list-formatter="providers_name"
+            path-to-data="providers"
+            value-property-name="provider"
+            display-property-name="providers_name"
+            min-chars="1"
+            name="providers_name"
+            #providers_name="ngModel"
+            [disabled]="buttonProvider"
+          />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="" class="col-1 col-form-label label-required">Fecha</label>
+        <div class="col-2">
+          <input
+            class="form-control input-modified"
+            type="date"
+            name="date"
+            [(ngModel)]="cotizacionmodel.purchases_date"
+            #date="ngModel"
+            date
+            required
+          />
+          <span *ngIf="date.errors?.date && date.touched" class="error_message"
+            >la fecha no es valida</span
+          >
+          <span
+            *ngIf="date.errors?.required && date.touched"
+            class="error_message"
+            >el campo fecha es requerido</span
+          >
+        </div>
+
+        <label for="" class="col-1 col-form-label">Almacen</label>
+        <div class="col-2">
+          <select
+            class="form-control input-modified"
+            name="purchases_cellar"
+            [(ngModel)]="cotizacionmodel.purchases_cellar"
+            #purchases_cellar="ngModel"
+            required
+          >
+            <option
+              *ngFor="let cellar of cellar"
+              value="{{cellar.idcellar}}"
+              [disabled]="updatedisable"
+              >{{ cellar.name }}</option
+            >
+          </select>
+          <span
+            *ngIf="
+              purchases_cellar.errors?.required && purchases_cellar.touched
+            "
+            class="error_message"
+            >el campo fecha es requerido</span
+          >
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="" class="col-1 col-form-label">Obeservaciones</label>
+        <div class="col-8">
+          <textarea
+            name=""
+            id=""
+            class="form-control input-modified textarea-modified"
+            name="purchases_observations"
+            [(ngModel)]="cotizacionmodel.purchases_observations"
+          ></textarea>
+        </div>
+      </div>
+    </form>
+    <button
+      class="btn btn_primary btn-sm mr-3 my-3"
+      [disabled]="!form_purchases.valid || buttonDisabled"
+      data-toggle="modal"
+      data-target="#guardar"
+      (click)="ViewCompany()"
+    >
+      <i class="fa fa-save"></i> Guardar
+    </button>
+    <button
+      class="btn btn_primary btn-sm mr-3 my-3"
+      data-toggle="modal"
+      [disabled]="buttonUpdate"
+      data-target="#actualizar"
+    >
+      <i class="fa fa-sync"></i>Actualizar
+    </button>
+    <button class=" btn btn_success btn-sm mr-3 my-3" (click)="imprimir()">
+      <i class="fa fa-print" aria-hidden="true"></i> Imprimir
+    </button>
+
+    <button
+      class="btn btn_warning btn-sm mr-3 my-3"
+      data-toggle="modal"
+      data-target="#buscar"
+    >
+      <i class="fa fa-search" aria-hidden="true"></i>Buscar
+    </button>
+    <button
+      class="btn btn-primary btn-sm mr-3 my-3"
+      data-toggle="modal"
+      data-target="#submitMail"
+    >
+      <i class="fa fa-envelope"></i> Enviar Correo
+    </button>
+
+    <button
+    class="btn btn_primary btn-sm mr-3 my-3"
+    data-toggle="modal"
+    data-target="#recibidos"
+  >
+    <i class="fa fa-felder"></i> Recibidos
+  </button>
+
+  </div>
+</div>
+
+<div class="container-fluid container-modified" (keydown)="someMethod($event)">
+  <div class="col-12">
+    <div class="form-group">
+      <div class="datagrid">
+        <table
+          id="table"
+          class="table table-striped table-hover table-bordered table-relative font-table"
+        >
+          <thead>
+            <tr>
+              <th class="width-table-01">#</th>
+              <th class="width-table-01">Eliminar</th>
+              <th class="width-table-03">Material</th>
+              <th class="width-table-03">Código</th>
+              <th class="width-table-5">Descripción</th>
+              <th class="width-table-01">Unidad</th>
+              <th class="width-table-02">Can/Solicitada</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="item_actividad eliminar_tr"
+              *ngFor="let newrow of rowDataHomeForm; let i = index"
+            >
+              <td>{{ i + 1 }}</td>
+              <td class="text-center">
+                <button
+                  class="btn_delete fas fa-trash-alt"
+                  type="button"
+                  (click)="delete(i, $event)"
+                  value="{{newrow.iddetail_shopping}}"
+                  style="padding: 2px"
+                ></button>
+              </td>
+              <td>
+                <input
+                  class="form-control input-modified"
+                  (change)="valuechagemate(i, newrow)"
+                  ngui-auto-complete
+                  [(ngModel)]="newrow.cod_mater"
+                  placeholder="Item"
+                  [source]="search_code"
+                  list-formatter="code"
+                  path-to-data="supply_providers"
+                  value-property-name="newrow.idmateriales"
+                  display-property-name="code"
+                  min-chars="1"
+                  name="code"
+                  #codename="ngModel"
+                  [disabled]="code"
+                />
+              </td>
+              <td>
+                <input
+                  class="idcode form-control purchase hiden input-modified"
+                  type="text"
+                  name="code"
+                  [(ngModel)]="newrow.code"
+                  readonly
+                />
+              </td>
+
+              <td>
+                <input
+                  class="form-control input-modified"
+                  (change)="valuechagematedes(i, newrow)"
+                  ngui-auto-complete
+                  [(ngModel)]="newrow.description"
+                  placeholder="Descripcion"
+                  [source]="searc_matedescrip"
+                  list-formatter="description"
+                  path-to-data="supply_providers"
+                  value-property-name="idmateriales"
+                  display-property-name="description"
+                  min-chars="1"
+                  name="description"
+                  #description="ngModel"
+                  [disabled]="code"
+                />
+              </td>
+              <td>{{ newrow.name_Unity }}</td>
+              <td>
+                <input
+                  class="request_amount form-control purchase input-modified"
+                  type="text"
+                  name="request_amount"
+                  (keyup)="operaciones(i, newrow)"
+                  [(ngModel)]="newrow.request_amount"
+                />
+              </td>
+
+            
+            </tr>
+          </tbody>
+        </table>
+
+        <div>
+          <button class="btn_add" (click)="addRowHomeCampusProvinceAreaForm()">
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+        <div class="d-flex justify-content-end pr-3">
+          <div class="resumen mr-5">
+            <p class="info border_botom">SUBTOTAL</p>
+            <p class="info border_botom">IVA</p>
+            <p class="info border_botom">TOTAL</p>
+          </div>
+          <div class="resumen text-right">
+            <p class="sub_total border_botom">{{ subtotal }}</p>
+            <p class="sub_iva border_botom">{{ valor_iva }}</p>
+            <p class="total border_botom">{{ valor_total }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PARA BUSCAR LAS ORDENES DE COMPRA -->
+<div
+  class="modal fade"
+  id="buscar"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="buscar"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">BUSCAR</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="startdate">
+          <div class="row">
+            <div class="col-2">
+              <label for="">Fecha Inicial</label>
+              <input
+                type="date"
+                class="form-control input-modified"
+                name="start_date"
+                [(ngModel)]="start_date"
+              />
+            </div>
+            <div class="col-2">
+              <label for="">Fecha Final</label>
+              <input
+                type="date"
+                class="form-control input-modified"
+                name="end_date"
+                [(ngModel)]="end_date"
+              />
+            </div>
+            <div class="col-2 d-flex align-items-end">
+              <button
+                class="btn btn_primary btn-sm"
+                (click)="search_purchases()"
+              >
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+        <hr />
+        <div class="row data-tables">
+          <div class="col-sm-12">
+            <table
+              id="example"
+              class="table table-striped table-bordered"
+              cellspacing="0"
+              width="100%"
+            >
+              <thead>
+                <tr>
+                  <th>N° Orden</th>
+                  <th>Proveedor</th>
+                  <th>Estado</th>
+                  <th>N° Ingreso</th>
+                  <th>Fecha</th>
+                  <th>Selección</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let row of data; let i = index"
+                  (click)="selectRow(i, row)"
+                  class="tr1 text-center "
+                >
+                  <td>{{ row.consecutive_purc }}</td>
+                  <td>{{ row.providers_name }}</td>
+                  <td>{{ row.name_moves }}</td>
+                  <td></td>
+                  <td>{{ row.purchases_date }}</td>
+
+                  <td>
+                    <button
+                      class="btn btn_select btn-sm"
+                      data-dismiss="modal"
+                      value="{{row.idpurchases}}"
+                      (click)="handleClick($event)"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn_danger btn-sm"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-window-close"></i>Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PARA IMPRIMIR LAS ORDENES DE COMPRA -->
+<div
+  class="modal fade"
+  id="buscar_orden_compra"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="buscar_orden_compra"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">BUSCAR</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-4 offset-3">
+              <label for="">N° Orden</label>
+              <input
+                type="text"
+                class="form-control input-modified"
+                name="imprimir"
+                [(ngModel)]="print"
+              />
+            </div>
+
+            <div class="col-2 d-flex align-items-end">
+              <button
+                class="btn btn_primary btn-sm"
+                (click)="imprimir_search()"
+              >
+                <i class="fa fa-print"></i> Imprimir
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class=" modal-footer">
+        <button
+          type="button"
+          class="btn btn_danger btn-sm"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-window-close"></i> Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE CONFIMACION -->
+<div
+  class="modal fade"
+  id="actualizar"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="actualizar"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Actualizar</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <p class="text-center text-muted p-3">
+              Esta seguro que desea actualizar la orden ?
+            </p>
+          </div>
+        </form>
+      </div>
+      <div class=" modal-footer">
+        <button
+          type="button"
+          class="btn btn_danger btn-sm"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-window-close"></i> Cerrar
+        </button>
+        <button
+          type="button"
+          class="btn btn_success btn-sm"
+          data-dismiss="modal"
+          (click)="update_purchase()"
+        >
+          <i class="fa fa-sync"></i> Actualizar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="guardar"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="guardar"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Guardar</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <p class="text-center text-muted p-3">
+              Esta seguro que desea crear la orden ?
+            </p>
+            <h4>en la Empresa {{ empresa }} y Contrato {{ contrato }}</h4>
+          </div>
+        </form>
+      </div>
+      <div class=" modal-footer">
+        <button
+          type="button"
+          class="btn btn_danger btn-sm"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-window-close"></i> Cerrar
+        </button>
+        <button
+          type="button"
+          class="btn btn_success btn-sm"
+          data-dismiss="modal"
+          (click)="inser_purchase()"
+        >
+          <i class="fa fa-save"></i> Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for submit mails -->
+<div
+  class="modal fade"
+  data-backdrop="static"
+  data-keyboard="false"
+  id="submitMail"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledb.3y="modalSubmitMail"
+  aria-hidden="true"
+>
+  <div class="modal-dialog  modal-lg" role="document">
+    <div class="modal-content ">
+      <div class="modal-header bg-#000 ">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="modal-title mtitle ">Enviar Correo</h2>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body ">
+        <div class="form-group row">
+          <div class="col-sm-12 col-md-6 float-left d-inline-block dos">
+            <div class="form-group row">
+              <div class="col-12 mb-1 mt-1  ">
+                <label class="col-4 col-form-label pl-2  "
+                  >Correo proveedor:
+                </label>
+                <div class="col-7 float-right">
+                  <input
+                    class="form-control input-modified"
+                    style="width:90%; height: 25px"
+                    type="mail"
+                    name="mailProvider"
+                  />
+                </div>
+              </div>
+
+              <div class="col-12 mb-1 mt-1 ">
+                <label class="col-4 col-form-label pl-2  "
+                  >Con copia a #1:
+                </label>
+                <div class="col-7 float-right">
+                  <input
+                    class="form-control input-modified  "
+                    style="width:90%;height: 25px"
+                    type="mail"
+                    name="mailCopy1"
+                  />
+                </div>
+              </div>
+
+              <div class="col-12 mb-1 mt-1 ">
+                <label class="col-4 col-form-label pl-2  "
+                  >Con copia a #2:
+                </label>
+                <div class="col-7 float-right">
+                  <input
+                    class="form-control input-modified  "
+                    style="width:90%;height: 25px"
+                    type="mail"
+                    name="mailCopy2"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-9 float-left d-inline-block dos">
+            <div class="form-group row">
+              <div class="col-12 mb-1 mt-1 uno">
+                <label class=" col-1 col-form-label pl-2  "
+                  >Observaciones:
+                </label>
+                <div class="col-10 float-right">
+                  <textarea
+                    rows="20"
+                    name="observation"
+                    style="width:100%;"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="float-right ">
+          <button type="button" class="btn btn-sm btn-primary">
+            <i class="fa fa-envelope"></i> Enviar
+          </button>
+
+          <button
+            type="button"
+            data-dismiss="modal"
+            class="btn btn-sm btn-danger"
+          >
+            <i class="fa fa-window-close"></i> Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="recibidos"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="buscar"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Recibidos</h5>
+
+      </div>
+      <div class="modal-body">
+
+        <div class="row data-tables">
+          <div class="col-sm-12">
+            <table
+              class="table table-striped table-bordered" >
+              <thead>
+                <tr>
+                  <th class="width-table-1">Proveedor</th>
+                  <th class="width-table-1">Estado</th>
+                  <th class="width-table-1">Fecha</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td ></td>
+                  <td ></td>
+                  <td ></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn_danger btn-sm"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-window-close"></i>Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

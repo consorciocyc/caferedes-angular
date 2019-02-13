@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-12">
+        <table class="table table-striped table-checkable table-bordered table-hover" id="table">
+            <thead>
+                <tr>
+                    <th>ver</th>
+                    <th>consecutivo</th>
+                    <th>Nombre Proyecto</th>
+                    <th>Nro Plano</th>
+
+                    <th>Tipo Obra</th>
+                    <th>Dirección</th>
+                    <th>Municipio</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let newrow of data; let i=index">
+                    <td>
+                        <button class="btn btn-sm btn_primary fa fa-eye" value="{{newrow.idobr_externa}}" (click)="seach_conse($event)">
+                        </button>
+                    </td>
+                    <td>
+                        {{newrow.obr_consecutivo}}
+                    </td>
+                    <td>
+                        {{newrow.obr_nproyecto}}
+                    </td>
+                    <td>
+                        {{newrow.obr_nplano}}
+                    </td>
+                    <td>
+                        {{newrow.name_obrext}}
+                    </td>
+                    <td>
+                        {{newrow.obr_direccion}}
+                    </td>
+                    <td>
+                        {{newrow.name_municipality}}
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

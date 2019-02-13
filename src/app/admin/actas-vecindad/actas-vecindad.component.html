@@ -1,0 +1,921 @@
+<div class="container-fluid container-modified ">
+  <div class="col-12"><h3 class="mb-3 title">Domiciliarias</h3></div>
+  <br />
+
+  <div class="row">
+    <div class="col-12 ">
+      <div class="row">
+        <div class="col-2">
+          <input
+            class="form-control input-modified "
+            (change)="search_acta_auto($event)"
+            ngui-auto-complete
+            [(ngModel)]="acta"
+            placeholder="ACTA"
+            [source]="auto_acta"
+            list-formatter="acta"
+            path-to-data="acta"
+            value-property-name="acta"
+            display-property-name="acta"
+            min-chars="1"
+            name="code"
+            #code="ngModel"
+          />
+        </div>
+
+        <div class="col-3">
+          <input
+            class="form-control input-modified"
+            (change)="search_user_auto($event)"
+            ngui-auto-complete
+            [(ngModel)]="btnauto_user"
+            placeholder="USUARIO"
+            [source]="auto_user"
+            list-formatter="user"
+            path-to-data="user"
+            value-property-name="user"
+            display-property-name="user"
+            min-chars="1"
+            name="btnauto_user"
+            style="width: 95%; padding-right:1em; "
+          />
+        </div>
+
+        <div class="col-3">
+          <input
+            class="form-control input-modified "
+            (change)="search_address_auto($event)"
+            ngui-auto-complete
+            [(ngModel)]="addrees"
+            placeholder="DIRECCION"
+            [source]="auto_address"
+            list-formatter="address [name_type_acta]"
+            path-to-data="address"
+            value-property-name="address"
+            display-property-name="address"
+            min-chars="1"
+            name="code"
+            #code="ngModel"
+            style="width: 95%;"
+          />
+        </div>
+
+        <div class="col-3">
+          <input
+            class="form-control mr-5 mb-1 input-modified "
+            style="width:55%;"
+            (change)="valueChanged($event)"
+            ngui-auto-complete
+            [(ngModel)]="OTI"
+            placeholder="OTI"
+            [source]="search_oti"
+            list-formatter="obr_anillos_oti"
+            path-to-data="obr_anillos"
+            value-property-name="obr_anillos_oti"
+            display-property-name="obr_anillos_oti"
+            min-chars="1"
+            name="OTI"
+            #code="ngModel"
+            [(ngModel)]="OTI"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+
+  <div class="row">
+    <div class="col-12">
+      <div class="col-sm-12 col-md-3 float-left d-inline-block dos">
+        <div class="form-group row">
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label al">Tramo: </label>
+            <div class="col-7 float-right">
+              <input
+                class="form-control mr-6   input-modified"
+                style="width:100%;"
+                (change)="valueChanged_tramo()"
+                ngui-auto-complete
+                placeholder="TRAMO"
+                [source]="search_oti"
+                list-formatter="obr_anillos_oti"
+                path-to-data="obr_anillos"
+                value-property-name="obr_anillos_oti"
+                display-property-name="obr_anillos_oti"
+                min-chars="1"
+                name="tramo"
+                #code="ngModel"
+                [(ngModel)]="tramo"
+              />
+            </div>
+          </div>
+
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label al">IPID: </label>
+            <div class="col-7 float-right">
+              <select
+                class="form-control mr-6 float-right  input-modified"
+                style="width:100%;"
+                name="id_ipid"
+                #ipid="ngModel"
+                [(ngModel)]="actavmodel.id_ipid"
+              >
+                <option
+                  *ngFor="let list_ipid of list_ipid"
+                  value="{{list_ipid.idipd}}"
+                  >{{ list_ipid.ipid }}</option
+                >
+              </select>
+            </div>
+          </div>
+
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label al">Acta numero: </label>
+            <div class="col-7 float-right">
+              <input
+                class="form-control mr-6 float-right  input-modified"
+                style="width:100%;"
+                type="text"
+                name="acta"
+                [(ngModel)]="actavmodel.acta"
+              />
+            </div>
+          </div>
+
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label al">Ficha numero: </label>
+            <div class="col-7 float-right">
+              <input
+                class="form-control mr-6 float-right  input-modified"
+                style="width:100%;"
+                type="text"
+                name="ficha"
+                [(ngModel)]="actavmodel.ficha"
+              />
+            </div>
+          </div>
+
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label al">Interior Multiple: </label>
+            <div class="col-7 float-right">
+              <select
+                class="form-control mr-6 float-right  input-modified"
+                style="width:100%;"
+                name="type"
+                [(ngModel)]="actavmodel.multiple"
+              >
+                <option value="si">Si</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-3 float-left d-inline-block dos">
+        <div class="form-group row">
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label al">Fecha de envio: </label>
+            <div class="col-7 float-right">
+              <input
+                class="form-control mr-4 float-right  input-modified"
+                style="width:100%;"
+                type="datetime-local"
+                name="date_send"
+                [(ngModel)]="actavmodel.date_send"
+              />
+            </div>
+          </div>
+
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label al">Dirección: </label>
+            <div class="col-7 float-right">
+              <input
+                class="form-control mr-4 float-right  input-modified"
+                style="width:100%;"
+                type="text"
+                name="address"
+                [(ngModel)]="actavmodel.address"
+              />
+            </div>
+          </div>
+
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label  al">Teléfono: </label>
+            <div class="col-7 float-right">
+              <input
+                class="form-control mr-4 float-right  input-modified"
+                style="width:100%;"
+                type="text"
+                name="phone"
+                [(ngModel)]="actavmodel.phone"
+              />
+            </div>
+          </div>
+
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label  al">Celular: </label>
+            <div class="col-7 float-right">
+              <input
+                class="form-control mr-4 float-right  input-modified"
+                style="width:100%;"
+                type="text"
+                name="cel"
+                [(ngModel)]="actavmodel.cel"
+              />
+            </div>
+          </div>
+
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label  al">Fecha acta: </label>
+            <div class="col-7 float-right">
+              <input
+                class="form-control mr-4 float-right  input-modified"
+                style="width:100%;"
+                type="date"
+                name="date"
+                [(ngModel)]="actavmodel.date"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-3 float-left d-inline-block dos">
+        <div class="form-group row">
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label al">Usuario: </label>
+            <div class="col-7 float-right">
+              <input
+                class="form-control mr-4  input-modified"
+                style="width:100%;"
+                type="text"
+                name="user"
+                [(ngModel)]="actavmodel.user"
+              />
+            </div>
+          </div>
+
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label  al">Cedula: </label>
+            <div class="col-7 float-right">
+              <input
+                class="form-control mr-4   input-modified"
+                style="width:100%;"
+                type="text"
+                name="identification"
+                [(ngModel)]="actavmodel.identification"
+              />
+            </div>
+          </div>
+
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label  al">Correo Electronico: </label>
+            <div class="col-7 float-right">
+              <input
+                class="form-control mr-4  input-modified"
+                style="width:100%;"
+                type="text"
+                name="email"
+                [(ngModel)]="actavmodel.email"
+              />
+            </div>
+          </div>
+
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label al">Tipo: </label>
+            <div class="col-7 float-right">
+              <select
+                class="form-control mr-4  input-modified"
+                style="width:100%;"
+                name="type"
+                [(ngModel)]="actavmodel.type"
+              >
+                <option
+                  *ngFor="let lis_type_acta of lis_type_acta"
+                  value="{{lis_type_acta.id_type_acta}}"
+                  >{{ lis_type_acta.name_type_acta }}</option
+                >
+              </select>
+            </div>
+          </div>
+
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label al">Empleado: </label>
+            <div class="col-7 float-right">
+              <input
+                class="form-control mr-4   col-12 input-modified"
+                ngui-auto-complete
+                style="width:100%;"
+                (change)="employe()"
+                [(ngModel)]="actavmodel.employee"
+                [source]="searc_employee"
+                list-formatter="full_name"
+                path-to-data="employee"
+                value-property-name="idemployees"
+                display-property-name="full_name"
+                min-chars="1"
+                name="employee"
+                #employee="ngModel"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-3 float-left d-inline-block dos">
+        <div class="form-group row">
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label">
+              <input
+                type="checkbox"
+                name="acueducto"
+                [(ngModel)]="actavmodel.acueducto"
+              />
+              Acueducto</label
+            >
+          </div>
+
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label  ">
+              <input
+                type="checkbox"
+                name="alcantarillado"
+                [(ngModel)]="actavmodel.alcantarillado"
+              />
+              Alcantarillado
+            </label>
+          </div>
+
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label  ">
+              <input type="checkbox" name="gas" [(ngModel)]="actavmodel.gas" />
+              Gas
+            </label>
+          </div>
+
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class="col-4 col-form-label ">
+              <input
+                type="checkbox"
+                name="energia"
+                [(ngModel)]="actavmodel.energia"
+              />
+              Energia
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 ">
+      <div class="col-sm-12 col-md-6 float-left d-inline-block dos">
+        <div class="form-group row">
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class=" col-2 col-form-label al"
+              >Observaciones domisiliarias:
+            </label>
+            <div class="col-10">
+              <textarea
+                class="form-control input-modified textarea-modified "
+                name="obs"
+                [(ngModel)]="actavmodel.obs"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 float-left d-inline-block dos">
+        <div class="form-group row">
+          <div class="col-12 mb-1 mt-1 uno ">
+            <label class=" col-2 col-form-label al"
+              >Observaciones comerciales:
+            </label>
+            <div class="col-10 ">
+              <textarea
+                class="form-control input-modified textarea-modified   "
+                name="obsC"
+                [(ngModel)]="actavmodel.obsC"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 float-left d-block uno">
+      <div class="form-group row">
+        <button
+          type="button"
+          class="button btn btn-sm btn-primary"
+          (click)="save_acta()"
+          [disabled]="btninsert_acta"
+        >
+          <i class="fa fa-save"></i> Guardar
+        </button>
+
+        <button
+          type="button"
+          class="button btn btn-sm btn-primary"
+          (click)="update_acta()"
+          [disabled]="btnupdateacta"
+        >
+          <i class="fa fa-sync"></i> Actualizar
+        </button>
+        <button
+          type="button"
+          class="button btn btn-sm btn-primary"
+          (click)="send_mail()"
+          [disabled]="btnsendmail"
+        >
+          <i class="fa fa-mail-bulk"></i> Enviar Mail
+        </button>
+        <button
+          type="button"
+          class="button btn  btn-sm btn-primary"
+          (click)="download()"
+          [disabled]="btnsendmail"
+        >
+          <i class="fa fa-download"></i> Descargar
+        </button>
+        <button
+          type="button"
+          class="button btn  btn-sm btn-primary"
+          (click)="nuevo()"
+          [disabled]="newacta"
+        >
+          <i class="fa fa-newspaper"></i> Nueva
+        </button>
+        <button #pickfiles class="button btn btn-sm btn-primary">
+          <i class="fa fa-folder-minus"></i> Seleccionar archivo
+        </button>
+        <button
+          (click)="uploadFiles()"
+          class="button btn btn-sm btn-primary"
+          [disabled]="btnupload"
+        >
+          <i class="fa fa-upload"></i> Subir archivo(s)
+        </button>
+        <button
+          type="button"
+          class="button btn  btn-sm btn-primary"
+          (click)="search_image()"
+          data-toggle="modal"
+          data-target="#seeDocuments"
+        >
+          <i class="fa fa-eye"></i> Ver Documentos
+        </button>
+        <button
+          type="button"
+          class="button btn  btn-sm btn-success"
+          (click)="searchoti()"
+        >
+          <i class="fa fa-search"></i> Buscar
+        </button>
+        <button
+          (click)="items()"
+          type="button"
+          class="button btn  btn-sm btn-primary"
+          data-toggle="modal"
+          data-target="#items"
+          [disabled]="btnitems"
+        >
+          <i class="fa fa-folder"></i> Items
+        </button>
+
+        <button
+          type="button"
+          class="button btn  btn-sm btn-primary"
+          data-toggle="modal"
+          data-target="#address"
+        >
+          <i class="fa fa-folder"></i> Multiple
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Files being uploaded -->
+  <ul *ngIf="fileList.length > 0">
+    <li *ngFor="let file of fileList">
+      {{ file.name }} ({{ file.size }}) - {{ file.percent }}%
+    </li>
+  </ul>
+  <table
+    class="table table-striped table-bordered table-hover"
+    id="actas"
+    style="margin-top: 30px;"
+  >
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Editar</th>
+        <th>Direccion</th>
+        <th>Acta</th>
+        <th>Usuario</th>
+        <th>Cedula</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let list_acta of list_acta; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>
+          <button
+            class=" btn btn_success btn-sm mr-3 fa fa-edit"
+            (click)="search_acta($event)"
+            value="{{list_acta.id_actav}}"
+          ></button>
+        </td>
+
+        <td>{{ list_acta.address }}</td>
+        <td>{{ list_acta.acta }}</td>
+        <td>{{ list_acta.user }}</td>
+        <td>{{ list_acta.identification }}</td>
+        <td>{{ list_acta.email }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal for see documents -->
+  <div
+    class="modal fade"
+    id="seeDocuments"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modalSeeDocuments"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog  modal-lg" role="document">
+      <div class="modal-content ">
+        <div class="modal-header bg-#000 ">
+          <div class="row">
+            <div class="col-12">
+              <h2 class="modal-title mtitle ">Fotografias</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <hr />
+
+          <div class="row data-tables">
+            <div class="col-sm-12">
+              <div class="form-group row">
+                <div class="col-sm-7">
+                  <table
+                    id="table_income"
+                    class="table table-striped table-hover table-bordered table-relative"
+                  >
+                    <thead>
+                      <tr>
+                        <th class="width-table-1">Item</th>
+                        <th class="width-table-1">Nombre</th>
+                        <th class="width-table-1">Nombre</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="item_actividad eliminar_tr" *ngFor="let imageacta of _album; let i=index">
+                            <td>
+                                {{i+1}}
+                            </td>
+                            <td>
+                                {{imageacta.name}}
+                            </td>
+                            <td>
+                                <img [src]="imageacta.thumb" (click)="open(i)" class="img-circle" />
+                            </td>
+
+                        <tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-sm-5">
+                  <table
+                    id="table_income"
+                    class="table table-striped table-hover table-bordered table-relative"
+                  >
+                    <thead>
+                      <tr>
+                        <th class="width-table-1">Nombre</th>
+                        <th class="width-table-2">documento</th>
+                        <th class="width-table-2">Eliminar</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class=" modal-footer">
+          <button
+            type="button"
+            class="btn btn_danger btn-sm"
+            data-dismiss="modal"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for see photos -->
+  <div
+    class="modal fade"
+    data-backdrop="static"
+    data-keyboard="false"
+    id="items"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledb.3y="modalItems"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog  modal-xl" role="document">
+      <div class="modal-content ">
+        <div class="modal-header bg-#000 ">
+          <div class="row">
+            <div class="col-12"><h2 class="modal-title mtitle ">Items</h2></div>
+          </div>
+        </div>
+        <div class="modal-body scroll tmodal">
+          <div class="form-group row">
+              <div class="col-3">
+                  <input
+                    class="form-control input-modified "
+                    (change)="search_address_items($event)"
+                    ngui-auto-complete
+                    [(ngModel)]="addrees_item"
+                    placeholder="DIRECCION"
+                    [source]="auto_address"
+                    list-formatter="address [name_type_acta]"
+                    path-to-data="address"
+                    value-property-name="address"
+                    display-property-name="address"
+                    min-chars="1"
+                    name="code"
+                    #code="ngModel"
+                    style="width: 95%;"
+                  />
+                </div>
+
+            <table
+              class="table table-striped table-bordered table-hover"
+              style="font-size: 12px; margin: 10px"
+            >
+              <thead>
+                <tr>
+                  <th class="width-table-02">Item</th>
+                  <th class="width-table-01">Eliminar</th>
+                  <th class="width-table-03">Cod</th>
+                  <th class="width-table-03">Item</th>
+                  <th class="width-table-7">Descripción</th>
+                 
+                  <th class="width-table-01">Fecha</th>
+                  <th class="width-table-01">
+                      Un
+                  </th>
+                  <th class="width-table-03">
+                      L1
+                  </th>
+                  <th class="width-table-03">
+                          L2
+                      </th>
+                      <th class="width-table-03">
+                              E
+                          </th>
+                  <th class="width-table-2">Cantidad</th>
+                  <th class="width-table-1">Estado</th>
+                  <th class="width-table-1">Cat/Acta</th>
+                  <th class="width-table-1">Actas</th>
+                  <th class="width-table-1">Fecha/Acta</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of items_cobro; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>
+                    <button
+                      class="btn btn_danger btn-sm mr-3 fas fa-trash-alt"
+                      value="{{row.id_items_actas}}"
+                      (click)="delete_item($event)"
+                    ></button>
+                  </td>
+                  <td>
+                    <input
+                      class="form-control input-modified mx-2"
+                      (change)="valueChanged_items(i, row)"
+                      ngui-auto-complete
+                      [(ngModel)]="row.item_cobro_code"
+                      placeholder="Item"
+                      [source]="itemscode"
+                      list-formatter="item_cobro_code"
+                      path-to-data="search"
+                      value-property-name="item_cobro_code"
+                      display-property-name="item_cobro_code"
+                      min-chars="1"
+                      name="item_cobro_code"
+                      #code="ngModel"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control-sm col-12 input-modified"
+                      name="item"
+                      [(ngModel)]="row.item"
+                      readonly
+                    />
+                  </td>
+                  <td>
+                    <input
+                      class="form-control input-modified mx-2"
+                      (change)="valueChanged_name(i, row)"
+                      ngui-auto-complete
+                      [(ngModel)]="row.item_cobro_name"
+                      placeholder="Descripción"
+                      [source]="items_name"
+                      list-formatter="item_cobro_name"
+                      no-match-found-text="no se encontro ningun resultado"
+                      path-to-data="search"
+                      value-property-name="item_cobro_name"
+                      display-property-name="item_cobro_name"
+                      min-chars="1"
+                      name="item_cobro_name"
+                      #name="ngModel"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="date"
+                      class="form-control input-modified"
+                      name="date"
+                      [(ngModel)]="row.date"
+                    />
+                  </td>
+                  <td>{{row.item_cobro_unidad}}</td>
+                  
+                  <td>
+                      <input type="text" class="form-control-sm col-12 input-modified" (keyup)="formula(i, row)"  name="item"
+                          [(ngModel)]="row.l1" >
+                  </td>
+                  <td>
+                          <input type="text" class="form-control-sm col-12 input-modified" (keyup)="formula(i, row)"  name="item"
+                              [(ngModel)]="row.l2" >
+                      </td>
+                      <td>
+                              <input type="text" class="form-control-sm col-12 input-modified" (keyup)="formula(i, row)"  name="item"
+                                  [(ngModel)]="row.e" >
+                          </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control input-modified"
+                      name="quantity"
+                      [(ngModel)]="row.quantity"
+                    />
+                  </td>
+                  <td>
+                    <select
+                      name=""
+                      class="form-control input-modified"
+                      name="id_state"
+                      [(ngModel)]="row.id_state"
+                    >
+                      <option
+                        *ngFor="let stateitems of stateitems"
+                        value="{{stateitems.idestados_items}}"
+                        >{{ stateitems.estados_item_name }}</option
+                      >
+                    </select>
+                  </td>
+
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control input-modified"
+                      name="quanity_acta"
+                      [(ngModel)]="row.quanity_acta"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control input-modified"
+                      name="acta"
+                      [(ngModel)]="row.acta"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="date"
+                      class="form-control input-modified"
+                      name="date_acta"
+                      [(ngModel)]="row.date_acta"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div>
+              <button class="btn-sm mr-3 button1 btn_add" (click)="add_item()">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <br />
+        </div>
+
+        <div class="modal-footer">
+          <div class="float-right ">
+            <button
+              type="button"
+              class="btn btn-sm btn-danger"
+              data-dismiss="modal"
+              #btncerrar
+              [hidden]="btnclose"
+            ></button>
+
+            <button
+              type="button"
+              class="btn btn-sm btn-danger"
+              (click)="close()"
+            >
+              <i class="fa fa-window-close"></i> Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for create -->
+  <div
+    class="modal fade"
+    data-backdrop="static"
+    data-keyboard="false"
+    id="address"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledb.3y="modalAddress"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog  modal-md" role="document">
+      <div class="modal-content ">
+        <div class="modal-header bg-#000 ">
+          <div class="row">
+            <div class="col-12">
+              <h2 class="modal-title mtitle ">Multiple</h2>
+            </div>
+          </div>
+        </div>
+        <div class="modal-body ">
+          <div class="form-group row">
+            <div class="col-12 mb-1 mt-1 uno">
+              <label class="col-3 col-form-label pl-2 al">Direccion: </label>
+              <div class="col-7 float-right">
+                <input
+                  class=" form-control input-modified pr-4"
+                  style="width:100%;height: 25px"
+                  type="text"
+                  name="newAddress"
+                  [(ngModel)]="newAddress_multiple"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="float-right ">
+            <button
+              type="button"
+              class="btn btn-sm btn-primary"
+              (click)="save_multiple()"
+            >
+              <i class="fa fa-plus"></i> Crear
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-sm btn-danger"
+              data-dismiss="modal"
+            >
+              <i class="fa fa-window-close"></i> Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loader" *ngIf="loader == false" style="z-index: 7000;">
+  <img src="../../assets/images/preload.svg" alt="" />
+</div>
